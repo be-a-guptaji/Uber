@@ -1,6 +1,12 @@
-function hello(name: string) {
-  return "Hello, " + name;
-}
+import http from "http";
+import app from "./app";
 
-console.log(hello("This is awesome!"));
-console.log(hello("Now the code is updated")); 
+// Create a server
+// The server is created using the http module and the express app is passed to it.
+const server = http.createServer(app);
+
+// Start the server
+// The server listens on the port specified in the environment variables.
+server.listen(process.env.PORT, () => {
+  console.log(`Server is running on http://localhost:${process.env.PORT!}`);
+});
