@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { ApiError } from "../utils/api/ApiError";
 
 // Define the function to connect to the database
 export async function connectToDatabase(): Promise<void> {
@@ -9,9 +10,7 @@ export async function connectToDatabase(): Promise<void> {
 
     // Validate the environment variables
     if (!mongoUrl || !dbName) {
-      throw new Error(
-        "MONGO_URL and DB_NAME must be defined in the environment variables."
-      );
+      throw new ApiError(500, "Missing required environment variables.");
     }
 
     // Connect to the MongoDB database

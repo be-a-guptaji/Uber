@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import { connectToDatabase } from "./database/database";
+import { ApiError } from "./utils/api/ApiError";
 
 // Load and configuring environment variables
 dotenv.config();
@@ -14,9 +15,7 @@ if (
   !process.env.PORT ||
   !process.env.JWT_SECRET_KEY
 ) {
-  throw new Error(
-    "Missing required environment variables: MONGO_URL, DB_NAME, or CORS_ORIGIN."
-  );
+  throw new ApiError(500, "Missing required environment variables.");
 }
 
 // Create an express app
