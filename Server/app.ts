@@ -1,12 +1,32 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import { connectToDatabase } from "./database/database";
 
 // Load and configuring environment variables
 dotenv.config();
 
+// Ensure environment variables are loaded
+if (
+  !process.env.MONGO_URL ||
+  !process.env.DB_NAME ||
+  !process.env.CORS_ORIGIN ||
+  !process.env.PORT ||
+  !process.env.JWT_SECRET_KEY
+) {
+  throw new Error(
+    "Missing required environment variables: MONGO_URL, DB_NAME, or CORS_ORIGIN."
+  );
+}
+
 // Create an express app
 const app = express();
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Connect to the database
+connectToDatabase();
 
 // Enable CORS
 app.use(

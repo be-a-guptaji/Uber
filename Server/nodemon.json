@@ -1,5 +1,5 @@
 {
-  "watch": ["src"],
+  "watch": ["./dist/**/*"],
   "ext": "js",
   "ignore": [],
   "exec": "node dist/server.js"
