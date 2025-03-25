@@ -197,20 +197,34 @@ export const getUserProfile = async (req: Request, res: Response) => {
 
 // Logout a User
 export const logoutUser = async (req: Request, res: Response) => {
-  // Clear the token cookie
-  res.clearCookie("token");
+  try {
+    // Retreiving the token from the request headers or cookies
+    const token: string =
+      req.cookies.token || req.headers.authorization?.split(" ")[1];
 
-  // Retreiving the token from the request headers or cookies
-  const token: string =
-    req.cookies.token || req.headers.authorization?.split(" ")[1];
+    // Add the token to the blacklist
+    await addTokenToBlackList(token);
 
-  // Add the token to the blacklist
-  addTokenToBlackList(token);
+    // Clear the token cookie
+    res.clearCookie("token");
 
-  // Return a success response
-  res
-    .status(200)
-    .json(new ApiResponse(200, null, "User logged out successfully."));
+    // Return a success response
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "User logged out successfully."));
 
-  return;
+    return;
+  } catch (error) {
+    // If an error occurs, return an error response
+    res
+      .status(500)
+      .json(
+        new ApiError(500, "Unable to logout.", [
+          "Token cannot be deleted.",
+          "Token cannot be added to blacklist.",
+        ])
+      );
+
+    return;
+  }
 };

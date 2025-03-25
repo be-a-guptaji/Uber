@@ -94,7 +94,10 @@ export const registerCaptain = async (
 };
 
 // Login a Captain through email and password
-export const loginCaptain = async (req: Request, res: Response): Promise<void> => {
+export const loginCaptain = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   // Check if the request body is valid
   const errors = validationResult(req);
 
@@ -123,7 +126,9 @@ export const loginCaptain = async (req: Request, res: Response): Promise<void> =
       res
         .status(401)
         .json(
-          new ApiError(401, "Captain not found.", ["Invalid email or password."])
+          new ApiError(401, "Captain not found.", [
+            "Invalid email or password.",
+          ])
         );
 
       return;
@@ -137,7 +142,9 @@ export const loginCaptain = async (req: Request, res: Response): Promise<void> =
       res
         .status(401)
         .json(
-          new ApiError(401, "Captain not found.", ["Invalid email or password."])
+          new ApiError(401, "Captain not found.", [
+            "Invalid email or password.",
+          ])
         );
 
       return;
@@ -191,27 +198,43 @@ export const getCaptainProfile = async (req: Request, res: Response) => {
   // Return a success response
   res
     .status(200)
-    .json(new ApiResponse(200, req.captain, "Captain profile successfully fetched."));
+    .json(
+      new ApiResponse(200, req.captain, "Captain profile successfully fetched.")
+    );
 
   return;
 };
 
 // Logout a Captain
 export const logoutCaptain = async (req: Request, res: Response) => {
-  // Clear the token cookie
-  res.clearCookie("token");
+  try {
+    // Retreiving the token from the request headers or cookies
+    const token: string =
+      req.cookies.token || req.headers.authorization?.split(" ")[1];
 
-  // Retreiving the token from the request headers or cookies
-  const token: string =
-    req.cookies.token || req.headers.authorization?.split(" ")[1];
+    // Add the token to the blacklist
+    await addTokenToBlackList(token);
 
-  // Add the token to the blacklist
-  addTokenToBlackList(token);
+    // Clear the token cookie
+    res.clearCookie("token");
 
-  // Return a success response
-  res
-    .status(200)
-    .json(new ApiResponse(200, null, "Captain logged out successfully."));
+    // Return a success response
+    res
+      .status(200)
+      .json(new ApiResponse(200, null, "Captain logged out successfully."));
 
-  return;
+    return;
+  } catch (error) {
+    // If an error occurs, return an error response
+    res
+      .status(500)
+      .json(
+        new ApiError(500, "Unable to logout.", [
+          "Token cannot be deleted.",
+          "Token cannot be added to blacklist.",
+        ])
+      );
+
+    return;
+  }
 };

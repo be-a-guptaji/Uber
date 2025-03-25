@@ -3,8 +3,9 @@ import { UserSchemaType } from "../models/user.model";
 
 declare global {
   namespace Express {
+    // Extend the request interface to include the User and Captain
     interface Request {
-      user?: UserSchemaType; // Add the user property (or use the appropriate type)
+      user?: UserSchemaType; 
       captain?: CaptainSchemaType;
     }
   }
