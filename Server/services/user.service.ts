@@ -88,3 +88,32 @@ export const findUserByEmail = async (
     throw new ApiError(500, "Error finding user.", errorMessages);
   }
 };
+
+export const findUserById = async (
+  id: string
+): Promise<UserSchemaType | null> => {
+  // Find a user by ID
+  try {
+    // Find the user by ID and select the password
+    const user = await User.findById(id).select("+password");
+
+    // Return the found user
+    return user;
+  } catch (error: unknown) {
+    // Ensure error is of type Error or handle it if it's something else
+    let errorMessages: string[];
+
+    // If error is an instance of Error, extract the message
+    if (error instanceof Error) {
+      errorMessages = [error.message];
+    } else {
+      // If error is not an instance of Error, convert it to a string
+      errorMessages = [
+        "Something went wrong at database connection. At ./services/user.service.ts file",
+      ];
+    }
+
+    // Throw a custom API error with the error messages
+    throw new ApiError(500, "Error finding user.", errorMessages);
+  }
+};

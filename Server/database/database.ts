@@ -4,8 +4,8 @@ import { ApiError } from "../utils/api/ApiError";
 // Define the function to connect to the database
 export async function connectToDatabase(): Promise<void> {
   // Ensure environment variables are defined
-  const mongoUrl = process.env.MONGO_URL;
-  const dbName = process.env.DB_NAME;
+  const mongoUrl = process.env.MONGO_URL!;
+  const dbName = process.env.DB_NAME!;
 
   // Validate the environment variables
   if (!mongoUrl || !dbName) {

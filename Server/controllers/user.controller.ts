@@ -1,8 +1,9 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { createUser, findUserByEmail } from "../services/user.service";
 import { validationResult } from "express-validator";
 import { ApiError } from "../utils/api/ApiError";
 import { ApiResponse } from "../utils/api/ApiResponse";
+import { UserSchemaType } from "../models/user.model";
 
 // Register a new user to the database
 export const registerUser = async (
@@ -15,12 +16,14 @@ export const registerUser = async (
   // If the request body is invalid, return an error response
   if (!errors.isEmpty()) {
     // Map errors to an array of error messages (strings)
-    const errorMessages = errors.array().map((error) => error.msg);
+    const errorMessages: string[] = errors.array().map((error) => error.msg);
 
     // Return an error response
     res
       .status(400)
       .json(new ApiError(400, "Invalid request body.", errorMessages));
+    
+    return;
   }
 
   try {
@@ -48,7 +51,9 @@ export const registerUser = async (
           { token, user: userObj },
           "User created successfully."
         )
-      );
+    );
+
+    return;
   } catch (error) {
     // If an error occurs, return an error response
     res
@@ -61,7 +66,9 @@ export const registerUser = async (
             "This email might be in use. Try registering with a different email.",
           ]
         )
-      );
+    );
+    
+    return;
   }
 };
 
@@ -73,12 +80,14 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   // If the request body is invalid, return an error response
   if (!errors.isEmpty()) {
     // Map errors to an array of error messages (strings)
-    const errorMessages = errors.array().map((error) => error.msg);
+    const errorMessages: string[] = errors.array().map((error) => error.msg);
 
     // Return an error response
     res
       .status(400)
       .json(new ApiError(400, "Invalid request body.", errorMessages));
+    
+    return;
   }
 
   try {
@@ -94,7 +103,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         .status(401)
         .json(
           new ApiError(401, "User not found.", ["Invalid email or password."])
-        );
+      );
+      
       return;
     }
 
@@ -107,7 +117,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         .status(401)
         .json(
           new ApiError(401, "User not found.", ["Invalid email or password."])
-        );
+      );
+      
       return;
     }
 
@@ -129,7 +140,9 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
           { token, user: userObj },
           "User logged in successfully."
         )
-      );
+    );
+    
+    return;
   } catch (error) {
     // If an error occurs, return an error response
     res
@@ -138,11 +151,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         new ApiError(500, "Something went wrong while loging your account.", [
           "Invalid email or password.",
         ])
-      );
+    );
+    
+    return;
   }
 };
 
 // Get user profile through the cookies
-export const getUserProfile = async (req: Request, res: Response) => {
-  
-};
+export const getUserProfile = async (req: Request, res: Response) => {};
