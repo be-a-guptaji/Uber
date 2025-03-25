@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { connectToDatabase } from "./database/database";
 import { ApiError } from "./utils/api/ApiError";
 import UserRoutes from "./routes/user.routes";
+import CaptainRoutes from "./routes/captain.routes";
 
 // Load and configuring environment variables
 dotenv.config({
@@ -18,7 +19,8 @@ if (
   !process.env.DB_NAME ||
   !process.env.CORS_ORIGIN ||
   !process.env.PORT ||
-  !process.env.JWT_SECRET_KEY
+  !process.env.JWT_SECRET_KEY ||
+  !process.env.NODE_ENV
 ) {
   throw new ApiError(500, "Missing required environment variables.", [
     "Something went wrong at app.ts. At ./app.ts file",
@@ -48,7 +50,8 @@ app.use(
 );
 
 // Configure routes
-app.use("/users", UserRoutes); // Prefix for user routes
+app.use("/users", UserRoutes); // Prefix for User routes
+app.use("/captains", CaptainRoutes); // Prefix for Captain routes
 
 // Connect to the database
 connectToDatabase();

@@ -2,8 +2,8 @@ import mongoose, { Document, Schema, Model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// Define the interface for the user document (model)
-export interface UserSchemaType extends Document {
+// Define the interface for the captain document (model)
+export interface CaptainSchemaType extends Document {
   fullName: {
     firstName: string;
     lastName: string;
@@ -11,19 +11,30 @@ export interface UserSchemaType extends Document {
   email: string;
   password: string;
   socketId?: string;
+  status: string;
+  vehicle: {
+    color: string;
+    licencePlate: string;
+    capacity: number;
+    vehicleType: string;
+  };
+  location: {
+    latitude: number;
+    longitude: number;
+  };
 
   // Instance methods
   generateAuthToken(): string;
   comparePassword(password: string): Promise<boolean>;
 }
 
-// Define the static methods for the User model
-interface UserModel extends Model<UserSchemaType> {
+// Define the static methods for the Captain model
+interface CaptainModel extends Model<CaptainSchemaType> {
   hashPassword(password: string): Promise<string>;
 }
 
-// Create the user schema
-const userSchema = new Schema<UserSchemaType, UserModel>(
+// Create the captain schema
+const captainSchema = new Schema<CaptainSchemaType, CaptainModel>(
   {
     fullName: {
       firstName: {
@@ -56,6 +67,41 @@ const userSchema = new Schema<UserSchemaType, UserModel>(
     socketId: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["active", "inactive"],
+      default: "inactive",
+    },
+    vehicle: {
+      color: {
+        type: String,
+        required: true,
+        minlength: [2, "Color must be at least 2 characters long"],
+      },
+      licencePlate: {
+        type: String,
+        required: true,
+        minlength: [6, "Licence plate must be at least 6 characters long"],
+      },
+      capacity: {
+        type: Number,
+        required: true,
+        min: [1, "Capacity must be at least 1 person"],
+      },
+      vehicleType: {
+        type: String,
+        required: true,
+        enum: ["car", "auto", "motorcycle"],
+      },
+    },
+    location: {
+      latitude: {
+        type: Number,
+      },
+      longitude: {
+        type: Number,
+      },
+    },
   },
   {
     timestamps: true,
@@ -63,7 +109,7 @@ const userSchema = new Schema<UserSchemaType, UserModel>(
 );
 
 // Static method to hash the password
-userSchema.statics.hashPassword = async function (
+captainSchema.statics.hashPassword = async function (
   password: string
 ): Promise<string> {
   // Hash the provided password
@@ -73,8 +119,8 @@ userSchema.statics.hashPassword = async function (
 };
 
 // Instance method to generate a JWT
-userSchema.methods.generateAuthToken = function (): string {
-  // Generating JWT token using the secret key and user ID
+captainSchema.methods.generateAuthToken = function (): string {
+  // Generating JWT token using the secret key and captain ID
   const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET_KEY!, {
     expiresIn: "24h",
   });
@@ -83,7 +129,7 @@ userSchema.methods.generateAuthToken = function (): string {
 };
 
 // Instance method to compare password
-userSchema.methods.comparePassword = async function (
+captainSchema.methods.comparePassword = async function (
   password: string
 ): Promise<boolean> {
   // Compare the provided password with the hashed password
@@ -92,8 +138,11 @@ userSchema.methods.comparePassword = async function (
   return isMatch;
 };
 
-// Create the User model based on the schema
-const User = mongoose.model<UserSchemaType, UserModel>("User", userSchema);
+// Create the Captain model based on the schema
+const Captain = mongoose.model<CaptainSchemaType, CaptainModel>(
+  "Captain",
+  captainSchema
+);
 
-// Export the User model
-export default User;
+// Export the Captain model
+export default Captain;

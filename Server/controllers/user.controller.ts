@@ -30,8 +30,28 @@ export const registerUser = async (
     // Destructure the request body
     const { fullName, email, password } = req.body;
 
+    // Check if the email is already in use
+    const isUserAlreadyExists = await findUserByEmail(email);
+
+    // If the email is already in use, return an error response
+    if (isUserAlreadyExists) {
+      res
+        .status(400)
+        .json(
+          new ApiError(400, "Email already in use.", [
+            "This email is already in use. Try registering with a different email.",
+          ])
+        );
+
+      return;
+    }
+
     // Create a new user
-    const user = await createUser({ fullName, email, password });
+    const user = await createUser({
+      fullName,
+      email,
+      password,
+    });
 
     // Generating Auth token using Instance method
     const token = user.generateAuthToken();

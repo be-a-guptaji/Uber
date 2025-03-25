@@ -1,43 +1,62 @@
-import User, { UserSchemaType } from "../models/user.model";
+import Captain, { CaptainSchemaType } from "../models/captain.model";
 import { ApiError } from "../utils/api/ApiError";
 
-// Define the User interface
-interface UserType {
+// Define the vehicle interface
+interface VehicleType {
+  color: string;
+  licencePlate: string;
+  capacity: number;
+  vehicleType: string;
+}
+
+// Define the Captain interface
+interface CaptainType {
   fullName: {
     firstName: string;
     lastName?: string;
   };
   email: string;
   password: string;
+  vehicle: VehicleType;
 }
 
-// Create a new User
-export const createUser = async ({
+// Create a new Captain
+export const createCaptain = async ({
   fullName,
   email,
   password,
-}: UserType): Promise<UserSchemaType> => {
-  // Create a new User using the hashed password
+  vehicle,
+}: CaptainType): Promise<CaptainSchemaType> => {
+  // Create a new Captain using the hashed password
   try {
-    // Validate the User data
-    if (!fullName.firstName || !email || !password) {
+    // Validate the Captain data
+    if (
+      !fullName.firstName ||
+      !email ||
+      !password ||
+      !vehicle.color ||
+      !vehicle.licencePlate ||
+      !vehicle.capacity ||
+      !vehicle.vehicleType
+    ) {
       // Throw an error if any required field is missing
       throw new ApiError(400, "Missing required fields.", [
-        "Data is missing. At ./services/user.service.ts file",
+        "Data is missing. At ./services/captain.service.ts file",
       ]);
     }
 
     // Hash the password for security reasons
-    const hashedPassword = await User.hashPassword(password);
+    const hashedPassword = await Captain.hashPassword(password);
 
-    const newUser = await User.create({
+    const newCaptain = await Captain.create({
       fullName,
       email,
       password: hashedPassword,
+      vehicle,
     });
 
-    // Return the created User
-    return newUser;
+    // Return the created Captain
+    return newCaptain;
   } catch (error: unknown) {
     // Ensure error is of type Error or handle it if it's something else
     let errorMessages: string[];
@@ -53,21 +72,21 @@ export const createUser = async ({
     }
 
     // Throw a custom API error with the error messages
-    throw new ApiError(500, "Error creating User.", errorMessages);
+    throw new ApiError(500, "Error creating Captain.", errorMessages);
   }
 };
 
-// Find a User by email
-export const findUserByEmail = async (
+// Find a Captain by email
+export const findCaptainByEmail = async (
   email: string
-): Promise<UserSchemaType | null> => {
-  // Find a User by email
+): Promise<CaptainSchemaType | null> => {
+  // Find a Captain by email
   try {
-    // Find the User by email and select the password
-    const user = await User.findOne({ email }).select("+password");
+    // Find the Captain by email and select the password
+    const captain = await Captain.findOne({ email }).select("+password");
 
-    // Return the found User
-    return user;
+    // Return the found Captain
+    return captain;
   } catch (error: unknown) {
     // Ensure error is of type Error or handle it if it's something else
     let errorMessages: string[];
@@ -78,26 +97,26 @@ export const findUserByEmail = async (
     } else {
       // If error is not an instance of Error, convert it to a string
       errorMessages = [
-        "Something went wrong at database connection. At ./services/user.service.ts file",
+        "Something went wrong at database connection. At ./services/captain.service.ts file",
       ];
     }
 
     // Throw a custom API error with the error messages
-    throw new ApiError(500, "Error finding User.", errorMessages);
+    throw new ApiError(500, "Error finding Captain.", errorMessages);
   }
 };
 
-// Find a User by ID
+// Find a Captain by ID
 export const findUserById = async (
   id: string
-): Promise<UserSchemaType | null> => {
-  // Find a User by ID
+): Promise<CaptainSchemaType | null> => {
+  // Find a Captain by ID
   try {
-    // Find the User by ID and select the password
-    const user = await User.findById(id).select("+password");
+    // Find the Captain by ID and select the password
+    const captain = await Captain.findById(id).select("+password");
 
-    // Return the found User
-    return user;
+    // Return the found Captain
+    return captain;
   } catch (error: unknown) {
     // Ensure error is of type Error or handle it if it's something else
     let errorMessages: string[];
@@ -108,11 +127,11 @@ export const findUserById = async (
     } else {
       // If error is not an instance of Error, convert it to a string
       errorMessages = [
-        "Something went wrong at database connection. At ./services/user.service.ts file",
+        "Something went wrong at database connection. At ./services/captain.service.ts file",
       ];
     }
 
     // Throw a custom API error with the error messages
-    throw new ApiError(500, "Error finding User.", errorMessages);
+    throw new ApiError(500, "Error finding Captain.", errorMessages);
   }
 };
