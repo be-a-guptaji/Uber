@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { ApiError } from "../utils/api/ApiError";
 import { findUserById } from "../services/user.service";
+import { isTokenBlacklisted } from "../services/blackListToken.service";
 
 // Middleware to authenticate user
 export const authMiddleware = async (
@@ -19,7 +20,33 @@ export const authMiddleware = async (
     // If the token is missing, return a 401 Unauthorized response
     res
       .status(401)
-      .json(new ApiError(401, "Unauthorized.", ["Token is missing."]));
+      .json(
+        new ApiError(401, "Unauthorized.", [
+          "The token is invalid.",
+          "Token is missing.",
+          "Token is expired.",
+          "Token is Unauthorized.",
+        ])
+      );
+
+    return;
+  }
+
+  // Check if the token is blacklisted
+  const isBlacklisted = await isTokenBlacklisted(token);
+
+  if (isBlacklisted) {
+    // If the token is blacklisted, return a 401 Unauthorized response
+    res
+      .status(401)
+      .json(
+        new ApiError(401, "Unauthorized.", [
+          "The token is invalid.",
+          "Token is missing.",
+          "Token is expired.",
+          "Token is Unauthorized.",
+        ])
+      );
 
     return;
   }
@@ -38,6 +65,7 @@ export const authMiddleware = async (
         "The token is invalid.",
         "Token is missing.",
         "Token is expired.",
+        "Token is Unauthorized.",
       ]);
     }
 
@@ -45,7 +73,12 @@ export const authMiddleware = async (
     const user = await findUserById(decoded._id);
 
     if (!user) {
-      throw new ApiError(404, "User not found.", ["The token is invalid."]);
+      throw new ApiError(404, "User not found.", [
+        "The token is invalid.",
+        "Token is missing.",
+        "Token is expired.",
+        "Token is Unauthorized.",
+      ]);
     }
 
     // Attach the user object to the request
@@ -55,7 +88,16 @@ export const authMiddleware = async (
     return next();
   } catch (error) {
     // If the token is invalid, return a 401 Unauthorized response
-    res.status(401).json(new ApiError(401, "Unauthorized."));
+    res
+      .status(401)
+      .json(
+        new ApiError(401, "Unauthorized.", [
+          "The token is invalid.",
+          "Token is missing.",
+          "Token is expired.",
+          "Token is Unauthorized.",
+        ])
+      );
 
     return;
   }

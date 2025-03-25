@@ -71,7 +71,9 @@ userSchema.statics.hashPassword = async function (
 // Instance method to generate a JWT
 userSchema.methods.generateAuthToken = function (): string {
   // Generating JWT token using the secret key and user ID
-  const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET_KEY!);
+  const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET_KEY!, {
+    expiresIn: "24h",
+  });
   // Return the token
   return token;
 };
@@ -86,7 +88,7 @@ userSchema.methods.comparePassword = async function (
   return isMatch;
 };
 
-// Create and export the User model based on the schema
+// Create the User model based on the schema
 const User = mongoose.model<UserSchemaType, UserModel>("User", userSchema);
 
 // Export the User model

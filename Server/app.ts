@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { connectToDatabase } from "./database/database";
 import { ApiError } from "./utils/api/ApiError";
 import UserRoutes from "./routes/user.routes";
@@ -33,6 +34,9 @@ app.use(express.json());
 // Middleware to parse URL-encoded bodies
 app.use(express.urlencoded({ extended: true }));
 
+// Middleware to parse cookies
+app.use(cookieParser());
+
 // Enable CORS
 app.use(
   cors({
@@ -49,4 +53,5 @@ app.use("/users", UserRoutes); // Prefix for user routes
 // Connect to the database
 connectToDatabase();
 
+// Export the app
 export default app;

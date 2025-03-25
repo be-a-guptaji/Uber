@@ -60,6 +60,7 @@ export const createUser = async ({
   }
 };
 
+// Find a user by email
 export const findUserByEmail = async (
   email: string
 ): Promise<UserSchemaType | null> => {
@@ -89,6 +90,7 @@ export const findUserByEmail = async (
   }
 };
 
+// Find a user by ID
 export const findUserById = async (
   id: string
 ): Promise<UserSchemaType | null> => {

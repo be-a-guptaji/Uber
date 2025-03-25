@@ -3,7 +3,7 @@ import { createUser, findUserByEmail } from "../services/user.service";
 import { validationResult } from "express-validator";
 import { ApiError } from "../utils/api/ApiError";
 import { ApiResponse } from "../utils/api/ApiResponse";
-import { UserSchemaType } from "../models/user.model";
+import { addTokenToBlackList } from "../services/blackListToken.service";
 
 // Register a new user to the database
 export const registerUser = async (
@@ -22,7 +22,7 @@ export const registerUser = async (
     res
       .status(400)
       .json(new ApiError(400, "Invalid request body.", errorMessages));
-    
+
     return;
   }
 
@@ -51,7 +51,7 @@ export const registerUser = async (
           { token, user: userObj },
           "User created successfully."
         )
-    );
+      );
 
     return;
   } catch (error) {
@@ -66,8 +66,8 @@ export const registerUser = async (
             "This email might be in use. Try registering with a different email.",
           ]
         )
-    );
-    
+      );
+
     return;
   }
 };
@@ -86,7 +86,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     res
       .status(400)
       .json(new ApiError(400, "Invalid request body.", errorMessages));
-    
+
     return;
   }
 
@@ -103,8 +103,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         .status(401)
         .json(
           new ApiError(401, "User not found.", ["Invalid email or password."])
-      );
-      
+        );
+
       return;
     }
 
@@ -117,8 +117,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         .status(401)
         .json(
           new ApiError(401, "User not found.", ["Invalid email or password."])
-      );
-      
+        );
+
       return;
     }
 
@@ -131,6 +131,14 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     // Remove the password field
     delete userObj.password;
 
+    // Set the token as a cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+    });
+
     // Return a success response
     res
       .status(200)
@@ -140,8 +148,8 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
           { token, user: userObj },
           "User logged in successfully."
         )
-    );
-    
+      );
+
     return;
   } catch (error) {
     // If an error occurs, return an error response
@@ -151,11 +159,38 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         new ApiError(500, "Something went wrong while loging your account.", [
           "Invalid email or password.",
         ])
-    );
-    
+      );
+
     return;
   }
 };
 
 // Get user profile through the cookies
-export const getUserProfile = async (req: Request, res: Response) => {};
+export const getUserProfile = async (req: Request, res: Response) => {
+  // Return a success response
+  res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User profile successfully fetched."));
+
+  return;
+};
+
+// Logout a user
+export const logoutUser = async (req: Request, res: Response) => {
+  // Clear the token cookie
+  res.clearCookie("token");
+
+  // Retreiving the token from the request headers or cookies
+  const token: string =
+    req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  // Add the token to the blacklist
+  addTokenToBlackList(token);
+
+  // Return a success response
+  res
+    .status(200)
+    .json(new ApiResponse(200, null, "User logged out successfully."));
+
+  return;
+};
