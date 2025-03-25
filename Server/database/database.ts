@@ -17,8 +17,10 @@ export async function connectToDatabase(): Promise<void> {
     await mongoose.connect(`${mongoUrl}/${dbName}`);
     console.log("Connected to MongoDB");
   } catch (error) {
-    // Handle connection errors
-    console.error("Error connecting to MongoDB:", error);
-    throw error; // Re-throw the error for further handling if needed
+    // Ensure the error is a string or convert it to a string
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
+    // Handle any errors during user creation
+    throw new ApiError(500, "Error creating user.", [errorMessage]);
   }
 }

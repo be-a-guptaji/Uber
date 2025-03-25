@@ -5,7 +5,10 @@ import { connectToDatabase } from "./database/database";
 import { ApiError } from "./utils/api/ApiError";
 
 // Load and configuring environment variables
-dotenv.config();
+dotenv.config({
+  // Specify the path to the .env file
+  path: "./.env",
+});
 
 // Ensure environment variables are loaded
 if (

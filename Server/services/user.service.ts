@@ -33,7 +33,10 @@ export const createUser = async ({
     // Return the created user
     return newUser;
   } catch (error) {
+    // Ensure the error is a string or convert it to a string
+    const errorMessage = error instanceof Error ? error.message : String(error);
+
     // Handle any errors during user creation
-    throw new ApiError(500, "Error creating user.");
+    throw new ApiError(500, "Error creating user.", [errorMessage]);
   }
 };
