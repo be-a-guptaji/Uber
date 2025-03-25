@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { connectToDatabase } from "./database/database";
 import { ApiError } from "./utils/api/ApiError";
+import UserRoutes from "./routes/user.routes";
 
 // Load and configuring environment variables
 dotenv.config({
@@ -18,7 +19,9 @@ if (
   !process.env.PORT ||
   !process.env.JWT_SECRET_KEY
 ) {
-  throw new ApiError(500, "Missing required environment variables.");
+  throw new ApiError(500, "Missing required environment variables.", [
+    "Something went wrong at app.ts. At ./app.ts file",
+  ]);
 }
 
 // Create an express app
@@ -27,8 +30,8 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-// Connect to the database
-connectToDatabase();
+// Middleware to parse URL-encoded bodies
+app.use(express.urlencoded({ extended: true }));
 
 // Enable CORS
 app.use(
@@ -39,5 +42,11 @@ app.use(
     credentials: true,
   })
 );
+
+// Configure routes
+app.use("/users", UserRoutes); // Prefix for user routes
+
+// Connect to the database
+connectToDatabase();
 
 export default app;

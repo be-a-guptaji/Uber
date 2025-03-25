@@ -1,7 +1,6 @@
 class ApiError extends Error {
   statusCode: number;
   message: string;
-  data: any | null;
   success: boolean;
   errors: string[];
 
@@ -16,8 +15,7 @@ class ApiError extends Error {
 
     // Set the properties of the ApiError class
     this.statusCode = statusCode;
-    this.message = message;
-    this.data = null;
+    this.message = message; // Ensure message is passed to the parent class (Error)
     this.success = false;
     this.errors = errors;
 
@@ -28,6 +26,17 @@ class ApiError extends Error {
       Error.captureStackTrace(this, this.constructor);
     }
   }
+
+  // Optionally, override the toJSON method to format the error response
+  toJSON() {
+    return {
+      statusCode: this.statusCode,
+      message: this.message,
+      success: this.success,
+      errors: this.errors,
+    };
+  }
 }
 
+// Export the ApiError class
 export { ApiError };
