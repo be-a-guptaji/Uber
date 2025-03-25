@@ -5,7 +5,7 @@ import { ApiError } from "../utils/api/ApiError";
 import { ApiResponse } from "../utils/api/ApiResponse";
 import { addTokenToBlackList } from "../services/blackListToken.service";
 
-// Register a new user to the database
+// Register a new User to the database
 export const registerUser = async (
   req: Request,
   res: Response
@@ -46,7 +46,7 @@ export const registerUser = async (
       return;
     }
 
-    // Create a new user
+    // Create a new User
     const user = await createUser({
       fullName,
       email,
@@ -92,7 +92,7 @@ export const registerUser = async (
   }
 };
 
-// Login a user through email and password
+// Login a User through email and password
 export const loginUser = async (req: Request, res: Response): Promise<void> => {
   // Check if the request body is valid
   const errors = validationResult(req);
@@ -114,11 +114,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     // Destructure the request body
     const { email, password } = req.body;
 
-    // Create a new user
+    // Create a new User
     const user = await findUserByEmail(email);
 
     if (!user) {
-      // If user is not found, return an error response
+      // If User is not found, return an error response
       res
         .status(401)
         .json(
@@ -128,7 +128,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
-    // Compare the provided password with the user's password
+    // Compare the provided password with the User's password
     const isMatch = await user.comparePassword(password);
 
     // If the passwords do not match, return an error response
@@ -185,7 +185,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// Get user profile through the cookies
+// Get User profile through the cookies
 export const getUserProfile = async (req: Request, res: Response) => {
   // Return a success response
   res
@@ -195,7 +195,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
   return;
 };
 
-// Logout a user
+// Logout a User
 export const logoutUser = async (req: Request, res: Response) => {
   // Clear the token cookie
   res.clearCookie("token");

@@ -107,7 +107,7 @@ export const findCaptainByEmail = async (
 };
 
 // Find a Captain by ID
-export const findUserById = async (
+export const findCaptainById = async (
   id: string
 ): Promise<CaptainSchemaType | null> => {
   // Find a Captain by ID

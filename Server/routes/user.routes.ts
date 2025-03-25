@@ -1,6 +1,6 @@
 import express from "express";
 import { body } from "express-validator";
-import { authMiddleware } from "../middlewares/auth.middleware";
+import { authUser } from "../middlewares/auth.middleware";
 import {
   registerUser,
   loginUser,
@@ -39,10 +39,10 @@ router.post(
 );
 
 // Route to get User profile
-router.get("/profile", authMiddleware, getUserProfile);
+router.get("/profile", authUser, getUserProfile);
 
 // Route to logout a User
-router.get("/logout", authMiddleware, logoutUser);
+router.get("/logout", authUser, logoutUser);
 
 // Export the router
 export default router;

@@ -1,6 +1,12 @@
 import express from "express";
 import { body } from "express-validator";
-import { registerCaptain } from "../controllers/captain.controller";
+import {
+  registerCaptain,
+  loginCaptain,
+  getCaptainProfile,
+  logoutCaptain,
+} from "../controllers/captain.controller";
+import { authCaptain } from "../middlewares/auth.middleware";
 
 // Create a new router
 const router = express.Router();
@@ -32,6 +38,24 @@ router.post(
   ],
   registerCaptain
 );
+
+// Route to login a Captain
+router.post(
+  "/login",
+  [
+    body("email").isEmail().withMessage("Email is invalid"),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Password must be at least 6 characters long"),
+  ],
+  loginCaptain
+);
+
+// Route to get Captain profile
+router.get("/profile", authCaptain, getCaptainProfile);
+
+// Route to logout a Captain
+router.get("/logout", authCaptain, logoutCaptain);
 
 // Export the router
 export default router;
