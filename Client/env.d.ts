@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-  VITE_PORT: string; 
+  VITE_PORT: string;
   VITE_BASE_URL: string;
 }
 
