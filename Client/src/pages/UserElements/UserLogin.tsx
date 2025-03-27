@@ -1,17 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router";
-
-// Interface for User data
-interface UserDataProps {
-  email: string;
-  password: string;
-}
+import { LoginDataType } from "../../library/types";
 
 // User login component
 const UserLogin = () => {
   const [email, setEmail] = useState<string>(""); // User email
   const [password, setPassword] = useState<string>(""); // User password
-  const [userData, setUserData] = useState<UserDataProps | null>(null); // User data
+  const [userData, setUserData] = useState<LoginDataType | null>(null); // User data
 
   // Handle email change
   const handleEmail = (email: string) => {
@@ -29,8 +24,8 @@ const UserLogin = () => {
 
     // Setting User Data
     setUserData({
-      email: email,
-      password: password,
+      email,
+      password,
     });
 
     // Reset form fields
@@ -89,7 +84,7 @@ const UserLogin = () => {
           </form>
 
           {/* Login Button For Existing Users */}
-          <p className="text-sm font-medium text-center">
+          <p className="text-sm font-medium text-center mb-8">
             New to Uber?
             <Link to={"/signup"} className="font-semibold text-blue-600 ml-2">
               Create a New User Account

@@ -1,16 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router";
-
-// Interface for Captain data
-interface CaptainDataProps {
-  email: string;
-  password: string;
-}
+import { LoginDataType } from "../../library/types";
 
 const CaptainLogin = () => {
   const [email, setEmail] = useState<string>(""); // Captain email
   const [password, setPassword] = useState<string>(""); // Captain password
-  const [captainData, setCaptainData] = useState<CaptainDataProps | null>(null); // Captain data
+  const [captainData, setCaptainData] = useState<LoginDataType | null>(null); // Captain data
 
   // Handle email change
   const handleEmail = (email: string) => {
@@ -28,8 +23,8 @@ const CaptainLogin = () => {
 
     // Setting Captain Data
     setCaptainData({
-      email: email,
-      password: password,
+      email,
+      password,
     });
 
     // Reset form fields
@@ -92,7 +87,7 @@ const CaptainLogin = () => {
           </form>
 
           {/* Login Button For Existing Captains */}
-          <p className="text-sm font-medium text-center">
+          <p className="text-sm font-medium text-center mb-8">
             Join a fleet?
             <Link
               to={"/captain-signup"}
@@ -103,14 +98,14 @@ const CaptainLogin = () => {
           </p>
         </div>
 
-        {/* Sign up container for new Captains */}
+        {/* Sign up container for New User */}
         <div className="w-full">
-          {/* Sign up button for new Captains */}
+          {/* Sign up button for New User */}
           <Link
             to="/login"
             className="bg-[#10b461] text-white font-semibold mb-4 rounded px-4 py-3 w-full flex items-center justify-center"
           >
-            Login as User
+            Log in as User
           </Link>
         </div>
       </div>

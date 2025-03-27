@@ -1,17 +1,24 @@
 import { useState } from "react";
 import { Link } from "react-router";
-
-// Interface for User data
-interface UserDataProps {
-  email: string;
-  password: string;
-}
+import { UserType } from "../../library/types";
 
 // User sign up component
 const UserSignUp = () => {
+  const [firstName, setFirstName] = useState<string>(""); // User first name
+  const [lastName, setLastName] = useState<string>(""); // User last name
   const [email, setEmail] = useState<string>(""); // User email
   const [password, setPassword] = useState<string>(""); // User password
-  const [userData, setUserData] = useState<UserDataProps | null>(null); // User data
+  const [userData, setUserData] = useState<UserType | null>(null); // User data
+
+  // Handle first name change
+  const handleFirstName = (firstName: string) => {
+    setFirstName(firstName);
+  };
+
+  // Handle last name change
+  const handleLastName = (lastName: string) => {
+    setLastName(lastName);
+  };
 
   // Handle email change
   const handleEmail = (email: string) => {
@@ -29,11 +36,17 @@ const UserSignUp = () => {
 
     // Setting User Data
     setUserData({
-      email: email,
-      password: password,
+      fullName: {
+        firstName,
+        lastName,
+      },
+      email,
+      password,
     });
 
     // Reset form fields
+    setFirstName("");
+    setLastName("");
     setEmail("");
     setPassword("");
   };
@@ -45,12 +58,8 @@ const UserSignUp = () => {
         {/* Login form container */}
         <div className="w-full">
           {/* Logo */}
-          <img
-            src="./UberCaptain.webp"
-            className="invert w-48"
-            alt="Uber Captain Logo"
-          />
-          {/* Form for Captain login */}
+          <img src="./Uber.png" className="w-48" alt="Uber Logo" />
+          {/* Form for User login */}
           <form
             onSubmit={(event) => {
               handleSubmit(event);
@@ -63,27 +72,29 @@ const UserSignUp = () => {
               </h3>
             </label>
 
-            {/* First Name Section */}
-            <input
-              type="text"
-              id="firstName"
-              placeholder="First Name"
-              value={email}
-              onChange={(e) => handleEmail(e.target.value)}
-              className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
-              required
-            />
+            <div className="flex justify-between w-full">
+              {/* First Name Section */}
+              <input
+                type="text"
+                id="firstName"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => handleFirstName(e.target.value)}
+                className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
+                required
+              />
 
-            {/* Last Name Section */}
-            <input
-              type="text"
-              id="lastName"
-              placeholder="Last Name"
-              value={email}
-              onChange={(e) => handleEmail(e.target.value)}
-              className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
-              required
-            />
+              {/* Last Name Section */}
+              <input
+                type="text"
+                id="lastName"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => handleLastName(e.target.value)}
+                className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
+                required
+              />
+            </div>
 
             {/* Email Section */}
             <label htmlFor="email">
@@ -115,14 +126,14 @@ const UserSignUp = () => {
               required
             />
 
-            {/* Login Button For Existing Captains */}
+            {/* Sign Up Button For New Captains */}
             <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">
-              Login
+              Sign Up
             </button>
           </form>
 
-          {/* Login Button For Existing Captains */}
-          <p className="text-sm font-medium text-center">
+          {/* Link Button For Creating New Captains */}
+          <p className="text-sm font-medium text-center mb-8">
             Join a fleet?
             <Link
               to={"/captain-signup"}
@@ -133,15 +144,24 @@ const UserSignUp = () => {
           </p>
         </div>
 
-        {/* Sign up container for new Captains */}
+        {/* Sign up container for New User */}
         <div className="w-full">
-          {/* Sign up button for new Captains */}
+          {/* Sign up button for New User */}
           <Link
             to="/login"
             className="bg-[#10b461] text-white font-semibold mb-4 rounded px-4 py-3 w-full flex items-center justify-center"
           >
-            Login as User
+            Log in as User
           </Link>
+
+          {/* Footer Section and Privacy Policy */}
+          <div className="w-full">
+            <p className="text-[10px] leading-tight">
+              This site is protected by reCAPTCHA and the{" "}
+              <span className="underline">Google Privacy Policy</span> and{" "}
+              <span className="underline">Terms of Service apply</span>.
+            </p>
+          </div>
         </div>
       </div>
     </>
