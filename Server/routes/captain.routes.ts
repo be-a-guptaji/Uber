@@ -6,7 +6,7 @@ import {
   getCaptainProfile,
   logoutCaptain,
 } from "../controllers/captain.controller";
-import { authCaptain } from "../middlewares/auth.middleware";
+import { authCaptain } from "../middlewares/authCaptain.middleware";
 
 // Create a new router
 const router = express.Router();

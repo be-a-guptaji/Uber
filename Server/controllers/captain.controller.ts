@@ -154,8 +154,11 @@ export const loginCaptain = async (
     const oldToken: string =
       req.cookies.token || req.headers.authorization?.split(" ")[1];
 
-    // Add the token to the blacklist
-    await addTokenToBlackList(oldToken);
+    // If the old token exists
+    if (oldToken) {
+      // Add the token to the blacklist if it exists
+      await addTokenToBlackList(oldToken);
+    }
 
     // Generating Auth token using Instance method
     const token = captain.generateAuthToken();
