@@ -142,6 +142,13 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       return;
     }
 
+    // Get the old token from the request
+    const oldToken: string =
+      req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+    // Add the token to the blacklist
+    await addTokenToBlackList(oldToken);
+
     // Generating Auth token using Instance method
     const token = user.generateAuthToken();
 

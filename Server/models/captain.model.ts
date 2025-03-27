@@ -1,27 +1,17 @@
 import mongoose, { Document, Schema, Model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { FullNameType, LocationType, VehicleType } from "../library/types";
 
 // Define the interface for the captain document (model)
 export interface CaptainSchemaType extends Document {
-  fullName: {
-    firstName: string;
-    lastName: string;
-  };
+  fullName: FullNameType;
   email: string;
   password: string;
   socketId?: string;
   status: string;
-  vehicle: {
-    color: string;
-    licencePlate: string;
-    capacity: number;
-    vehicleType: string;
-  };
-  location: {
-    latitude: number;
-    longitude: number;
-  };
+  vehicle: VehicleType;
+  location: LocationType;
 
   // Instance methods
   generateAuthToken(): string;

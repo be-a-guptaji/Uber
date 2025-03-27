@@ -3,7 +3,6 @@ import mongoose, { Document, Schema } from "mongoose";
 // Define the interface for the BlacklistToken document
 interface BlacklistToken extends Document {
   token: string;
-  createdAt: Date; // createdAt will be managed automatically by MongoDB if timestamps is true
 }
 
 // Define the schema for the BlacklistToken model
@@ -16,10 +15,14 @@ const blacklistTokenSchema = new Schema<BlacklistToken>(
     },
   },
   {
-    timestamps: true, // Enable automatic creation of createdAt and updatedAt fields
-    expires: 86400, // Set the expiration time for the token to 24 hours (86400 seconds)
+    timestamps: true,
+    expireAfterSeconds: 86400,
+    expires: 86400,
   }
 );
+
+// Set the expiration time for the createdAt field to 24 hours (86400 seconds)
+blacklistTokenSchema.index({ createdAt: 1 }, { expireAfterSeconds: 86400 });
 
 // Create the BlacklistToken model based on the schema
 const BlacklistToken = mongoose.model<BlacklistToken>(

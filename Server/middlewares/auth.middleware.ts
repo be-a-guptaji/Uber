@@ -11,48 +11,48 @@ export const authUser = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  // Get the token from the request
-  const token: string =
-    req.cookies.token || req.headers.authorization?.split(" ")[1];
-
-  // Check if the token exists
-  if (!token) {
-    // If the token is missing, return a 401 Unauthorized response
-    res
-      .status(401)
-      .json(
-        new ApiError(401, "Unauthorized.", [
-          "The token is invalid.",
-          "Token is missing.",
-          "Token is expired.",
-          "Token is Unauthorized.",
-        ])
-      );
-
-    return;
-  }
-
-  // Check if the token is blacklisted
-  const isBlacklisted = await isTokenBlacklisted(token);
-
-  if (isBlacklisted) {
-    // If the token is blacklisted, return a 401 Unauthorized response
-    res
-      .status(401)
-      .json(
-        new ApiError(401, "Unauthorized.", [
-          "The token is invalid.",
-          "Token is missing.",
-          "Token is expired.",
-          "Token is Unauthorized.",
-        ])
-      );
-
-    return;
-  }
-
   // Verify the token
   try {
+    // Get the token from the request
+    const token: string =
+      req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+    // Check if the token exists
+    if (!token) {
+      // If the token is missing, return a 401 Unauthorized response
+      res
+        .status(401)
+        .json(
+          new ApiError(401, "Unauthorized.", [
+            "The token is invalid.",
+            "Token is missing.",
+            "Token is expired.",
+            "Token is Unauthorized.",
+          ])
+        );
+
+      return;
+    }
+
+    // Check if the token is blacklisted
+    const isBlacklisted = await isTokenBlacklisted(token);
+
+    if (isBlacklisted) {
+      // If the token is blacklisted, return a 401 Unauthorized response
+      res
+        .status(401)
+        .json(
+          new ApiError(401, "Unauthorized.", [
+            "The token is invalid.",
+            "Token is missing.",
+            "Token is expired.",
+            "Token is Unauthorized.",
+          ])
+        );
+
+      return;
+    }
+
     // Decode the token and assert the type to JwtPayload
     const decoded = jwt.verify(
       token,
@@ -109,48 +109,48 @@ export const authCaptain = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  // Get the token from the request
-  const token: string =
-    req.cookies.token || req.headers.authorization?.split(" ")[1];
-
-  // Check if the token exists
-  if (!token) {
-    // If the token is missing, return a 401 Unauthorized response
-    res
-      .status(401)
-      .json(
-        new ApiError(401, "Unauthorized.", [
-          "The token is invalid.",
-          "Token is missing.",
-          "Token is expired.",
-          "Token is Unauthorized.",
-        ])
-      );
-
-    return;
-  }
-
-  // Check if the token is blacklisted
-  const isBlacklisted = await isTokenBlacklisted(token);
-
-  if (isBlacklisted) {
-    // If the token is blacklisted, return a 401 Unauthorized response
-    res
-      .status(401)
-      .json(
-        new ApiError(401, "Unauthorized.", [
-          "The token is invalid.",
-          "Token is missing.",
-          "Token is expired.",
-          "Token is Unauthorized.",
-        ])
-      );
-
-    return;
-  }
-
   // Verify the token
   try {
+    // Get the token from the request
+    const token: string =
+      req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+    // Check if the token exists
+    if (!token) {
+      // If the token is missing, return a 401 Unauthorized response
+      res
+        .status(401)
+        .json(
+          new ApiError(401, "Unauthorized.", [
+            "The token is invalid.",
+            "Token is missing.",
+            "Token is expired.",
+            "Token is Unauthorized.",
+          ])
+        );
+
+      return;
+    }
+
+    // Check if the token is blacklisted
+    const isBlacklisted = await isTokenBlacklisted(token);
+
+    if (isBlacklisted) {
+      // If the token is blacklisted, return a 401 Unauthorized response
+      res
+        .status(401)
+        .json(
+          new ApiError(401, "Unauthorized.", [
+            "The token is invalid.",
+            "Token is missing.",
+            "Token is expired.",
+            "Token is Unauthorized.",
+          ])
+        );
+
+      return;
+    }
+
     // Decode the token and assert the type to JwtPayload
     const decoded = jwt.verify(
       token,

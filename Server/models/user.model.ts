@@ -1,13 +1,11 @@
 import mongoose, { Document, Schema, Model } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { FullNameType } from "../library/types";
 
 // Define the interface for the user document (model)
 export interface UserSchemaType extends Document {
-  fullName: {
-    firstName: string;
-    lastName: string;
-  };
+  fullName: FullNameType;
   email: string;
   password: string;
   socketId?: string;

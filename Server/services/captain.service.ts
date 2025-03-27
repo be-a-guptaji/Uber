@@ -1,24 +1,6 @@
+import { CaptainType } from "../library/types";
 import Captain, { CaptainSchemaType } from "../models/captain.model";
 import { ApiError } from "../utils/api/ApiError";
-
-// Define the vehicle interface
-interface VehicleType {
-  color: string;
-  licencePlate: string;
-  capacity: number;
-  vehicleType: string;
-}
-
-// Define the Captain interface
-interface CaptainType {
-  fullName: {
-    firstName: string;
-    lastName?: string;
-  };
-  email: string;
-  password: string;
-  vehicle: VehicleType;
-}
 
 // Create a new Captain
 export const createCaptain = async ({

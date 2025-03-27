@@ -150,6 +150,13 @@ export const loginCaptain = async (
       return;
     }
 
+    // Get the old token from the request
+    const oldToken: string =
+      req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+    // Add the token to the blacklist
+    await addTokenToBlackList(oldToken);
+
     // Generating Auth token using Instance method
     const token = captain.generateAuthToken();
 

@@ -1,15 +1,6 @@
+import { UserType } from "../library/types";
 import User, { UserSchemaType } from "../models/user.model";
 import { ApiError } from "../utils/api/ApiError";
-
-// Define the User interface
-interface UserType {
-  fullName: {
-    firstName: string;
-    lastName?: string;
-  };
-  email: string;
-  password: string;
-}
 
 // Create a new User
 export const createUser = async ({
