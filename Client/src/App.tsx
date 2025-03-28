@@ -8,6 +8,8 @@ import ProtectedUserComponentWrapper from "./pages/ProtectedComponentsWrapper/Pr
 import UserLogout from "./pages/UserComponents/UserLogout";
 import UserHome from "./pages/UserComponents/UserHome";
 import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
+import CaptainHome from "./pages/CaptainComponents/CaptainHome";
+import CaptainLogout from "./pages/CaptainComponents/CaptainLogout";
 
 const App = () => {
   return (
@@ -48,9 +50,9 @@ const App = () => {
           }
         >
           {/* For the home page */}
-          <Route path="home" index element={<UserHome />} />
+          <Route path="home" index element={<CaptainHome />} />
           {/* For the Captain logout page */}
-          <Route path="logout" element={<UserLogout />} />
+          <Route path="logout" element={<CaptainLogout />} />
         </Route>
       </Routes>
     </>
