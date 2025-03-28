@@ -9,7 +9,7 @@ export type VehicleType = {
   color: string;
   licencePlate: string;
   capacity: number;
-  vehicleType: string;
+  vehicleType: "car" | "auto" | "motorcycle";
 };
 
 // Define the type for the Location

@@ -100,7 +100,9 @@ const UserSignUp = () => {
                 id="firstName"
                 placeholder="First Name"
                 value={firstName}
-                onChange={(e) => handleFirstName(e.target.value)}
+                onChange={(e) => {
+                  handleFirstName(e.target.value);
+                }}
                 className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
                 required
               />
@@ -111,7 +113,9 @@ const UserSignUp = () => {
                 id="lastName"
                 placeholder="Last Name"
                 value={lastName}
-                onChange={(e) => handleLastName(e.target.value)}
+                onChange={(e) => {
+                  handleLastName(e.target.value);
+                }}
                 className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
                 required
               />
@@ -128,7 +132,9 @@ const UserSignUp = () => {
               id="email"
               placeholder="your@email.com"
               value={email}
-              onChange={(e) => handleEmail(e.target.value)}
+              onChange={(e) => {
+                handleEmail(e.target.value);
+              }}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
@@ -149,7 +155,9 @@ const UserSignUp = () => {
               placeholder="password"
               autoComplete="off"
               value={password}
-              onChange={(e) => handlePassword(e.target.value)}
+              onChange={(e) => {
+                handlePassword(e.target.value);
+              }}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />

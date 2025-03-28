@@ -7,7 +7,7 @@ export const getUser = async (): Promise<UserApiSuccess> => {
 
   // The API response is typed as UserApiSuccess
   const data: UserApiSuccess = response.data;
-  
+
   // Return the full response data
   return data;
 };

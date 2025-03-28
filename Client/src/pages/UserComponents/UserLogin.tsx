@@ -79,7 +79,9 @@ const UserLogin = () => {
               id="email"
               placeholder="your@email.com"
               value={email}
-              onChange={(e) => handleEmail(e.target.value)}
+              onChange={(e) => {
+                handleEmail(e.target.value);
+              }}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
@@ -94,7 +96,9 @@ const UserLogin = () => {
               placeholder="password"
               autoComplete="off"
               value={password}
-              onChange={(e) => handlePassword(e.target.value)}
+              onChange={(e) => {
+                handlePassword(e.target.value);
+              }}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />

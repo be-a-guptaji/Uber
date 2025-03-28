@@ -1,5 +1,5 @@
-import { LoginDataType, UserApiSuccess, UserType } from "../../library/types"; 
-import { Api } from "../axios"; 
+import { LoginDataType, UserApiSuccess, UserType } from "../../library/types";
+import { Api } from "../axios";
 
 // Api call to create a new User in the database
 export const createUser = async (
