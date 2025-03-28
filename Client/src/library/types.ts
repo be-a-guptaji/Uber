@@ -36,3 +36,27 @@ export type UserType = {
 export type CaptainType = {
   vehicle: VehicleType;
 } & UserType;
+
+// Define the type for the Schema Additions from Mongoose database
+export type SchemaAdditions = {
+  _id: string;
+  __v: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+// Define the type for the Api success for Captain
+export type CaptainApiSuccess = {
+  statusCode: number;
+  data: { captain: CaptainType & SchemaAdditions } | null;
+  message: string;
+  success: boolean;
+};
+
+// Define the type for the Api success for User
+export type UserApiSuccess = {
+  statusCode: number;
+  data: { user: UserType & SchemaAdditions } | null;
+  message: string;
+  success: boolean;
+};

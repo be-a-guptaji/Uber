@@ -63,15 +63,25 @@ export const registerCaptain = async (
     // Remove the password field
     delete captainObj.password;
 
-    // Return a success response
+    // Set the token as a cookie
     res
+      .cookie("token", token, {
+        httpOnly: true,
+        path: "/",
+        expires: new Date(
+          Date.now() + 60 * 60 * 1000 * parseInt(process.env.JWT_EXPIRY)
+        ),
+        maxAge: 60 * 60 * 1000 * parseInt(process.env.JWT_EXPIRY),
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+      })
       .status(201)
       .json(
         new ApiResponse(
           201,
-          { token, captain: captainObj },
+          { captain: captainObj },
           "Captain created successfully."
-        )
+        ) // Return a success response
       );
 
     return;
@@ -170,22 +180,24 @@ export const loginCaptain = async (
     delete captainObj.password;
 
     // Set the token as a cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
-    });
-
-    // Return a success response
     res
+      .cookie("token", token, {
+        httpOnly: true,
+        path: "/",
+        expires: new Date(
+          Date.now() + 60 * 60 * 1000 * parseInt(process.env.JWT_EXPIRY)
+        ),
+        maxAge: 60 * 60 * 1000 * parseInt(process.env.JWT_EXPIRY),
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+      })
       .status(200)
       .json(
         new ApiResponse(
           200,
-          { token, captain: captainObj },
+          { captain: captainObj },
           "Captain logged in successfully."
-        )
+        ) // Return a success response
       );
 
     return;
@@ -226,12 +238,10 @@ export const logoutCaptain = async (req: Request, res: Response) => {
     await addTokenToBlackList(token);
 
     // Clear the token cookie
-    res.clearCookie("token");
-
-    // Return a success response
     res
+      .clearCookie("token")
       .status(200)
-      .json(new ApiResponse(200, null, "Captain logged out successfully."));
+      .json(new ApiResponse(200, null, "Captain logged out successfully.")); // Return a success response
 
     return;
   } catch (error) {

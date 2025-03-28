@@ -1,10 +1,15 @@
 import React, { createContext, useState, ReactNode } from "react";
-import { UserType } from "../library/types";
+import { SchemaAdditions, UserType } from "../library/types";
+
+// Mongoose Schema Additions for User
+type MongooseUserSchemaType = UserType & SchemaAdditions;
 
 // Define the context value type
 type UserContextType = {
-  user: UserType | null;
-  setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
+  user: MongooseUserSchemaType | null | undefined;
+  setUser: React.Dispatch<
+    React.SetStateAction<MongooseUserSchemaType | null | undefined>
+  >;
 };
 
 // Define the context props type
@@ -18,7 +23,9 @@ export const UserDataContext = createContext<UserContextType | undefined>(
 );
 
 const UserContext = ({ children }: UserContextProps) => {
-  const [user, setUser] = useState<UserType | null>(null); // User data
+  const [user, setUser] = useState<MongooseUserSchemaType | null | undefined>(
+    null
+  ); // User data
 
   return (
     //   Provide the context value

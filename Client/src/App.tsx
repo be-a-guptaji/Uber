@@ -1,17 +1,18 @@
 import { Routes, Route } from "react-router";
+import Start from "./pages/Start";
+import UserLogin from "./pages/UserComponents/UserLogin";
+import UserSignUp from "./pages/UserComponents/UserSignUp";
+import CaptainLogin from "./pages/CaptainComponents/CaptainLogin";
+import CaptainSignUp from "./pages/CaptainComponents/CaptainSignUp";
 import Home from "./pages/Home";
-import UserLogin from "./pages/UserElements/UserLogin";
-import UserSignUp from "./pages/UserElements/UserSignUp";
-import CaptainLogin from "./pages/CaptainElements/CaptainLogin";
-import CaptainSignUp from "./pages/CaptainElements/CaptainSignUp";
 
 const App = () => {
   return (
     <>
       {/* Define routes for the application */}
       <Routes>
-        {/* For the home page */}
-        <Route path="/" element={<Home />} />
+        {/* For the landing page */}
+        <Route path="/" element={<Start />} />
         {/* For the User sign up page */}
         <Route path="/signup" element={<UserSignUp />} />
         {/* For the User login page */}
@@ -20,6 +21,8 @@ const App = () => {
         <Route path="/captain-signup" element={<CaptainSignUp />} />
         {/* For the Captain login page */}
         <Route path="/captain-login" element={<CaptainLogin />} />
+        {/* For the home page */}
+        <Route path="/home" element={<Home />} />
       </Routes>
     </>
   );

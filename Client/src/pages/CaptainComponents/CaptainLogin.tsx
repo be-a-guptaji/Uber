@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { LoginDataType } from "../../library/types";
 
 const CaptainLogin = () => {
+  // State variables for form fields and data
   const [email, setEmail] = useState<string>(""); // Captain email
   const [password, setPassword] = useState<string>(""); // Captain password
   const [captainData, setCaptainData] = useState<LoginDataType | null>(null); // Captain data

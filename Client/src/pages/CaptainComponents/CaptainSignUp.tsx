@@ -3,6 +3,7 @@ import { CaptainType } from "../../library/types";
 import { Link } from "react-router";
 
 const CaptainSignUp = () => {
+  // State variables for form fields and data
   const [firstName, setFirstName] = useState<string>(""); // Captain first name
   const [lastName, setLastName] = useState<string>(""); // Captain last name
   const [email, setEmail] = useState<string>(""); // Captain email
@@ -11,7 +12,6 @@ const CaptainSignUp = () => {
   const [vehicleLicencePlate, setVehicleLicencePlate] = useState<string>(""); // Captain vehicle licence plate
   const [vehicleCapacity, setVehicleCapacity] = useState<number>(1); // Captain vehicle capacity
   const [vehicleType, setVehicleType] = useState<string>(""); // Captain vehicle type
-  const [captainData, setCaptainData] = useState<CaptainType | null>(null); // Captain data
 
   // Handle first name change
   const handleFirstName = (firstName: string) => {
@@ -145,7 +145,7 @@ const CaptainSignUp = () => {
 
             {/* Sign Up Button For New Captains */}
             <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">
-              Sign Up
+              Create Captain Account
             </button>
           </form>
 

@@ -4,6 +4,7 @@ import { LoginDataType } from "../../library/types";
 
 // User login component
 const UserLogin = () => {
+  // State variables for form fields and data
   const [email, setEmail] = useState<string>(""); // User email
   const [password, setPassword] = useState<string>(""); // User password
   const [userData, setUserData] = useState<LoginDataType | null>(null); // User data

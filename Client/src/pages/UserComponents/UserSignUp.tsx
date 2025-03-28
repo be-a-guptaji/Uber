@@ -1,14 +1,23 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { UserType } from "../../library/types";
+import { createUser } from "../../services/Post/User";
+import { UserDataContext } from "../../contexts/UserContext";
 
 // User sign up component
 const UserSignUp = () => {
+  // Navigation hook
+  const navigate = useNavigate();
+
+  // State variables for form fields and data
   const [firstName, setFirstName] = useState<string>(""); // User first name
   const [lastName, setLastName] = useState<string>(""); // User last name
   const [email, setEmail] = useState<string>(""); // User email
   const [password, setPassword] = useState<string>(""); // User password
-  const [userData, setUserData] = useState<UserType | null>(null); // User data
+  const [error, setError] = useState<boolean>(false); // Show error
+
+  // Context variables and functions
+  const { setUser } = useContext(UserDataContext)!;
 
   // Handle first name change
   const handleFirstName = (firstName: string) => {
@@ -31,18 +40,32 @@ const UserSignUp = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the form from submitting
 
     // Setting User Data
-    setUserData({
+    const newUser: UserType = {
       fullName: {
         firstName,
         lastName,
       },
       email,
       password,
-    });
+    };
+
+    try {
+      // Save user data to database
+      const res = await createUser(newUser);
+
+      if (res.success) {
+        // If user is saved successfully, set user data in context and navigate to login page
+        setUser(res.data?.user);
+        navigate("/home");
+      }
+    } catch {
+      // Handle error silently, no alert or console log
+      setError(true);
+    }
 
     // Reset form fields
     setFirstName("");
@@ -111,6 +134,11 @@ const UserSignUp = () => {
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
+            {error && (
+              <p className="text-red-600 -mt-8 text-[12px] text-center">
+                Either email is already in use or invalid.
+              </p>
+            )}
 
             {/* Password Section */}
             <label htmlFor="password">
@@ -128,7 +156,7 @@ const UserSignUp = () => {
 
             {/* Sign Up Button For New Captains */}
             <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">
-              Sign Up
+              Create Account
             </button>
           </form>
 
