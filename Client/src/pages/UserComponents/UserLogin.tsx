@@ -1,13 +1,21 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router";
 import { LoginDataType } from "../../library/types";
+import { UserDataContext } from "../../contexts/UserContext";
+import { loginUser } from "../../services/Post/UserPostAPI";
 
 // User login component
 const UserLogin = () => {
+  // Navigation hook
+  const navigate = useNavigate();
+
   // State variables for form fields and data
   const [email, setEmail] = useState<string>(""); // User email
   const [password, setPassword] = useState<string>(""); // User password
-  const [userData, setUserData] = useState<LoginDataType | null>(null); // User data
+  const [error, setError] = useState<boolean>(false); // Show error
+
+  // Context variables and functions
+  const { setUser } = useContext(UserDataContext)!;
 
   // Handle email change
   const handleEmail = (email: string) => {
@@ -20,14 +28,26 @@ const UserLogin = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the form from submitting
 
-    // Setting User Data
-    setUserData({
+    // Setting login Data
+    const loginData: LoginDataType = {
       email,
       password,
-    });
+    };
+
+    try {
+      // Retrieve User data
+      const res = await loginUser(loginData);
+
+      // If User is logged in successfully, set User data in context and navigate to home page
+      setUser(res.data);
+      navigate("/user/home");
+    } catch {
+      // Handle error silently, no alert or console log
+      setError(true);
+    }
 
     // Reset form fields
     setEmail("");
@@ -72,11 +92,18 @@ const UserLogin = () => {
               type="password"
               id="password"
               placeholder="password"
+              autoComplete="off"
               value={password}
               onChange={(e) => handlePassword(e.target.value)}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
+            {/* Error Message for invalid email or password */}
+            {error && (
+              <p className="text-red-600 -mt-8 text-[12px] text-center mb-3.5">
+                Invalid email or password
+              </p>
+            )}
 
             {/* Login Button For Existing Users */}
             <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">

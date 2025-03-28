@@ -1,8 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { CaptainType } from "../../library/types";
-import { Link } from "react-router";
+import { createCaptain } from "../../services/Post/CaptainPostAPI";
+import { CaptainDataContext } from "../../contexts/CaptainContext";
 
+// Captain sign-up component
 const CaptainSignUp = () => {
+  // Navigation hook
+  const navigate = useNavigate();
+
   // State variables for form fields and data
   const [firstName, setFirstName] = useState<string>(""); // Captain first name
   const [lastName, setLastName] = useState<string>(""); // Captain last name
@@ -12,6 +18,10 @@ const CaptainSignUp = () => {
   const [vehicleLicencePlate, setVehicleLicencePlate] = useState<string>(""); // Captain vehicle licence plate
   const [vehicleCapacity, setVehicleCapacity] = useState<number>(1); // Captain vehicle capacity
   const [vehicleType, setVehicleType] = useState<string>(""); // Captain vehicle type
+  const [error, setError] = useState<boolean>(false); // Show error
+
+  // Context variables and functions
+  const { setCaptain } = useContext(CaptainDataContext)!;
 
   // Handle first name change
   const handleFirstName = (firstName: string) => {
@@ -34,11 +44,11 @@ const CaptainSignUp = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the form from submitting
 
     // Setting Captain Data
-    setCaptainData({
+    const newCaptain: CaptainType = {
       fullName: {
         firstName,
         lastName,
@@ -51,7 +61,19 @@ const CaptainSignUp = () => {
         capacity: vehicleCapacity,
         vehicleType,
       },
-    });
+    };
+
+    try {
+      // Save Captain data to database
+      const res = await createCaptain(newCaptain);
+
+      // If Captain is saved successfully, set Captain data in context and navigate to home page
+      setCaptain(res.data);
+      navigate("/captain/home");
+    } catch {
+      // Handle error silently, no alert or console log
+      setError(true);
+    }
 
     // Reset form fields
     setFirstName("");
@@ -88,7 +110,6 @@ const CaptainSignUp = () => {
                 What&apos;s our Captain&apos;s Name?
               </h3>
             </label>
-
             <div className="flex justify-between w-full">
               {/* First Name Section */}
               <input
@@ -112,7 +133,6 @@ const CaptainSignUp = () => {
                 required
               />
             </div>
-
             {/* Email Section */}
             <label htmlFor="email">
               <h3 className="text-xl mb-2 font-medium">
@@ -127,8 +147,13 @@ const CaptainSignUp = () => {
               onChange={(e) => handleEmail(e.target.value)}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
-            />
-
+            />{" "}
+            {/* Error Message For Invalid Email */}
+            {error && (
+              <p className="text-red-600 -mt-8 text-[12px] text-center">
+                Either email is already in use or invalid.
+              </p>
+            )}
             {/* Password Section */}
             <label htmlFor="password">
               <h3 className="text-xl mb-2 font-medium">Enter Password</h3>
@@ -137,12 +162,12 @@ const CaptainSignUp = () => {
               type="password"
               id="password"
               placeholder="password"
+              autoComplete="off"
               value={password}
               onChange={(e) => handlePassword(e.target.value)}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
-
             {/* Sign Up Button For New Captains */}
             <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">
               Create Captain Account

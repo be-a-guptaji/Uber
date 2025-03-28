@@ -1,12 +1,21 @@
-import { useState } from "react";
-import { Link } from "react-router";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router";
 import { LoginDataType } from "../../library/types";
+import { CaptainDataContext } from "../../contexts/CaptainContext";
+import { loginCaptain } from "../../services/Post/CaptainPostAPI";
 
+// Captain login component
 const CaptainLogin = () => {
+  // Navigation hook
+  const navigate = useNavigate();
+
   // State variables for form fields and data
   const [email, setEmail] = useState<string>(""); // Captain email
   const [password, setPassword] = useState<string>(""); // Captain password
-  const [captainData, setCaptainData] = useState<LoginDataType | null>(null); // Captain data
+  const [error, setError] = useState<boolean>(false); // Show error
+
+  // Context variables and functions
+  const { setCaptain } = useContext(CaptainDataContext)!;
 
   // Handle email change
   const handleEmail = (email: string) => {
@@ -19,14 +28,26 @@ const CaptainLogin = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // Prevent the form from submitting
 
-    // Setting Captain Data
-    setCaptainData({
+    // Setting login Data
+    const loginData: LoginDataType = {
       email,
       password,
-    });
+    };
+
+    try {
+      // Retrieve Captain data
+      const res = await loginCaptain(loginData);
+
+      // If Captain is logged in successfully, set Captain data in context and navigate to home page
+      setCaptain(res.data);
+      navigate("/captain/home");
+    } catch {
+      // Handle error silently, no alert or console log
+      setError(true);
+    }
 
     // Reset form fields
     setEmail("");
@@ -75,11 +96,18 @@ const CaptainLogin = () => {
               type="password"
               id="password"
               placeholder="password"
+              autoComplete="off"
               value={password}
               onChange={(e) => handlePassword(e.target.value)}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
+            {/* Error Message for invalid email or password */}
+            {error && (
+              <p className="text-red-600 -mt-8 text-[12px] text-center mb-3.5">
+                Invalid email or password
+              </p>
+            )}
 
             {/* Login Button For Existing Captains */}
             <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">

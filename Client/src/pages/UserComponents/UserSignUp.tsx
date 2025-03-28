@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { UserType } from "../../library/types";
-import { createUser } from "../../services/Post/User";
+import { createUser } from "../../services/Post/UserPostAPI";
 import { UserDataContext } from "../../contexts/UserContext";
 
 // User sign up component
@@ -54,14 +54,12 @@ const UserSignUp = () => {
     };
 
     try {
-      // Save user data to database
+      // Save User data to database
       const res = await createUser(newUser);
 
-      if (res.success) {
-        // If user is saved successfully, set user data in context and navigate to login page
-        setUser(res.data?.user);
-        navigate("/home");
-      }
+      // If User is saved successfully, set User data in context and navigate to home page
+      setUser(res.data);
+      navigate("/user/home");
     } catch {
       // Handle error silently, no alert or console log
       setError(true);
@@ -134,6 +132,7 @@ const UserSignUp = () => {
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
+            {/* Error Message For Invalid Email */}
             {error && (
               <p className="text-red-600 -mt-8 text-[12px] text-center">
                 Either email is already in use or invalid.
@@ -148,6 +147,7 @@ const UserSignUp = () => {
               type="password"
               id="password"
               placeholder="password"
+              autoComplete="off"
               value={password}
               onChange={(e) => handlePassword(e.target.value)}
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"

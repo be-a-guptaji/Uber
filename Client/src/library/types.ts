@@ -48,7 +48,7 @@ export type SchemaAdditions = {
 // Define the type for the Api success for Captain
 export type CaptainApiSuccess = {
   statusCode: number;
-  data: { captain: CaptainType & SchemaAdditions } | null;
+  data: (CaptainType & SchemaAdditions) | null;
   message: string;
   success: boolean;
 };
@@ -56,7 +56,7 @@ export type CaptainApiSuccess = {
 // Define the type for the Api success for User
 export type UserApiSuccess = {
   statusCode: number;
-  data: { user: UserType & SchemaAdditions } | null;
+  data: (UserType & SchemaAdditions) | null;
   message: string;
   success: boolean;
 };
