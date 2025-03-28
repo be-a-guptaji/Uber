@@ -12,6 +12,7 @@ const CaptainLogin = () => {
   // State variables for form fields and data
   const [email, setEmail] = useState<string>(""); // Captain email
   const [password, setPassword] = useState<string>(""); // Captain password
+  const [loading, setLoading] = useState<boolean>(false); // Show loading
   const [error, setError] = useState<boolean>(false); // Show error
 
   // Context variables and functions
@@ -38,6 +39,9 @@ const CaptainLogin = () => {
     };
 
     try {
+      // Set loading to true
+      setLoading(true);
+
       // Retrieve Captain data
       const res = await loginCaptain(loginData);
 
@@ -47,6 +51,9 @@ const CaptainLogin = () => {
     } catch {
       // Handle error silently, no alert or console log
       setError(true);
+    } finally {
+      // Set loading to false
+      setLoading(false);
     }
 
     // Reset form fields
@@ -114,7 +121,10 @@ const CaptainLogin = () => {
             )}
 
             {/* Login Button For Existing Captains */}
-            <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">
+            <button
+              className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full disabled:opacity-50"
+              disabled={loading}
+            >
               Login
             </button>
           </form>

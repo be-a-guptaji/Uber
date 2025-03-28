@@ -4,9 +4,10 @@ import UserLogin from "./pages/UserComponents/UserLogin";
 import UserSignUp from "./pages/UserComponents/UserSignUp";
 import CaptainLogin from "./pages/CaptainComponents/CaptainLogin";
 import CaptainSignUp from "./pages/CaptainComponents/CaptainSignUp";
-import Home from "./pages/Home";
 import ProtectedUserComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedUserComponentWrapper";
 import UserLogout from "./pages/UserComponents/UserLogout";
+import UserHome from "./pages/UserComponents/UserHome";
+import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
 
 const App = () => {
   return (
@@ -33,8 +34,22 @@ const App = () => {
           }
         >
           {/* For the home page */}
-          <Route path="home" index element={<Home />} />
+          <Route path="home" index element={<UserHome />} />
           {/* For the User logout page */}
+          <Route path="logout" element={<UserLogout />} />
+        </Route>
+        {/* Routes nested For the Captains page */}
+        <Route
+          path="captain"
+          element={
+            <ProtectedCaptainComponentWrapper>
+              <Outlet />
+            </ProtectedCaptainComponentWrapper>
+          }
+        >
+          {/* For the home page */}
+          <Route path="home" index element={<UserHome />} />
+          {/* For the Captain logout page */}
           <Route path="logout" element={<UserLogout />} />
         </Route>
       </Routes>

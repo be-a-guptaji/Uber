@@ -14,6 +14,7 @@ const UserSignUp = () => {
   const [lastName, setLastName] = useState<string>(""); // User last name
   const [email, setEmail] = useState<string>(""); // User email
   const [password, setPassword] = useState<string>(""); // User password
+  const [loading, setLoading] = useState<boolean>(false); // Show loading
   const [error, setError] = useState<boolean>(false); // Show error
 
   // Context variables and functions
@@ -54,6 +55,9 @@ const UserSignUp = () => {
     };
 
     try {
+      // Set loading to true
+      setLoading(true);
+
       // Save User data to database
       const res = await createUser(newUser);
 
@@ -63,6 +67,9 @@ const UserSignUp = () => {
     } catch {
       // Handle error silently, no alert or console log
       setError(true);
+    } finally {
+      // Set loading to false
+      setLoading(false);
     }
 
     // Reset form fields
@@ -163,7 +170,10 @@ const UserSignUp = () => {
             />
 
             {/* Sign Up Button For New Captains */}
-            <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">
+            <button
+              className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full disabled:opacity-50"
+              disabled={loading}
+            >
               Create Account
             </button>
           </form>

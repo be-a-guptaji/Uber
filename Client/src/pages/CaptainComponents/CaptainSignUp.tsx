@@ -20,6 +20,7 @@ const CaptainSignUp = () => {
   const [vehicleType, setVehicleType] = useState<"car" | "auto" | "motorcycle">(
     "car"
   ); // Captain vehicle type
+  const [loading, setLoading] = useState<boolean>(false); // Show loading
   const [error, setError] = useState<boolean>(false); // Show error
 
   // Context variables and functions
@@ -86,6 +87,9 @@ const CaptainSignUp = () => {
     };
 
     try {
+      // Set loading to true
+      setLoading(true);
+
       // Save Captain data to database
       const res = await createCaptain(newCaptain);
 
@@ -95,6 +99,9 @@ const CaptainSignUp = () => {
     } catch {
       // Handle error silently, no alert or console log
       setError(true);
+    } finally {
+      // Set loading to false
+      setLoading(false);
     }
 
     // Reset form fields
@@ -286,7 +293,10 @@ const CaptainSignUp = () => {
               </div>
             </div>
             {/* Sign Up Button For New Captains */}
-            <button className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full">
+            <button
+              className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full disabled:opacity-50"
+              disabled={loading}
+            >
               Create Captain Account
             </button>
           </form>
