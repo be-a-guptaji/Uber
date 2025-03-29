@@ -47,7 +47,7 @@ export const registerUser = async (
       return;
     }
 
-    // Check if the verification code is valid to register the user
+    // Check if the verification code is valid to register the User
     const isValidCode = await findVerificationCodeByEmail(
       email,
       "verificationCode"
@@ -221,7 +221,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       );
 
     return;
-  } catch  {
+  } catch {
     // If an error occurs, return an error response
     res
       .status(500)
@@ -237,7 +237,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
 // Get User profile through the cookies
 export const getUserProfile = async (req: Request, res: Response) => {
-  // Check if the user is authenticated
+  // Check if the User is authenticated
   if (!req.user) {
     res
       .status(401)
@@ -298,14 +298,14 @@ export const getUserProfile = async (req: Request, res: Response) => {
       maxAge: 60 * 60 * 1000 * parseInt(process.env.JWT_EXPIRY),
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
-    })
+    }) // Set the token as a cookie
     .status(200)
     .json(
       new ApiResponse(
         200,
         { user: userObj },
         "User profile successfully fetched."
-      )
+      ) // Return a data response
     );
 
   return;

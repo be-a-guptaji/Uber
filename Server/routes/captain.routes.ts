@@ -35,6 +35,9 @@ router.post(
     body("vehicle.vehicleType")
       .isLength({ min: 2 })
       .withMessage("Vehicle type must be at least 2 characters long"),
+    body("verificationCode")
+      .isLength({ min: 6, max: 6 })
+      .withMessage("Verification code must be 6 characters long"),
   ],
   registerCaptain
 );

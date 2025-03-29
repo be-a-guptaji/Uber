@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { CaptainType } from "../../library/types";
-import { createCaptain } from "../../services/Post/CaptainPostAPI";
 import { CaptainDataContext } from "../../contexts/CaptainContext";
+import { sendEmailVerificationCodeForCaptain } from "../../services/Post/EmailPostAPI";
 
 // Captain sign-up component
 const CaptainSignUp = () => {
@@ -90,12 +90,12 @@ const CaptainSignUp = () => {
       // Set loading to true
       setLoading(true);
 
-      // Save Captain data to database
-      const res = await createCaptain(newCaptain);
+      // Send email verification code for Captain
+      await sendEmailVerificationCodeForCaptain(newCaptain);
 
-      // If Captain is saved successfully, set Captain data in context and navigate to home page
-      setCaptain(res.data);
-      navigate("/captain/home");
+      // If Captain is saved successfully, set Captain data in context and navigate to email verification page
+      setCaptain(newCaptain);
+      navigate("/email/captain");
     } catch {
       // Handle error silently, no alert or console log
       setError(true);

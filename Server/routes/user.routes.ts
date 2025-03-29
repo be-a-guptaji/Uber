@@ -22,6 +22,9 @@ router.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters long"),
+    body("verificationCode")
+      .isLength({ min: 6, max: 6 })
+      .withMessage("Verification code must be 6 characters long"),
   ],
   registerUser
 );

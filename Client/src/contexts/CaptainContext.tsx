@@ -2,7 +2,7 @@ import React, { createContext, useState, ReactNode } from "react";
 import { SchemaAdditions, CaptainType } from "../library/types";
 
 // Mongoose Schema Additions for Captain
-type MongooseCaptainSchemaType = CaptainType & SchemaAdditions;
+type MongooseCaptainSchemaType = CaptainType & Partial<SchemaAdditions>;
 
 // Define the context value type
 type CaptainContextType = {

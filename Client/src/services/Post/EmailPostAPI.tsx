@@ -1,4 +1,9 @@
-import {  CaptainApiSuccess, CaptainType, UserApiSuccess, UserType } from "../../library/types";
+import {
+  CaptainApiSuccess,
+  CaptainType,
+  UserApiSuccess,
+  UserType,
+} from "../../library/types";
 import { Api } from "../axios";
 
 // Api call to create a new User in the database

@@ -25,7 +25,7 @@ const UserEmailVerification = () => {
   // Handle form submission
   const handleSubmit = async () => {
     if (user) {
-      // Create the newUser object by spreading user data and adding the verificationCode
+      // Create the newUser object by spreading User data and adding the verificationCode
       const newUser: UserEmailVerificationProps = {
         fullName: {
           firstName: user.fullName.firstName,

@@ -58,10 +58,10 @@ const UserSignUp = () => {
       // Set loading to true
       setLoading(true);
 
-      // Save User data to database
+      // Send email verification code for User
       await sendEmailVerificationCodeForUser(newUser);
 
-      // If User is saved successfully, set User data in context and navigate to home page
+      // If User is saved successfully, set User data in context and navigate to email verification page
       setUser(newUser);
       navigate("/email/user");
     } catch {

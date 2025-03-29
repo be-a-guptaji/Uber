@@ -85,7 +85,7 @@ export const authUser = async (
 
     // Call the next middleware
     return next();
-  } catch  {
+  } catch {
     // If the token is invalid, return a 401 Unauthorized response
     res
       .status(401)
