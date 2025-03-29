@@ -5,8 +5,8 @@ declare global {
   namespace Express {
     // Extend the request interface to include the User and Captain
     interface Request {
-      user?: UserSchemaType;
-      captain?: CaptainSchemaType;
+      user?: UserSchemaType & { code?: string };
+      captain?: CaptainSchemaType & { code?: string };
     }
   }
 }

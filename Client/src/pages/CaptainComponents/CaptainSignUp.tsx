@@ -163,7 +163,6 @@ const CaptainSignUp = () => {
                   handleLastName(e.target.value);
                 }}
                 className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
-                required
               />
             </div>
             {/* Email Section */}

@@ -2,7 +2,7 @@ import React, { createContext, useState, ReactNode } from "react";
 import { SchemaAdditions, UserType } from "../library/types";
 
 // Mongoose Schema Additions for User
-type MongooseUserSchemaType = UserType & SchemaAdditions;
+type MongooseUserSchemaType = UserType & Partial<SchemaAdditions>;
 
 // Define the context value type
 type UserContextType = {

@@ -85,7 +85,7 @@ export const registerCaptain = async (
       );
 
     return;
-  } catch (error) {
+  } catch {
     // If an error occurs, return an error response
     res
       .status(500)
@@ -201,7 +201,7 @@ export const loginCaptain = async (
       );
 
     return;
-  } catch (error) {
+  } catch {
     // If an error occurs, return an error response
     res
       .status(500)
@@ -244,7 +244,7 @@ export const logoutCaptain = async (req: Request, res: Response) => {
       .json(new ApiResponse(200, null, "Captain logged out successfully.")); // Return a success response
 
     return;
-  } catch (error) {
+  } catch  {
     // If an error occurs, return an error response
     res
       .status(500)

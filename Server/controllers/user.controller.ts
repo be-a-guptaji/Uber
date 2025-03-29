@@ -4,6 +4,7 @@ import { validationResult } from "express-validator";
 import { ApiError } from "../utils/api/ApiError";
 import { ApiResponse } from "../utils/api/ApiResponse";
 import { addTokenToBlackList } from "../services/blackListToken.service";
+import { findVerificationCodeByEmail } from "../services/code.service";
 
 // Register a new User to the database
 export const registerUser = async (
@@ -28,7 +29,7 @@ export const registerUser = async (
 
   try {
     // Destructure the request body
-    const { fullName, email, password } = req.body;
+    const { fullName, email, password, verificationCode } = req.body;
 
     // Check if the email is already in use
     const isUserAlreadyExists = await findUserByEmail(email);
@@ -40,6 +41,41 @@ export const registerUser = async (
         .json(
           new ApiError(400, "Email already in use.", [
             "This email is already in use. Try registering with a different email.",
+          ])
+        );
+
+      return;
+    }
+
+    // Check if the verification code is valid to register the user
+    const isValidCode = await findVerificationCodeByEmail(
+      email,
+      "verificationCode"
+    );
+
+    // If the verification code is not valid, return an error response
+    if (!isValidCode) {
+      res
+        .status(400)
+        .json(
+          new ApiError(400, "Invalid verification code.", [
+            "The verification code is invalid. Try registering again.",
+          ])
+        );
+
+      return;
+    }
+
+    // Compare the provided code with the User's Verification code
+    const isMatch = await isValidCode.compareCode(verificationCode);
+
+    // If the passwords do not match, return an error response
+    if (!isMatch) {
+      res
+        .status(401)
+        .json(
+          new ApiError(401, "Invalid verification code.", [
+            "The verification code is invalid. Try registering again.",
           ])
         );
 
@@ -80,7 +116,7 @@ export const registerUser = async (
       );
 
     return;
-  } catch (error) {
+  } catch {
     // If an error occurs, return an error response
     res
       .status(500)
@@ -185,7 +221,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       );
 
     return;
-  } catch (error) {
+  } catch  {
     // If an error occurs, return an error response
     res
       .status(500)
@@ -292,7 +328,7 @@ export const logoutUser = async (req: Request, res: Response) => {
       .json(new ApiResponse(200, null, "User logged out successfully.")); // Return a success response
 
     return;
-  } catch (error) {
+  } catch {
     // If an error occurs, return an error response
     res
       .status(500)

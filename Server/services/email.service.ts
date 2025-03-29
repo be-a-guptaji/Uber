@@ -27,7 +27,7 @@ export const SendEMail = async ({
 
     // Send the email
     const info = await transporter.sendMail({
-      from: `"E Kart" <${process.env.EMAIL_ID}>'`, // sender address
+      from: `Uber <${process.env.EMAIL_ID}>`, // Corrected sender address
       to, // recipient address
       subject, // Subject line
       text, // plain text body
@@ -36,7 +36,7 @@ export const SendEMail = async ({
 
     // Return the email info
     return info;
-  } catch (error) {
+  } catch {
     // Handle errors
     return null;
   }

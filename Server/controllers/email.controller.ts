@@ -3,9 +3,10 @@ import { ApiError } from "../utils/api/ApiError";
 import { validationResult } from "express-validator";
 import { ApiResponse } from "../utils/api/ApiResponse";
 import { findUserByEmail } from "../services/user.service";
-import { createVerificationCode } from "../services/emailCode.service";
+import { createVerificationCode } from "../services/code.service";
 import { findCaptainByEmail } from "../services/captain.service";
 import { SendVerificationEmail } from "../utils/Mails/SendVerificationEmail";
+import { generateSixDigitCode } from "../utils/functions/randomCodeGenerator";
 
 // Send an email to the User to verify their email address
 export const sendVerificationEmailToUser = async (
@@ -30,7 +31,7 @@ export const sendVerificationEmailToUser = async (
 
   try {
     // Destructure the request body
-    const { email } = req.body;
+    const { email, fullName } = req.body;
 
     // Check if the email is already in use
     const isUserAlreadyExists = await findUserByEmail(email);
@@ -48,11 +49,55 @@ export const sendVerificationEmailToUser = async (
       return;
     }
 
+    // Generate a verification code
+    const newVerificationCode = generateSixDigitCode();
+
     // Create a new verification code for new registration
-      const verificationCode = await createVerificationCode(email);
-      
-      // Send the verification code to the user's email
-      await SendVerificationEmail();
+    const verificationCode = await createVerificationCode(
+      email,
+      newVerificationCode
+    );
+
+    // If the verification code is not created, return an error response
+    if (!verificationCode) {
+      res
+        .status(500)
+        .json(
+          new ApiError(
+            500,
+            "Something went wrong while registering your account.",
+            [
+              "This email might be in use. Try registering with a different email.",
+            ]
+          )
+        );
+
+      return;
+    }
+
+    // Send the verification code to the user's email
+    const response = await SendVerificationEmail({
+      email,
+      verificationCode: newVerificationCode,
+      fullName,
+    });
+
+    // If the email is not sent, return an error response
+    if (!response.data) {
+      res
+        .status(500)
+        .json(
+          new ApiError(
+            500,
+            "Something went wrong while registering your account.",
+            [
+              "This email might be in use. Try registering with a different email.",
+            ]
+          )
+        );
+
+      return;
+    }
 
     // Return a success response
     res
@@ -66,7 +111,7 @@ export const sendVerificationEmailToUser = async (
       );
 
     return;
-  } catch (error) {
+  } catch {
     // If an error occurs, return an error response
     res
       .status(500)
@@ -107,7 +152,7 @@ export const sendVerificationEmailToCaptain = async (
 
   try {
     // Destructure the request body
-    const { email } = req.body;
+    const { email, fullName } = req.body;
 
     // Check if the email is already in use
     const isCaptainAlreadyExists = await findCaptainByEmail(email);
@@ -125,8 +170,38 @@ export const sendVerificationEmailToCaptain = async (
       return;
     }
 
+    // Generate a verification code
+    const newVerificationCode = generateSixDigitCode();
+
     // Create a new verification code for new registration
-    await createVerificationCode(email);
+    const verificationCode = await createVerificationCode(
+      email,
+      newVerificationCode
+    );
+
+    // If the verification code is not created, return an error response
+    if (!verificationCode) {
+      res
+        .status(500)
+        .json(
+          new ApiError(
+            500,
+            "Something went wrong while registering your account.",
+            [
+              "This email might be in use. Try registering with a different email.",
+            ]
+          )
+        );
+
+      return;
+    }
+
+    // Send the verification code to the user's email
+    const response = await SendVerificationEmail({
+      email,
+      verificationCode: newVerificationCode,
+      fullName,
+    });
 
     // Return a success response
     res
@@ -140,7 +215,7 @@ export const sendVerificationEmailToCaptain = async (
       );
 
     return;
-  } catch (error) {
+  } catch {
     // If an error occurs, return an error response
     res
       .status(500)

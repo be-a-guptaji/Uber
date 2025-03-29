@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { UserType } from "../../library/types";
-import { createUser } from "../../services/Post/UserPostAPI";
 import { UserDataContext } from "../../contexts/UserContext";
+import { sendEmailVerificationCodeForUser } from "../../services/Post/EmailPostAPI";
 
 // User sign up component
 const UserSignUp = () => {
@@ -59,11 +59,11 @@ const UserSignUp = () => {
       setLoading(true);
 
       // Save User data to database
-      const res = await createUser(newUser);
+      await sendEmailVerificationCodeForUser(newUser);
 
       // If User is saved successfully, set User data in context and navigate to home page
-      setUser(res.data);
-      navigate("/user/home");
+      setUser(newUser);
+      navigate("/email/user");
     } catch {
       // Handle error silently, no alert or console log
       setError(true);
@@ -124,7 +124,6 @@ const UserSignUp = () => {
                   handleLastName(e.target.value);
                 }}
                 className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
-                required
               />
             </div>
 
@@ -174,7 +173,7 @@ const UserSignUp = () => {
               className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full disabled:opacity-50"
               disabled={loading}
             >
-              Create Account
+              Verify Email
             </button>
           </form>
 

@@ -1,20 +1,19 @@
 import { FullNameType } from "../../library/types";
 import { SendEMail } from "../../services/email.service";
-import { ApiError } from "../api/ApiError";
 import { ApiResponse } from "../api/ApiResponse";
 
 // Define interface for email data
 interface UserData {
   email: string;
-  fullName: FullNameType;
   verificationCode: string;
+  fullName: FullNameType;
 }
 
-// Send a welcome email
+// Send a varification email
 export const SendVerificationEmail = async ({
   email,
-  fullName,
   verificationCode,
+  fullName,
 }: UserData): Promise<ApiResponse<boolean>> => {
   // Define the email data
   const SendVerificationEmailToUser = {
@@ -211,8 +210,6 @@ export const SendVerificationEmail = async ({
     return new ApiResponse(200, !!info, "Email sent successfully.");
   } catch {
     // Throw a custom API error with the error messages
-    throw new ApiError(500, "Error sending email.", [
-      "Error sending email. At ./utils/Mails/SendVerificationEmail.ts file",
-    ]);
+    throw new ApiResponse(500, false, "Failed to send email.");
   }
 };

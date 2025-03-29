@@ -10,6 +10,8 @@ import UserHome from "./pages/UserComponents/UserHome";
 import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
 import CaptainHome from "./pages/CaptainComponents/CaptainHome";
 import CaptainLogout from "./pages/CaptainComponents/CaptainLogout";
+import UserEmailVerification from "./pages/UserComponents/UserEmailVerification";
+import CaptainEmailVerification from "./pages/CaptainComponents/CaptainEmailVerification";
 
 const App = () => {
   return (
@@ -26,6 +28,13 @@ const App = () => {
         <Route path="/captain-signup" element={<CaptainSignUp />} />
         {/* For the Captain login page */}
         <Route path="/captain-login" element={<CaptainLogin />} />
+
+        {/* For the email verification page */}
+        <Route path="email">
+          <Route path="user" element={<UserEmailVerification />} />
+          <Route path="captain" element={<CaptainEmailVerification />} />
+        </Route>
+
         {/* Routes nested For the Users page */}
         <Route
           path="user"
