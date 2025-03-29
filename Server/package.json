@@ -21,6 +21,7 @@
     "@types/express": "^5.0.1",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^22.13.12",
+    "@types/nodemailer": "^6.4.17",
     "prettier": "^3.5.3",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
@@ -33,7 +34,8 @@
     "express": "^4.21.2",
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.12.2"
+    "mongoose": "^8.12.2",
+    "nodemailer": "^6.10.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -120,7 +120,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     // Destructure the request body
     const { email, password } = req.body;
 
-    // Create a new User
+    // Find the User by email
     const user = await findUserByEmail(email);
 
     if (!user) {
@@ -201,10 +201,76 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 
 // Get User profile through the cookies
 export const getUserProfile = async (req: Request, res: Response) => {
+  // Check if the user is authenticated
+  if (!req.user) {
+    res
+      .status(401)
+      .json(
+        new ApiError(401, "Unauthorized.", [
+          "The token is invalid.",
+          "Token is missing.",
+          "Token is expired.",
+          "Token is Unauthorized.",
+        ])
+      );
+
+    return;
+  }
+
+  // Find the User by email
+  const user = await findUserByEmail(req.user.email);
+
+  // If User is not found, return an error response
+  if (!user) {
+    // If User is not found, return an error response
+    res
+      .status(401)
+      .json(
+        new ApiError(401, "User not found.", ["Invalid email or password."])
+      );
+
+    return;
+  }
+
+  // Get the old token from the request
+  const oldToken: string =
+    req.cookies.token || req.headers.authorization?.split(" ")[1];
+
+  // If the old token exists
+  if (oldToken) {
+    // Add the token to the blacklist if it exists
+    await addTokenToBlackList(oldToken);
+  }
+
+  // Generating Auth token using Instance method
+  const token = user.generateAuthToken();
+
+  // Convert to plain object before modifying
+  const userObj = user.toObject();
+
+  // Remove the password field
+  delete userObj.password;
+
   // Return a success response
   res
+    .cookie("token", token, {
+      httpOnly: true,
+      path: "/",
+      expires: new Date(
+        Date.now() + 60 * 60 * 1000 * parseInt(process.env.JWT_EXPIRY)
+      ),
+      maxAge: 60 * 60 * 1000 * parseInt(process.env.JWT_EXPIRY),
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+    })
     .status(200)
-    .json(new ApiResponse(200, req.user, "User profile successfully fetched."));
+    .json(
+      new ApiResponse(
+        200,
+        { user: userObj },
+        "User profile successfully fetched."
+      )
+    );
 
   return;
 };
