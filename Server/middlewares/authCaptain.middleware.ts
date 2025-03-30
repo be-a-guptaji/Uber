@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { ApiError } from "../utils/api/ApiError";
 import { isTokenBlacklisted } from "../services/blackListToken.service";
 import { findCaptainById } from "../services/captain.service";
+import { ApiResponse } from "../utils/api/ApiResponse";
 
 // Middleware to authenticate Captain
 export const authCaptain = async (
@@ -22,12 +22,16 @@ export const authCaptain = async (
       res
         .status(401)
         .json(
-          new ApiError(401, "Unauthorized.", [
-            "The token is invalid.",
-            "Token is missing.",
-            "Token is expired.",
-            "Token is Unauthorized.",
-          ])
+          new ApiResponse(
+            401,
+            [
+              "The token is invalid.",
+              "Token is missing.",
+              "Token is expired.",
+              "Token is Unauthorized.",
+            ],
+            "Unauthorized."
+          )
         );
 
       return;
@@ -41,12 +45,16 @@ export const authCaptain = async (
       res
         .status(401)
         .json(
-          new ApiError(401, "Unauthorized.", [
-            "The token is invalid.",
-            "Token is missing.",
-            "Token is expired.",
-            "Token is Unauthorized.",
-          ])
+          new ApiResponse(
+            401,
+            [
+              "The token is invalid.",
+              "Token is missing.",
+              "Token is expired.",
+              "Token is Unauthorized.",
+            ],
+            "Unauthorized."
+          )
         );
 
       return;
@@ -60,24 +68,32 @@ export const authCaptain = async (
 
     // Check if _id exists on the decoded object
     if (!decoded._id) {
-      throw new ApiError(402, "Cannot decoded the token.", [
-        "The token is invalid.",
-        "Token is missing.",
-        "Token is expired.",
-        "Token is Unauthorized.",
-      ]);
+      throw new ApiResponse(
+        402,
+        [
+          "The token is invalid.",
+          "Token is missing.",
+          "Token is expired.",
+          "Token is Unauthorized.",
+        ],
+        "Cannot decoded the token."
+      );
     }
 
     // Now you can safely use decoded._id
     const captain = await findCaptainById(decoded._id);
 
     if (!captain) {
-      throw new ApiError(404, "Captain not found.", [
-        "The token is invalid.",
-        "Token is missing.",
-        "Token is expired.",
-        "Token is Unauthorized.",
-      ]);
+      throw new ApiResponse(
+        404,
+        [
+          "The token is invalid.",
+          "Token is missing.",
+          "Token is expired.",
+          "Token is Unauthorized.",
+        ],
+        "Captain not found."
+      );
     }
 
     // Attach the Captain object to the request
@@ -90,12 +106,16 @@ export const authCaptain = async (
     res
       .status(401)
       .json(
-        new ApiError(401, "Unauthorized.", [
-          "The token is invalid.",
-          "Token is missing.",
-          "Token is expired.",
-          "Token is Unauthorized.",
-        ])
+        new ApiResponse(
+          401,
+          [
+            "The token is invalid.",
+            "Token is missing.",
+            "Token is expired.",
+            "Token is Unauthorized.",
+          ],
+          "Unauthorized."
+        )
       );
 
     return;

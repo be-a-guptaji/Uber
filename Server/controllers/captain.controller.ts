@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ApiError } from "../utils/api/ApiError";
 import { ApiResponse } from "../utils/api/ApiResponse";
 import { createCaptain, findCaptainByEmail } from "../services/captain.service";
 import { validationResult } from "express-validator";
@@ -22,7 +21,7 @@ export const registerCaptain = async (
     // Return an error response
     res
       .status(400)
-      .json(new ApiError(400, "Invalid request body.", errorMessages));
+      .json(new ApiResponse(400, errorMessages, "Invalid request body."));
 
     return;
   }
@@ -39,9 +38,13 @@ export const registerCaptain = async (
       res
         .status(400)
         .json(
-          new ApiError(400, "Email already in use.", [
-            "This email is already in use. Try registering with a different email.",
-          ])
+          new ApiResponse(
+            400,
+            [
+              "This email is already in use. Try registering with a different email.",
+            ],
+            "Email already in use."
+          )
         );
 
       return;
@@ -58,9 +61,11 @@ export const registerCaptain = async (
       res
         .status(400)
         .json(
-          new ApiError(400, "Invalid verification code.", [
-            "The verification code is invalid. Try registering again.",
-          ])
+          new ApiResponse(
+            400,
+            ["The verification code is invalid. Try registering again."],
+            "Invalid verification code."
+          )
         );
 
       return;
@@ -74,9 +79,11 @@ export const registerCaptain = async (
       res
         .status(401)
         .json(
-          new ApiError(401, "Invalid verification code.", [
-            "The verification code is invalid. Try registering again.",
-          ])
+          new ApiResponse(
+            401,
+            ["The verification code is invalid. Try registering again."],
+            "Invalid verification code."
+          )
         );
 
       return;
@@ -126,12 +133,12 @@ export const registerCaptain = async (
     res
       .status(500)
       .json(
-        new ApiError(
+        new ApiResponse(
           500,
-          "Something went wrong while registering your account.",
           [
             "This email might be in use. Try registering with a different email.",
-          ]
+          ],
+          "Something went wrong while registering your account."
         )
       );
 
@@ -155,7 +162,7 @@ export const loginCaptain = async (
     // Return an error response
     res
       .status(400)
-      .json(new ApiError(400, "Invalid request body.", errorMessages));
+      .json(new ApiResponse(400, errorMessages, "Invalid request body."));
 
     return;
   }
@@ -172,9 +179,11 @@ export const loginCaptain = async (
       res
         .status(401)
         .json(
-          new ApiError(401, "Captain not found.", [
-            "Invalid email or password.",
-          ])
+          new ApiResponse(
+            401,
+            ["Invalid email or password."],
+            "Captain not found."
+          )
         );
 
       return;
@@ -188,9 +197,11 @@ export const loginCaptain = async (
       res
         .status(401)
         .json(
-          new ApiError(401, "Captain not found.", [
-            "Invalid email or password.",
-          ])
+          new ApiResponse(
+            401,
+            ["Invalid email or password."],
+            "Captain not found."
+          )
         );
 
       return;
@@ -242,9 +253,11 @@ export const loginCaptain = async (
     res
       .status(500)
       .json(
-        new ApiError(500, "Something went wrong while loging your account.", [
-          "Invalid email or password.",
-        ])
+        new ApiResponse(
+          500,
+          ["Invalid email or password."],
+          "Something went wrong while loging your account."
+        )
       );
 
     return;
@@ -258,12 +271,16 @@ export const getCaptainProfile = async (req: Request, res: Response) => {
     res
       .status(401)
       .json(
-        new ApiError(401, "Unauthorized.", [
-          "The token is invalid.",
-          "Token is missing.",
-          "Token is expired.",
-          "Token is Unauthorized.",
-        ])
+        new ApiResponse(
+          401,
+          [
+            "The token is invalid.",
+            "Token is missing.",
+            "Token is expired.",
+            "Token is Unauthorized.",
+          ],
+          "Unauthorized."
+        )
       );
 
     return;
@@ -278,7 +295,11 @@ export const getCaptainProfile = async (req: Request, res: Response) => {
     res
       .status(401)
       .json(
-        new ApiError(401, "Captain not found.", ["Invalid email or password."])
+        new ApiResponse(
+          401,
+          ["Invalid email or password."],
+          "Captain not found."
+        )
       );
 
     return;
@@ -345,10 +366,11 @@ export const logoutCaptain = async (req: Request, res: Response) => {
     res
       .status(500)
       .json(
-        new ApiError(500, "Unable to logout.", [
-          "Token cannot be deleted.",
-          "Token cannot be added to blacklist.",
-        ])
+        new ApiResponse(
+          500,
+          ["Token cannot be deleted.", "Token cannot be added to blacklist."],
+          "Unable to logout."
+        )
       );
 
     return;

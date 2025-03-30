@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { ApiError } from "../utils/api/ApiError";
 import { validationResult } from "express-validator";
 import { ApiResponse } from "../utils/api/ApiResponse";
 import { findUserByEmail } from "../services/user.service";
@@ -24,7 +23,7 @@ export const sendVerificationEmailToUser = async (
     // Return an error response
     res
       .status(400)
-      .json(new ApiError(400, "Invalid request body.", errorMessages));
+      .json(new ApiResponse(400, errorMessages, "Invalid request body."));
 
     return;
   }
@@ -41,9 +40,13 @@ export const sendVerificationEmailToUser = async (
       res
         .status(400)
         .json(
-          new ApiError(400, "Email already in use.", [
-            "This email is already in use. Try registering with a different email.",
-          ])
+          new ApiResponse(
+            400,
+            [
+              "This email is already in use. Try registering with a different email.",
+            ],
+            "Email already in use."
+          )
         );
 
       return;
@@ -63,12 +66,12 @@ export const sendVerificationEmailToUser = async (
       res
         .status(500)
         .json(
-          new ApiError(
+          new ApiResponse(
             500,
-            "Something went wrong while registering your account.",
             [
               "This email might be in use. Try registering with a different email.",
-            ]
+            ],
+            "Something went wrong while registering your account."
           )
         );
 
@@ -87,12 +90,12 @@ export const sendVerificationEmailToUser = async (
       res
         .status(500)
         .json(
-          new ApiError(
+          new ApiResponse(
             500,
-            "Something went wrong while registering your account.",
             [
               "This email might be in use. Try registering with a different email.",
-            ]
+            ],
+            "Something went wrong while registering your account."
           )
         );
 
@@ -116,12 +119,12 @@ export const sendVerificationEmailToUser = async (
     res
       .status(500)
       .json(
-        new ApiError(
+        new ApiResponse(
           500,
-          "Something went wrong while registering your account.",
           [
             "This email might be in use. Try registering with a different email.",
-          ]
+          ],
+          "Something went wrong while registering your account."
         )
       );
 
@@ -145,7 +148,7 @@ export const sendVerificationEmailToCaptain = async (
     // Return an error response
     res
       .status(400)
-      .json(new ApiError(400, "Invalid request body.", errorMessages));
+      .json(new ApiResponse(400, errorMessages, "Invalid request body."));
 
     return;
   }
@@ -162,9 +165,13 @@ export const sendVerificationEmailToCaptain = async (
       res
         .status(400)
         .json(
-          new ApiError(400, "Email already in use.", [
-            "This email is already in use. Try registering with a different email.",
-          ])
+          new ApiResponse(
+            400,
+            [
+              "This email is already in use. Try registering with a different email.",
+            ],
+            "Email already in use."
+          )
         );
 
       return;
@@ -184,12 +191,12 @@ export const sendVerificationEmailToCaptain = async (
       res
         .status(500)
         .json(
-          new ApiError(
+          new ApiResponse(
             500,
-            "Something went wrong while registering your account.",
             [
               "This email might be in use. Try registering with a different email.",
-            ]
+            ],
+            "Something went wrong while registering your account."
           )
         );
 
@@ -220,12 +227,12 @@ export const sendVerificationEmailToCaptain = async (
     res
       .status(500)
       .json(
-        new ApiError(
+        new ApiResponse(
           500,
-          "Something went wrong while registering your account.",
           [
             "This email might be in use. Try registering with a different email.",
-          ]
+          ],
+          "Something went wrong while registering your account."
         )
       );
 

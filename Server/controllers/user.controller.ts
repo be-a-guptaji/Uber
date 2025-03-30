@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { createUser, findUserByEmail } from "../services/user.service";
 import { validationResult } from "express-validator";
-import { ApiError } from "../utils/api/ApiError";
 import { ApiResponse } from "../utils/api/ApiResponse";
 import { addTokenToBlackList } from "../services/blackListToken.service";
 import { findVerificationCodeByEmail } from "../services/code.service";
@@ -22,7 +21,7 @@ export const registerUser = async (
     // Return an error response
     res
       .status(400)
-      .json(new ApiError(400, "Invalid request body.", errorMessages));
+      .json(new ApiResponse(400, errorMessages, "Invalid request body."));
 
     return;
   }
@@ -39,9 +38,13 @@ export const registerUser = async (
       res
         .status(400)
         .json(
-          new ApiError(400, "Email already in use.", [
-            "This email is already in use. Try registering with a different email.",
-          ])
+          new ApiResponse(
+            400,
+            [
+              "This email is already in use. Try registering with a different email.",
+            ],
+            "Email already in use."
+          )
         );
 
       return;
@@ -58,9 +61,11 @@ export const registerUser = async (
       res
         .status(400)
         .json(
-          new ApiError(400, "Invalid verification code.", [
-            "The verification code is invalid. Try registering again.",
-          ])
+          new ApiResponse(
+            400,
+            ["The verification code is invalid. Try registering again."],
+            "Invalid verification code."
+          )
         );
 
       return;
@@ -74,9 +79,11 @@ export const registerUser = async (
       res
         .status(401)
         .json(
-          new ApiError(401, "Invalid verification code.", [
-            "The verification code is invalid. Try registering again.",
-          ])
+          new ApiResponse(
+            401,
+            ["The verification code is invalid. Try registering again."],
+            "Invalid verification code."
+          )
         );
 
       return;
@@ -121,12 +128,12 @@ export const registerUser = async (
     res
       .status(500)
       .json(
-        new ApiError(
+        new ApiResponse(
           500,
-          "Something went wrong while registering your account.",
           [
             "This email might be in use. Try registering with a different email.",
-          ]
+          ],
+          "Something went wrong while registering your account."
         )
       );
 
@@ -147,7 +154,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     // Return an error response
     res
       .status(400)
-      .json(new ApiError(400, "Invalid request body.", errorMessages));
+      .json(new ApiResponse(400, errorMessages, "Invalid request body."));
 
     return;
   }
@@ -164,7 +171,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       res
         .status(401)
         .json(
-          new ApiError(401, "User not found.", ["Invalid email or password."])
+          new ApiResponse(
+            401,
+            ["Invalid email or password."],
+            "User not found."
+          )
         );
 
       return;
@@ -178,7 +189,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
       res
         .status(401)
         .json(
-          new ApiError(401, "User not found.", ["Invalid email or password."])
+          new ApiResponse(
+            401,
+            ["Invalid email or password."],
+            "User not found."
+          )
         );
 
       return;
@@ -226,9 +241,11 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
     res
       .status(500)
       .json(
-        new ApiError(500, "Something went wrong while loging your account.", [
-          "Invalid email or password.",
-        ])
+        new ApiResponse(
+          500,
+          ["Invalid email or password."],
+          "Something went wrong while loging your account."
+        )
       );
 
     return;
@@ -242,12 +259,16 @@ export const getUserProfile = async (req: Request, res: Response) => {
     res
       .status(401)
       .json(
-        new ApiError(401, "Unauthorized.", [
-          "The token is invalid.",
-          "Token is missing.",
-          "Token is expired.",
-          "Token is Unauthorized.",
-        ])
+        new ApiResponse(
+          401,
+          [
+            "The token is invalid.",
+            "Token is missing.",
+            "Token is expired.",
+            "Token is Unauthorized.",
+          ],
+          "Unauthorized."
+        )
       );
 
     return;
@@ -262,7 +283,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
     res
       .status(401)
       .json(
-        new ApiError(401, "User not found.", ["Invalid email or password."])
+        new ApiResponse(401, ["Invalid email or password."], "User not found.")
       );
 
     return;
@@ -333,10 +354,11 @@ export const logoutUser = async (req: Request, res: Response) => {
     res
       .status(500)
       .json(
-        new ApiError(500, "Unable to logout.", [
-          "Token cannot be deleted.",
-          "Token cannot be added to blacklist.",
-        ])
+        new ApiResponse(
+          500,
+          ["Token cannot be deleted.", "Token cannot be added to blacklist."],
+          "Unable to logout."
+        )
       );
 
     return;
