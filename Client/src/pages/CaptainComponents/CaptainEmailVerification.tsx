@@ -46,6 +46,8 @@ const CaptainEmailVerification = () => {
 
         // If Captain is saved successfully, set Captain data in context and navigate to home page
         setCaptain(res.data);
+
+        // Navigate to Captain home page
         navigate("/captain/home");
       } catch {
         // Handle error and display specific error messages

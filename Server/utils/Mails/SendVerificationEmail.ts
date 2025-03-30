@@ -1,5 +1,6 @@
 import { FullNameType } from "../../library/types";
 import { SendEMail } from "../../services/email.service";
+import { ApiError } from "../api/ApiError";
 import { ApiResponse } from "../api/ApiResponse";
 
 // Define interface for email data
@@ -52,9 +53,11 @@ export const SendVerificationEmail = async ({
           padding: 30px 20px;
           text-align: center;
         }
-        .header img {
-          width: 120px;
-          height: auto;
+        .header .uber-logo {
+          font-size: 36px;
+          font-weight: 700;
+          color: white;
+          letter-spacing: 2px;
         }
         .content {
           padding: 30px;
@@ -144,17 +147,14 @@ export const SendVerificationEmail = async ({
             padding: 12px 24px;
           }
         }
-        #logo {
-  filter: invert(100%);
-}
 
       </style>
     </head>
     <body>
       <div class="email-container">
-        <!-- Header with Uber Black Background -->
+        <!-- Header with Uber Text -->
         <div class="header">
-          <img id="logo" src="https://imgs.search.brave.com/4ATIxs0SwT-DsZ4ajF7jlixEaXFqw5Ys2I5OFQa8JEM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjAv/MDUvVWJlci1Mb2dv/LTcwMHgzOTQucG5n" alt="Uber Logo" width="120">
+          <div class="uber-logo">Uber</div>
         </div>
 
         <!-- Main Content -->
@@ -210,6 +210,8 @@ export const SendVerificationEmail = async ({
     return new ApiResponse(200, !!info, "Email sent successfully.");
   } catch {
     // Throw a custom API error with the error messages
-    throw new ApiResponse(500, false, "Failed to send email.");
+    throw new ApiError(500, "Failed to send email.", [
+      "Failed to send email. At ./utils/Mails/SendVerificationEmail.ts file",
+    ]);
   }
 };

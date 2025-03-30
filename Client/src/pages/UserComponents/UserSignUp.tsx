@@ -63,6 +63,14 @@ const UserSignUp = () => {
 
       // If User is saved successfully, set User data in context and navigate to email verification page
       setUser(newUser);
+
+      // Reset form fields
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPassword("");
+
+      // Navigate to email verification page
       navigate("/email/user");
     } catch {
       // Handle error silently, no alert or console log
@@ -71,12 +79,6 @@ const UserSignUp = () => {
       // Set loading to false
       setLoading(false);
     }
-
-    // Reset form fields
-    setFirstName("");
-    setLastName("");
-    setEmail("");
-    setPassword("");
   };
 
   return (
@@ -94,39 +96,45 @@ const UserSignUp = () => {
             }}
           >
             {/* Name Section */}
-            <label htmlFor="firstName">
-              <h3 className="text-xl mb-2 font-medium">
-                What&apos;s your Name?
-              </h3>
-            </label>
+            <div className="flex flex-col relative">
+              <label htmlFor="firstName">
+                <h3 className="text-xl mb-2 font-medium">
+                  What&apos;s your Name?
+                </h3>
+              </label>
+              <div className="flex justify-between w-full">
+                {/* First Name Section */}
+                <input
+                  type="text"
+                  id="firstName"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => {
+                    handleFirstName(e.target.value);
+                  }}
+                  className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
+                  required
+                />
+                {/* Error Message For Invalid First Name */}
+                {error && firstName.length < 2 && (
+                  <p className="text-red-600 -mt-8 text-[12px] text-center absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full">
+                    First name must be at least 2 characters long
+                  </p>
+                )}
 
-            <div className="flex justify-between w-full">
-              {/* First Name Section */}
-              <input
-                type="text"
-                id="firstName"
-                placeholder="First Name"
-                value={firstName}
-                onChange={(e) => {
-                  handleFirstName(e.target.value);
-                }}
-                className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
-                required
-              />
-
-              {/* Last Name Section */}
-              <input
-                type="text"
-                id="lastName"
-                placeholder="Last Name"
-                value={lastName}
-                onChange={(e) => {
-                  handleLastName(e.target.value);
-                }}
-                className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
-              />
+                {/* Last Name Section */}
+                <input
+                  type="text"
+                  id="lastName"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => {
+                    handleLastName(e.target.value);
+                  }}
+                  className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-[45%] text-lg placeholder:text-base"
+                />
+              </div>
             </div>
-
             {/* Email Section */}
             <label htmlFor="email">
               <h3 className="text-xl mb-2 font-medium">
@@ -145,12 +153,11 @@ const UserSignUp = () => {
               required
             />
             {/* Error Message For Invalid Email */}
-            {error && (
+            {error && password.length >= 6 && firstName.length >= 2 && (
               <p className="text-red-600 -mt-8 text-[12px] text-center">
                 Either email is already in use or invalid.
               </p>
             )}
-
             {/* Password Section */}
             <label htmlFor="password">
               <h3 className="text-xl mb-2 font-medium">Enter Password</h3>
@@ -167,7 +174,12 @@ const UserSignUp = () => {
               className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
               required
             />
-
+            {/* Error Message For Invalid Password */}
+            {error && password.length < 6 && (
+              <p className="text-red-600 -mt-8 text-[12px] text-center mb-3.5">
+                Password must be at least 6 characters long.
+              </p>
+            )}
             {/* Sign Up Button For New Captains */}
             <button
               className="bg-[#111] text-white font-semibold mb-4 rounded px-4 py-3 w-full disabled:opacity-50"

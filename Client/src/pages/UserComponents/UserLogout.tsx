@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import { UserDataContext } from "../../contexts/UserContext";
 import { logoutUser } from "../../services/Get/UserGetAPI";
 
@@ -22,6 +22,8 @@ const UserLogout = () => {
 
       // If user is logged out successfully, set user data in context and navigate to login page
       setUser(null);
+
+      // Navigate to login page
       navigate("/login");
     } catch {
       // Handle error silently, no alert or console log
@@ -35,12 +37,13 @@ const UserLogout = () => {
       <button onClick={handleLogout}>Logout</button>
       <br />
       <Link to="/user/home">jome</Link>
-      {/* Error Message for invalid email or password */}
+      {/* Error Message for logout failure */}
       {error && (
         <p className="text-red-600 text-[12px] text-center">
-          Invalid email or password
+          Logout failed. Please try again.
         </p>
       )}
+      <Outlet />
     </>
   );
 };

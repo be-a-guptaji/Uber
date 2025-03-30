@@ -47,6 +47,12 @@ const UserLogin = () => {
 
       // If User is logged in successfully, set User data in context and navigate to home page
       setUser(res.data);
+
+      // Reset form fields
+      setEmail("");
+      setPassword("");
+
+      // Navigate to User home page
       navigate("/user/home");
     } catch {
       // Handle error silently, no alert or console log
@@ -55,10 +61,6 @@ const UserLogin = () => {
       // Set loading to false
       setLoading(false);
     }
-
-    // Reset form fields
-    setEmail("");
-    setPassword("");
   };
 
   return (

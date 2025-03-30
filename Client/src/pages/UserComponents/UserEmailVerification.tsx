@@ -45,6 +45,8 @@ const UserEmailVerification = () => {
 
         // If User is saved successfully, set User data in context and navigate to home page
         setUser(res.data);
+
+        // Navigate to User home page
         navigate("/user/home");
       } catch {
         // Handle error and display specific error messages

@@ -31,6 +31,7 @@ const ProtectedCaptainComponentWrapper = ({
         setCaptain(res.data);
       } catch {
         // Handle error silently, no alert or console log
+        // If Captain is not logged in, navigate to login page
         navigate("/login");
       }
     };

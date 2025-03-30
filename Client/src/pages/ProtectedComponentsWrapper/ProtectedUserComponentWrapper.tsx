@@ -31,6 +31,7 @@ const ProtectedUserComponentWrapper = ({
         setUser(res.data);
       } catch {
         // Handle error silently, no alert or console log
+        // If User is not logged in, navigate to login page
         navigate("/login");
       }
     };

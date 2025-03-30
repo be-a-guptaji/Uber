@@ -47,6 +47,12 @@ const CaptainLogin = () => {
 
       // If Captain is logged in successfully, set Captain data in context and navigate to home page
       setCaptain(res.data);
+
+      // Reset form fields
+      setEmail("");
+      setPassword("");
+
+      // Navigate to Captain home page
       navigate("/captain/home");
     } catch {
       // Handle error silently, no alert or console log
@@ -55,10 +61,6 @@ const CaptainLogin = () => {
       // Set loading to false
       setLoading(false);
     }
-
-    // Reset form fields
-    setEmail("");
-    setPassword("");
   };
 
   return (
