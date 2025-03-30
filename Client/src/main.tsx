@@ -3,8 +3,8 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import App from "./App.tsx";
 import UserContext from "./contexts/UserContext.tsx";
-import "./index.css";
 import CaptainContext from "./contexts/CaptainContext.tsx";
+import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
