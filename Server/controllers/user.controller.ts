@@ -256,20 +256,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 export const getUserProfile = async (req: Request, res: Response) => {
   // Check if the User is authenticated
   if (!req.user) {
-    res
-      .status(401)
-      .json(
-        new ApiResponse(
-          401,
-          [
-            "The token is invalid.",
-            "Token is missing.",
-            "Token is expired.",
-            "Token is Unauthorized.",
-          ],
-          "Unauthorized."
-        )
-      );
+    res.status(401).json(new ApiResponse(401, null, "Unauthorized."));
 
     return;
   }
@@ -280,11 +267,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
   // If User is not found, return an error response
   if (!user) {
     // If User is not found, return an error response
-    res
-      .status(401)
-      .json(
-        new ApiResponse(401, ["Invalid email or password."], "User not found.")
-      );
+    res.status(401).json(new ApiResponse(401, null, "User not found."));
 
     return;
   }

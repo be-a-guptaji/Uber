@@ -268,20 +268,7 @@ export const loginCaptain = async (
 export const getCaptainProfile = async (req: Request, res: Response) => {
   // Check if the Captain is authenticated
   if (!req.captain) {
-    res
-      .status(401)
-      .json(
-        new ApiResponse(
-          401,
-          [
-            "The token is invalid.",
-            "Token is missing.",
-            "Token is expired.",
-            "Token is Unauthorized.",
-          ],
-          "Unauthorized."
-        )
-      );
+    res.status(401).json(new ApiResponse(401, null, "Unauthorized."));
 
     return;
   }
@@ -292,15 +279,7 @@ export const getCaptainProfile = async (req: Request, res: Response) => {
   // If Captain is not found, return an error response
   if (!captain) {
     // If Captain is not found, return an error response
-    res
-      .status(401)
-      .json(
-        new ApiResponse(
-          401,
-          ["Invalid email or password."],
-          "Captain not found."
-        )
-      );
+    res.status(401).json(new ApiResponse(401, null, "Captain not found."));
 
     return;
   }

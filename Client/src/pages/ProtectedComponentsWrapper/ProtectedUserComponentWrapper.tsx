@@ -3,6 +3,7 @@ import { UserDataContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router";
 import { getUser } from "../../services/Get/UserGetAPI";
 import Loading from "../Loading";
+import { UserApiSuccess } from "../../library/types";
 
 // Define the props for the component
 interface ProtectedUserComponentWrapperProps {
@@ -23,16 +24,26 @@ const ProtectedUserComponentWrapper = ({
   useEffect(() => {
     // Function to get User profile
     const getUserProfile = async () => {
+      // Variable to store User data
+      let res: UserApiSuccess = {
+        statusCode: 0,
+        message: "",
+        data: null,
+        success: false,
+      };
+
       try {
         // Retrieve User data
-        const res = await getUser();
+        res = await getUser();
 
         // If User is retrieved successfully, set User data in context and navigate to home page
         setUser(res.data);
-      } catch {
-        // Handle error silently, no alert or console log
+
         // If User is not logged in, navigate to login page
-        navigate("/login");
+      } catch {
+        if (!res.data) {
+          navigate("/login");
+        }
       }
     };
 

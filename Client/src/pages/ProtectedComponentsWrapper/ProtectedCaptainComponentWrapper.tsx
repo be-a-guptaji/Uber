@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { CaptainDataContext } from "../../contexts/CaptainContext";
 import { getCaptain } from "../../services/Get/CaptainGetAPI";
 import Loading from "../Loading";
+import { CaptainApiSuccess } from "../../library/types";
 
 // Define the props for the component
 interface ProtectedCaptainComponentWrapperProps {
@@ -23,16 +24,25 @@ const ProtectedCaptainComponentWrapper = ({
   useEffect(() => {
     // Function to get Captain profile
     const getCaptainProfile = async () => {
+      // Variable to store Captain data
+      let res: CaptainApiSuccess = {
+        statusCode: 0,
+        message: "",
+        data: null,
+        success: false,
+      };
+
       try {
         // Retrieve Captain data
-        const res = await getCaptain();
+        res = await getCaptain();
 
         // If Captain is retrieved successfully, set Captain data in context and navigate to home page
         setCaptain(res.data);
       } catch {
-        // Handle error silently, no alert or console log
         // If Captain is not logged in, navigate to login page
-        navigate("/login");
+        if (!res.data || !captain) {
+          navigate("/captain-login");
+        }
       }
     };
 

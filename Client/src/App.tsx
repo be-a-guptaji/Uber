@@ -4,14 +4,14 @@ import UserLogin from "./pages/UserComponents/UserLogin";
 import UserSignUp from "./pages/UserComponents/UserSignUp";
 import CaptainLogin from "./pages/CaptainComponents/CaptainLogin";
 import CaptainSignUp from "./pages/CaptainComponents/CaptainSignUp";
-import ProtectedUserComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedUserComponentWrapper";
 import UserLogout from "./pages/UserComponents/UserLogout";
 import UserHome from "./pages/UserComponents/UserHome";
-import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
 import CaptainHome from "./pages/CaptainComponents/CaptainHome";
 import CaptainLogout from "./pages/CaptainComponents/CaptainLogout";
 import UserEmailVerification from "./pages/UserComponents/UserEmailVerification";
 import CaptainEmailVerification from "./pages/CaptainComponents/CaptainEmailVerification";
+import ProtectedUserComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedUserComponentWrapper";
+import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
 
 const App = () => {
   return (

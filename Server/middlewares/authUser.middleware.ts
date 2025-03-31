@@ -103,20 +103,7 @@ export const authUser = async (
     return next();
   } catch {
     // If the token is invalid, return a 401 Unauthorized response
-    res
-      .status(401)
-      .json(
-        new ApiResponse(
-          401,
-          [
-            "The token is invalid.",
-            "Token is missing.",
-            "Token is expired.",
-            "Token is Unauthorized.",
-          ],
-          "Unauthorized."
-        )
-      );
+    res.status(401).json(new ApiResponse(401, null, "Unauthorized."));
 
     return;
   }
