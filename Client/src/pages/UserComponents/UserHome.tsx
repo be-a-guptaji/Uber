@@ -134,9 +134,62 @@ const UserHome = () => {
               />
             </form>
           </div>
+
+          {/* Location search panel */}
           <div className="flex flex-col gap-4 overflow-y-scroll">
             <LocationSearchPanel />
           </div>
+        </div>
+      </div>
+
+      {/* Ride selection panel */}
+      <div className="fixed z-30 bottom-0 p-4 bg-white w-full space-y-4">
+        {/* Heading */}
+        <h3 className="text-3xl font-bold my-4">Choose Your Ride</h3>
+        {/* Car card */}
+        <div className="flex items-center justify-between bg-[#eee] border-2 rounded-lg p-4">
+          <img src="/UberCar.webp" alt="Car logo" className="w-20" />
+          <div>
+            <h4 className="font-bold tracking-wide text-xl">
+              UberGo{" "}
+              <span>
+                <i className="ri-user-fill" />4
+              </span>
+            </h4>
+            <h5 className="text-gray-600 font-medium">2 mins away</h5>
+            <p className="text-gray-600 text-xs">Affordable, compact rides</p>
+          </div>
+          <h2 className="font-bold text-xl">₹1000.00</h2>
+        </div>
+        {/* Car card */}
+        <div className="flex items-center justify-between bg-[#eee] border-2 rounded-lg p-4">
+          <img src="/UberCar.webp" alt="Car logo" className="w-20" />
+          <div>
+            <h4 className="font-bold tracking-wide text-xl">
+              UberGo{" "}
+              <span>
+                <i className="ri-user-fill" />4
+              </span>
+            </h4>
+            <h5 className="text-gray-600 font-medium">2 mins away</h5>
+            <p className="text-gray-600 text-xs">Affordable, compact rides</p>
+          </div>
+          <h2 className="font-bold text-xl">₹1000.00</h2>
+        </div>
+        {/* Car card */}
+        <div className="flex items-center justify-between bg-[#eee] border-2 rounded-lg p-4">
+          <img src="/UberCar.webp" alt="Car logo" className="w-20" />
+          <div>
+            <h4 className="font-bold tracking-wide text-xl">
+              UberGo{" "}
+              <span>
+                <i className="ri-user-fill" />4
+              </span>
+            </h4>
+            <h5 className="text-gray-600 font-medium">2 mins away</h5>
+            <p className="text-gray-600 text-xs">Affordable, compact rides</p>
+          </div>
+          <h2 className="font-bold text-xl">₹1000.00</h2>
         </div>
       </div>
 
