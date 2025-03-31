@@ -9,14 +9,16 @@ import LocationSearchPanel from "../../components/LocationSearchPanel";
 const UserHome = () => {
   // Ref variables
   const panelRef = useRef<HTMLDivElement>(null);
+  const vehiclePanelRef = useRef<HTMLDivElement>(null);
   const panelCloseRef = useRef<HTMLButtonElement>(null);
 
   // State variables for form fields
   const [pickup, setPickup] = useState<string>(""); // Pickup location
   const [destination, setDestination] = useState<string>(""); // Destination location
   const [panelOpen, setPanelOpen] = useState<boolean>(false); // Panel state
+  const [vehiclePanelOpen, setVehiclePanelOpen] = useState<boolean>(false); // Vehicle panel state
 
-  // GSAP animation hook
+  // GSAP animation hook for location panel
   useGSAP(
     function () {
       if (panelOpen) {
@@ -37,6 +39,19 @@ const UserHome = () => {
     },
     [panelOpen]
   );
+
+  // GSAP animation hook for vehicle panel
+  useGSAP(() => {
+    if (vehiclePanelOpen) {
+      gsap.to(vehiclePanelRef.current, {
+        transform: "translateY(0%)",
+      });
+    } else {
+      gsap.to(vehiclePanelRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [vehiclePanelOpen]);
 
   // Function to handle pickup location change
   const handlePickup = (pickup: string) => {
@@ -137,60 +152,66 @@ const UserHome = () => {
 
           {/* Location search panel */}
           <div className="flex flex-col gap-4 overflow-y-scroll">
-            <LocationSearchPanel />
+            <LocationSearchPanel
+              setPanelOpen={setPanelOpen}
+              setVehiclePanelOpen={setVehiclePanelOpen}
+            />
           </div>
         </div>
       </div>
 
       {/* Ride selection panel */}
-      <div className="fixed z-30 bottom-0 p-4 bg-white w-full space-y-4">
+      <div
+        ref={vehiclePanelRef}
+        className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
+      >
         {/* Heading */}
         <h3 className="text-3xl font-bold my-4">Choose Your Ride</h3>
         {/* Car card */}
-        <div className="flex items-center justify-between bg-[#eee] border-2 rounded-lg p-4">
+        <button className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border">
           <img src="/UberCar.webp" alt="Car logo" className="w-20" />
-          <div>
-            <h4 className="font-bold tracking-wide text-xl">
+          <div className="w-[45%] flex flex-col items-start">
+            <h4 className="font-bold tracking-wide text-xl w-full inline-flex justify-between">
               UberGo{" "}
               <span>
                 <i className="ri-user-fill" />4
               </span>
             </h4>
             <h5 className="text-gray-600 font-medium">2 mins away</h5>
-            <p className="text-gray-600 text-xs">Affordable, compact rides</p>
+            <p className="text-gray-600 text-xs">Affordable, city rides</p>
           </div>
-          <h2 className="font-bold text-xl">₹1000.00</h2>
-        </div>
-        {/* Car card */}
-        <div className="flex items-center justify-between bg-[#eee] border-2 rounded-lg p-4">
-          <img src="/UberCar.webp" alt="Car logo" className="w-20" />
-          <div>
-            <h4 className="font-bold tracking-wide text-xl">
-              UberGo{" "}
+          <h2 className="font-bold text-xl">₹1234.45</h2>
+        </button>
+        {/* Motercycle card */}
+        <button className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border">
+          <img src="/UberBike.webp" alt="Moto logo" className="w-20" />
+          <div className="w-[45%] flex flex-col items-start">
+            <h4 className="font-bold tracking-wide text-xl w-full inline-flex justify-between">
+              Moto{" "}
               <span>
-                <i className="ri-user-fill" />4
+                <i className="ri-user-fill" />1
+              </span>
+            </h4>
+            <h5 className="text-gray-600 font-medium">1 mins away</h5>
+            <p className="text-gray-600 text-xs">Affordable motercycle rides</p>
+          </div>
+          <h2 className="font-bold text-xl">₹111.67</h2>
+        </button>
+        {/* Auto card */}
+        <button className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border">
+          <img src="/UberAuto.png" alt="Auto logo" className="w-20" />
+          <div className="w-[45%] flex flex-col items-start">
+            <h4 className="font-bold tracking-wide text-xl w-full inline-flex justify-between">
+              UberAuto{" "}
+              <span>
+                <i className="ri-user-fill" />3
               </span>
             </h4>
             <h5 className="text-gray-600 font-medium">2 mins away</h5>
             <p className="text-gray-600 text-xs">Affordable, compact rides</p>
           </div>
-          <h2 className="font-bold text-xl">₹1000.00</h2>
-        </div>
-        {/* Car card */}
-        <div className="flex items-center justify-between bg-[#eee] border-2 rounded-lg p-4">
-          <img src="/UberCar.webp" alt="Car logo" className="w-20" />
-          <div>
-            <h4 className="font-bold tracking-wide text-xl">
-              UberGo{" "}
-              <span>
-                <i className="ri-user-fill" />4
-              </span>
-            </h4>
-            <h5 className="text-gray-600 font-medium">2 mins away</h5>
-            <p className="text-gray-600 text-xs">Affordable, compact rides</p>
-          </div>
-          <h2 className="font-bold text-xl">₹1000.00</h2>
-        </div>
+          <h2 className="font-bold text-xl">₹453.14</h2>
+        </button>
       </div>
 
       <Outlet />
