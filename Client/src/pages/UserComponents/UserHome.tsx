@@ -3,6 +3,7 @@ import { Outlet } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
+import LocationSearchPanel from "../../components/LocationSearchPanel";
 
 // User Home Page
 const UserHome = () => {
@@ -27,7 +28,7 @@ const UserHome = () => {
         });
       } else {
         gsap.to(panelRef.current, {
-          top: "75%",
+          top: "77%",
         });
         gsap.to(panelCloseRef.current, {
           opacity: 0,
@@ -84,7 +85,7 @@ const UserHome = () => {
         {/* Footer */}
         <div
           ref={panelRef}
-          className="bg-white flex flex-col justify-start gap-8 h-dvh max-h-dvh absolute z-20 w-full p-4"
+          className="bg-white flex flex-col justify-start gap-8 h-dvh min-h-dvh absolute z-20 w-full p-4"
         >
           <div className="w-full">
             <div className="flex items-center justify-between mb-8">
@@ -99,6 +100,7 @@ const UserHome = () => {
                 <i className="ri-arrow-down-s-line" />
               </button>
             </div>
+            {/* Form for pickup and destination */}
             <form
               onSubmit={(e) => {
                 handleSubmit(e);
@@ -133,65 +135,7 @@ const UserHome = () => {
             </form>
           </div>
           <div className="flex flex-col gap-4 overflow-y-scroll">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi,
-            ullam. Ab vero officia quaerat labore autem. Sunt officia maxime
-            facilis nostrum dolor adipisci iure. Obcaecati necessitatibus id
-            sequi ipsum architecto. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Beatae, est enim dolorum reiciendis veritatis
-            quasi. Officia nihil, quos voluptatum assumenda commodi nobis sint
-            corporis amet exercitationem obcaecati quasi nam placeat libero
-            totam excepturi quam nisi, ex repudiandae ipsa ab tempora dolore
-            blanditiis. Aliquid, rerum ullam, reprehenderit corrupti deserunt
-            omnis consequatur quo ipsa dolorem autem ea neque pariatur. Sint
-            facilis nostrum dolor adipisci iure. Obcaecati necessitatibus id
-            sequi ipsum architecto. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Beatae, est enim dolorum reiciendis veritatis
-            quasi. Officia nihil, quos voluptatum assumenda commodi nobis sint
-            corporis amet exercitationem obcaecati quasi nam placeat libero
-            totam excepturi quam nisi, ex repudiandae ipsa ab tempora dolore
-            blanditiis. Aliquid, rerum ullam, reprehenderit corrupti deserunt
-            omnis consequatur quo ipsa dolorem autem ea neque pariatur. Sint
-            facilis nostrum dolor adipisci iure. Obcaecati necessitatibus id
-            sequi ipsum architecto. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Beatae, est enim dolorum reiciendis veritatis
-            quasi. Officia nihil, quos voluptatum assumenda commodi nobis sint
-            corporis amet exercitationem obcaecati quasi nam placeat libero
-            totam excepturi quam nisi, ex repudiandae ipsa ab tempora dolore
-            blanditiis. Aliquid, rerum ullam, reprehenderit corrupti deserunt
-            omnis consequatur quo ipsa dolorem autem ea neque pariatur. Sint
-            facilis nostrum dolor adipisci iure. Obcaecati necessitatibus id
-            sequi ipsum architecto. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Beatae, est enim dolorum reiciendis veritatis
-            quasi. Officia nihil, quos voluptatum assumenda commodi nobis sint
-            corporis amet exercitationem obcaecati quasi nam placeat libero
-            totam excepturi quam nisi, ex repudiandae ipsa ab tempora dolore
-            blanditiis. Aliquid, rerum ullam, reprehenderit corrupti deserunt
-            omnis consequatur quo ipsa dolorem autem ea neque pariatur. Sint
-            facilis nostrum dolor adipisci iure. Obcaecati necessitatibus id
-            sequi ipsum architecto. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Beatae, est enim dolorum reiciendis veritatis
-            quasi. Officia nihil, quos voluptatum assumenda commodi nobis sint
-            corporis amet exercitationem obcaecati quasi nam placeat libero
-            totam excepturi quam nisi, ex repudiandae ipsa ab tempora dolore
-            blanditiis. Aliquid, rerum ullam, reprehenderit corrupti deserunt
-            omnis consequatur quo ipsa dolorem autem ea neque pariatur. Sint
-            numquam sequi, doloribus neque sit molestias ullam laborum ipsa
-            corrupti eligendi modi. Eum nobis ut reiciendis dicta aut quam
-            accusantium optio, aliquid atque deserunt non nulla exercitationem
-            porro cumque placeat perferendis neque ad? Cupiditate porro ipsa
-            sint, similique aliquid voluptates sit alias atque quis maxime
-            nostrum velit nam aspernatur est obcaecati mollitia accusantium
-            facere, recusandae soluta nobis. Tempora rem magnam aspernatur
-            dignissimos culpa molestias amet vitae quidem pariatur. Natus totam,
-            corporis, sapiente, eligendi deserunt eaque inventore ad dolores
-            alias ipsum sint iusto repellendus beatae voluptatum dolorem
-            dolorum! Adipisci architecto optio sunt expedita doloribus nihil,
-            sint tempore suscipit in deleniti culpa perferendis officia
-            aspernatur, ut neque. Repellendus accusantium eos ipsum dicta labore
-            id minima in, veniam unde nemo tempora nam assumenda illo aliquid,
-            amet magni dolorum, voluptas doloribus dolore ab debitis. Magnam ea
-            consectetur non quia cupiditate, quibusdam repudiandae rerum ex
-            voluptatibus dolores!
+            <LocationSearchPanel />
           </div>
         </div>
       </div>

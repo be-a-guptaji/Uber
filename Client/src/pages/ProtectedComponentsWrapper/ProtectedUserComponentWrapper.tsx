@@ -2,7 +2,7 @@ import { useContext, useEffect } from "react";
 import { UserDataContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router";
 import { getUser } from "../../services/Get/UserGetAPI";
-import Loading from "../Loading";
+import Loading from "../../components/Loading";
 import { UserApiSuccess } from "../../library/types";
 
 // Define the props for the component

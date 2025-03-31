@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import VerificationCode from "../../components/VerificationCode";
 import { useContext, useEffect, useState } from "react";
 import { CaptainDataContext } from "../../contexts/CaptainContext";
-import Loading from "../Loading";
+import Loading from "../../components/Loading";
 import { CaptainType } from "../../library/types";
 import { createCaptain } from "../../services/Post/CaptainPostAPI";
 

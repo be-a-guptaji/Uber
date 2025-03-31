@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import VerificationCode from "../../components/VerificationCode";
 import { useContext, useEffect, useState } from "react";
 import { UserDataContext } from "../../contexts/UserContext";
-import Loading from "../Loading";
+import Loading from "../../components/Loading";
 import { UserType } from "../../library/types";
 import { createUser } from "../../services/Post/UserPostAPI";
 
