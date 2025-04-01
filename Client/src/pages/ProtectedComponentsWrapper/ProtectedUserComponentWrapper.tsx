@@ -50,11 +50,11 @@ const ProtectedUserComponentWrapper = ({
     // Check if User is logged in
     if (!user) {
       // If User is not logged in, navigate to login page
-      // getUserProfile();
+      getUserProfile();
     }
   }, [user, navigate, setUser]); // Only re-run effect if getUserProfile changes
 
-  return <>{!user ? children : <Loading />}</>;
+  return <>{user ? children : <Loading />}</>;
 };
 
 export default ProtectedUserComponentWrapper;
