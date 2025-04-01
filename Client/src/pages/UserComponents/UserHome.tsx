@@ -7,6 +7,7 @@ import LocationSearchPanel from "../../components/LocationSearchPanel";
 import VehiclePanel from "../../components/VehiclePanel";
 import ConfirmedRide from "../../components/ConfirmedRide";
 import LookingForDriver from "../../components/LookingForDriver";
+import WaitingForDriver from "../../components/WaitingForDriver";
 
 // User Home Page
 const UserHome = () => {
@@ -14,6 +15,7 @@ const UserHome = () => {
   const panelRef = useRef<HTMLDivElement>(null);
   const vehiclePanelRef = useRef<HTMLDivElement>(null);
   const confirmRidePanelRef = useRef<HTMLDivElement>(null);
+  const watingForDriverRef = useRef<HTMLDivElement>(null);
   const vehicelFoundRef = useRef<HTMLDivElement>(null);
   const panelCloseRef = useRef<HTMLButtonElement>(null);
 
@@ -24,6 +26,7 @@ const UserHome = () => {
   const [vehiclePanelOpen, setVehiclePanelOpen] = useState<boolean>(false); // Vehicle panel state
   const [confirmedRidePanel, setConfirmedRidePanel] = useState<boolean>(false); // Confirmed ride state
   const [vehicelFound, setVehicelFound] = useState<boolean>(false); // Vehicle found state
+  const [waitingForDriver, setWaitingForDriver] = useState<boolean>(false); // Waiting for driver state
 
   // GSAP animation hook for location panel
   useGSAP(
@@ -85,6 +88,19 @@ const UserHome = () => {
       });
     }
   }, [vehicelFound]);
+
+  // GSAP animation hook for waiting for driver panel
+  useGSAP(() => {
+    if (waitingForDriver) {
+      gsap.to(watingForDriverRef.current, {
+        transform: "translateY(0%)",
+      });
+    } else {
+      gsap.to(watingForDriverRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [waitingForDriver]);
 
   // Function to handle pickup location change
   const handlePickup = (pickup: string) => {
@@ -228,7 +244,15 @@ const UserHome = () => {
         ref={vehicelFoundRef}
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
-        <LookingForDriver />
+        <LookingForDriver setVehicelFound={setVehicelFound} />
+      </div>
+
+      {/* Driver Details panel */}
+      <div
+        ref={watingForDriverRef}
+        className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-fulll space-y-4"
+      >
+        <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
       </div>
 
       <Outlet />

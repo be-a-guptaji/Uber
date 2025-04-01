@@ -37,10 +37,12 @@ const ProtectedCaptainComponentWrapper = ({
         res = await getCaptain();
 
         // If Captain is retrieved successfully, set Captain data in context and navigate to home page
-        setCaptain(res.data);
+        if (res.data) {
+          setCaptain(res.data);
+        }
       } catch {
         // If Captain is not logged in, navigate to login page
-        if (!res.data || !captain) {
+        if (!res.data) {
           navigate("/captain-login");
         }
       }

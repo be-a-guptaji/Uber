@@ -1,11 +1,17 @@
+// Types for the LookingForDriver component
+type LookingForDriverProps = { setVehicelFound: (open: boolean) => void };
+
 // LookingForDriver component
-const LookingForDriver = () => {
+const LookingForDriver = ({ setVehicelFound }: LookingForDriverProps) => {
   return (
     <>
       {/* Heading */}
-      <h3 className="text-3xl font-bold my-4 text-center">
-        Looking For Driver
-      </h3>
+      <div className="flex items-center justify-between">
+        <h3 className="text-3xl font-bold my-4">Looking For Driver</h3>
+        <button onClick={() => setVehicelFound(false)}>
+          <i className="ri-arrow-down-s-line text-3xl" />
+        </button>
+      </div>
 
       {/* Details Section */}
       <div className="flex flex-col items-center justify-center w-full gap-4">

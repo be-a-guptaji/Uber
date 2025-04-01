@@ -37,10 +37,11 @@ const ProtectedUserComponentWrapper = ({
         res = await getUser();
 
         // If User is retrieved successfully, set User data in context and navigate to home page
-        setUser(res.data);
-
-        // If User is not logged in, navigate to login page
+        if (res.data) {
+          setUser(res.data);
+        }
       } catch {
+        // If User is not logged in, navigate to login page
         if (!res.data) {
           navigate("/login");
         }
