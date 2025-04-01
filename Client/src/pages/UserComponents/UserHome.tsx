@@ -6,6 +6,7 @@ import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../../components/LocationSearchPanel";
 import VehiclePanel from "../../components/VehiclePanel";
 import ConfirmedRide from "../../components/ConfirmedRide";
+import LookingForDriver from "../../components/LookingForDriver";
 
 // User Home Page
 const UserHome = () => {
@@ -13,6 +14,7 @@ const UserHome = () => {
   const panelRef = useRef<HTMLDivElement>(null);
   const vehiclePanelRef = useRef<HTMLDivElement>(null);
   const confirmRidePanelRef = useRef<HTMLDivElement>(null);
+  const vehicelFoundRef = useRef<HTMLDivElement>(null);
   const panelCloseRef = useRef<HTMLButtonElement>(null);
 
   // State variables for form fields
@@ -21,6 +23,7 @@ const UserHome = () => {
   const [panelOpen, setPanelOpen] = useState<boolean>(false); // Panel state
   const [vehiclePanelOpen, setVehiclePanelOpen] = useState<boolean>(false); // Vehicle panel state
   const [confirmedRidePanel, setConfirmedRidePanel] = useState<boolean>(false); // Confirmed ride state
+  const [vehicelFound, setVehicelFound] = useState<boolean>(false); // Vehicle found state
 
   // GSAP animation hook for location panel
   useGSAP(
@@ -70,6 +73,19 @@ const UserHome = () => {
     }
   }, [confirmedRidePanel]);
 
+  // GSAP animation hook for looking for driver panel
+  useGSAP(() => {
+    if (vehicelFound) {
+      gsap.to(vehicelFoundRef.current, {
+        transform: "translateY(0%)",
+      });
+    } else {
+      gsap.to(vehicelFoundRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [vehicelFound]);
+
   // Function to handle pickup location change
   const handlePickup = (pickup: string) => {
     setPickup(pickup);
@@ -112,6 +128,7 @@ const UserHome = () => {
             setPanelOpen(false);
             setVehiclePanelOpen(false);
             setConfirmedRidePanel(false);
+            setVehicelFound(false);
           }}
         >
           <img
@@ -200,7 +217,18 @@ const UserHome = () => {
         ref={confirmRidePanelRef}
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
-        <ConfirmedRide setConfirmedRidePanel={setConfirmedRidePanel} />
+        <ConfirmedRide
+          setConfirmedRidePanel={setConfirmedRidePanel}
+          setVehicelFound={setVehicelFound}
+        />
+      </div>
+
+      {/* Waiting for ride confirmation panel */}
+      <div
+        ref={vehicelFoundRef}
+        className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
+      >
+        <LookingForDriver />
       </div>
 
       <Outlet />

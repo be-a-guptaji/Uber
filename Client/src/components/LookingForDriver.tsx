@@ -1,23 +1,11 @@
-// Types for the ConfirmedRide component
-type ConfirmedRideProps = {
-  setConfirmedRidePanel: (open: boolean) => void;
-  setVehicelFound: (open: boolean) => void;
-};
-
-// ConfirmedRide component
-const ConfirmedRide = ({
-  setConfirmedRidePanel,
-  setVehicelFound,
-}: ConfirmedRideProps) => {
+// LookingForDriver component
+const LookingForDriver = () => {
   return (
     <>
       {/* Heading */}
-      <div className="flex items-center justify-between">
-        <h3 className="text-3xl font-bold my-4">Confirm Your Ride</h3>
-        <button onClick={() => setConfirmedRidePanel(false)}>
-          <i className="ri-arrow-down-s-line text-3xl" />
-        </button>
-      </div>
+      <h3 className="text-3xl font-bold my-4 text-center">
+        Looking For Driver
+      </h3>
 
       {/* Details Section */}
       <div className="flex flex-col items-center justify-center w-full gap-4">
@@ -55,20 +43,9 @@ const ConfirmedRide = ({
             </div>
           </div>
         </div>
-
-        {/* Confirm button */}
-        <button
-          className="w-full bg-green-600 text-white font-semibold p-2 rounded-lg text-xl"
-          onClick={() => {
-            setVehicelFound(true);
-            setConfirmedRidePanel(false);
-          }}
-        >
-          Confirm
-        </button>
       </div>
     </>
   );
 };
 
-export default ConfirmedRide;
+export default LookingForDriver;
