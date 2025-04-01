@@ -4,12 +4,15 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
 import LocationSearchPanel from "../../components/LocationSearchPanel";
+import VehiclePanel from "../../components/VehiclePanel";
+import ConfirmedRide from "../../components/ConfirmedRide";
 
 // User Home Page
 const UserHome = () => {
   // Ref variables
   const panelRef = useRef<HTMLDivElement>(null);
   const vehiclePanelRef = useRef<HTMLDivElement>(null);
+  const confirmRidePanelRef = useRef<HTMLDivElement>(null);
   const panelCloseRef = useRef<HTMLButtonElement>(null);
 
   // State variables for form fields
@@ -17,6 +20,7 @@ const UserHome = () => {
   const [destination, setDestination] = useState<string>(""); // Destination location
   const [panelOpen, setPanelOpen] = useState<boolean>(false); // Panel state
   const [vehiclePanelOpen, setVehiclePanelOpen] = useState<boolean>(false); // Vehicle panel state
+  const [confirmedRidePanel, setConfirmedRidePanel] = useState<boolean>(false); // Confirmed ride state
 
   // GSAP animation hook for location panel
   useGSAP(
@@ -52,6 +56,19 @@ const UserHome = () => {
       });
     }
   }, [vehiclePanelOpen]);
+
+  // GSAP animation hook for confirmation panel
+  useGSAP(() => {
+    if (confirmedRidePanel) {
+      gsap.to(confirmRidePanelRef.current, {
+        transform: "translateY(0%)",
+      });
+    } else {
+      gsap.to(confirmRidePanelRef.current, {
+        transform: "translateY(100%)",
+      });
+    }
+  }, [confirmedRidePanel]);
 
   // Function to handle pickup location change
   const handlePickup = (pickup: string) => {
@@ -89,7 +106,14 @@ const UserHome = () => {
         />
 
         {/* Background Map */}
-        <div className="h-dvh w-screen">
+        <div
+          className="h-dvh w-screen"
+          onClick={() => {
+            setPanelOpen(false);
+            setVehiclePanelOpen(false);
+            setConfirmedRidePanel(false);
+          }}
+        >
           <img
             src="https://imgs.search.brave.com/o-Q6bJ_pg1WafiZikzPkNL3w3nBizjXwgyusJsdxPxw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnNz/dGF0aWMubmV0L2d0/aUk3LmdpZg.gif"
             className="h-screen"
@@ -165,53 +189,18 @@ const UserHome = () => {
         ref={vehiclePanelRef}
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
-        {/* Heading */}
-        <h3 className="text-3xl font-bold my-4">Choose Your Ride</h3>
-        {/* Car card */}
-        <button className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border">
-          <img src="/UberCar.webp" alt="Car logo" className="w-20" />
-          <div className="w-[45%] flex flex-col items-start">
-            <h4 className="font-bold tracking-wide text-xl w-full inline-flex justify-between">
-              UberGo{" "}
-              <span>
-                <i className="ri-user-fill" />4
-              </span>
-            </h4>
-            <h5 className="text-gray-600 font-medium">2 mins away</h5>
-            <p className="text-gray-600 text-xs">Affordable, city rides</p>
-          </div>
-          <h2 className="font-bold text-xl">₹1234.45</h2>
-        </button>
-        {/* Motercycle card */}
-        <button className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border">
-          <img src="/UberBike.webp" alt="Moto logo" className="w-20" />
-          <div className="w-[45%] flex flex-col items-start">
-            <h4 className="font-bold tracking-wide text-xl w-full inline-flex justify-between">
-              Moto{" "}
-              <span>
-                <i className="ri-user-fill" />1
-              </span>
-            </h4>
-            <h5 className="text-gray-600 font-medium">1 mins away</h5>
-            <p className="text-gray-600 text-xs">Affordable motercycle rides</p>
-          </div>
-          <h2 className="font-bold text-xl">₹111.67</h2>
-        </button>
-        {/* Auto card */}
-        <button className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border">
-          <img src="/UberAuto.png" alt="Auto logo" className="w-20" />
-          <div className="w-[45%] flex flex-col items-start">
-            <h4 className="font-bold tracking-wide text-xl w-full inline-flex justify-between">
-              UberAuto{" "}
-              <span>
-                <i className="ri-user-fill" />3
-              </span>
-            </h4>
-            <h5 className="text-gray-600 font-medium">2 mins away</h5>
-            <p className="text-gray-600 text-xs">Affordable, compact rides</p>
-          </div>
-          <h2 className="font-bold text-xl">₹453.14</h2>
-        </button>
+        <VehiclePanel
+          setVehiclePanelOpen={setVehiclePanelOpen}
+          setConfirmedRidePanel={setConfirmedRidePanel}
+        />
+      </div>
+
+      {/* Ride confirmation panel */}
+      <div
+        ref={confirmRidePanelRef}
+        className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
+      >
+        <ConfirmedRide setConfirmedRidePanel={setConfirmedRidePanel} />
       </div>
 
       <Outlet />
