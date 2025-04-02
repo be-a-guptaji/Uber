@@ -12,6 +12,7 @@ import UserEmailVerification from "./pages/UserComponents/UserEmailVerification"
 import CaptainEmailVerification from "./pages/CaptainComponents/CaptainEmailVerification";
 import ProtectedUserComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedUserComponentWrapper";
 import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
+import Riding from "./pages/Riding";
 
 const App = () => {
   return (
@@ -48,14 +49,16 @@ const App = () => {
           <Route path="home" index element={<UserHome />} />
           {/* For the User logout page */}
           <Route path="logout" element={<UserLogout />} />
+          {/* For the Riding page */}
+          <Route path="riding" element={<Riding />} />
         </Route>
         {/* Routes nested For the Captains page */}
         <Route
           path="captain"
           element={
-            <ProtectedCaptainComponentWrapper>
-              <Outlet />
-            </ProtectedCaptainComponentWrapper>
+            // <ProtectedCaptainComponentWrapper>
+            <Outlet />
+            // </ProtectedCaptainComponentWrapper>
           }
         >
           {/* For the home page */}

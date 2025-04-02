@@ -150,7 +150,7 @@ const UserHome = () => {
           <img
             src="https://imgs.search.brave.com/o-Q6bJ_pg1WafiZikzPkNL3w3nBizjXwgyusJsdxPxw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLnNz/dGF0aWMubmV0L2d0/aUk3LmdpZg.gif"
             className="h-screen"
-            alt=""
+            alt="map"
           />
         </div>
 
