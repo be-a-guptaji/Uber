@@ -70,7 +70,7 @@ const UserLogin = () => {
         {/* Login form container */}
         <div className="w-full">
           {/* Logo */}
-          <img src="./Uber.png" className="w-48" alt="Uber Logo" />
+          <img src="/Uber.png" className="w-48" alt="Uber Logo" />
           {/* Form for User login */}
           <form
             onSubmit={(event) => {

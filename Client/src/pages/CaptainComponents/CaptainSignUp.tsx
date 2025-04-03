@@ -125,7 +125,7 @@ const CaptainSignUp = () => {
         <div className="w-full">
           {/* Logo */}
           <img
-            src="./UberCaptain.webp"
+            src="/UberCaptain.webp"
             className="invert w-48"
             alt="Uber Captain Logo"
           />

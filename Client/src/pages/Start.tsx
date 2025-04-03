@@ -7,7 +7,7 @@ const Start = () => {
       {/* Background image */}
       <div className="bg-cover bg-center bg-[url('./HomePageBackgroundImage.jpg')] h-dvh w-full flex justify-between flex-col pt-4">
         {/* Logo */}
-        <img src="./Uber.png" className="w-48 ml-4 invert" alt="" />
+        <img src="/Uber.png" className="w-48 ml-4 invert" alt="Uber Logo" />
         {/* Footer */}
         <div className="bg-white p-4 pb-7">
           {/* Heading */}

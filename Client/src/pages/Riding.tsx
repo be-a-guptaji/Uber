@@ -4,12 +4,15 @@ import { Link, Outlet } from "react-router";
 const Riding = () => {
   return (
     <>
-          <div className="h-dvh">
-              {/* Home Icon */}
-              <Link to="/" className="fixed size-10 bg-white flex items-center justify-center rounded-lg right-2 top-2">
-                  <i className="ri-home-5-line text-3xl font-medium"/>
-              </Link>
-            
+      <div className="h-dvh">
+        {/* Home Icon */}
+        <Link
+          to="/"
+          className="fixed size-10 bg-white flex items-center justify-center rounded-lg right-2 top-2"
+        >
+          <i className="ri-home-5-line text-3xl font-medium" />
+        </Link>
+
         {/* Map */}
         <div className="h-1/2">
           <img
