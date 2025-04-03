@@ -1,12 +1,10 @@
 // Define the props type
 type ConfirmRidePopUpProps = {
-  setRidePopupPanel: (open: boolean) => void;
   setConfirmRidePopupPanel: (open: boolean) => void;
 };
 
 // Define the ConfirmRidePopUp component
 const ConfirmRidePopUp = ({
-  setRidePopupPanel,
   setConfirmRidePopupPanel,
 }: ConfirmRidePopUpProps) => {
   return (
