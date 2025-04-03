@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 // Define the props type
 type ConfirmRidePopUpProps = {
   setConfirmRidePopupPanel: (open: boolean) => void;
@@ -74,14 +76,14 @@ const ConfirmRidePopUp = ({
           </div>
 
           {/* Confirm button */}
-          <button
-            className="w-full bg-green-600 text-white font-semibold p-2 rounded-lg text-xl"
+          <Link to={"/captain/riding"}
+            className="w-full bg-green-600 text-white text-center font-semibold p-2 rounded-lg text-xl"
             onClick={() => {
               setConfirmRidePopupPanel(false);
             }}
           >
             Confirm
-          </button>
+          </Link>
 
           {/* Cancel button */}
           <button

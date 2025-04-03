@@ -13,7 +13,7 @@ const CaptainHome = () => {
   const confirmRidePopupPanelRef = useRef<HTMLDivElement>(null);
 
   // State Variables
-  const [ridePopupPanel, setRidePopupPanel] = useState<boolean>(true);
+  const [ridePopupPanel, setRidePopupPanel] = useState<boolean>(false);
   const [confirmRidePopupPanel, setConfirmRidePopupPanel] =
     useState<boolean>(false);
   const [ride, setRide] = useState<null>(null);

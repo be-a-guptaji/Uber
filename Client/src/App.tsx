@@ -13,6 +13,7 @@ import CaptainEmailVerification from "./pages/CaptainComponents/CaptainEmailVeri
 import ProtectedUserComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedUserComponentWrapper";
 import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
 import Riding from "./pages/Riding";
+import CaptainRiding from "./pages/CaptainComponents/CaptainRiding";
 
 const App = () => {
   return (
@@ -65,6 +66,8 @@ const App = () => {
           <Route path="home" index element={<CaptainHome />} />
           {/* For the Captain logout page */}
           <Route path="logout" element={<CaptainLogout />} />
+          {/* For the Riding page */}
+          <Route path="riding" element={<CaptainRiding />} />
         </Route>
       </Routes>
     </>
