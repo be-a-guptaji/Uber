@@ -19,7 +19,7 @@ const UserHome = () => {
   const vehicelFoundRef = useRef<HTMLDivElement>(null);
   const panelCloseRef = useRef<HTMLButtonElement>(null);
 
-  // State variables for form fields
+  // State variables
   const [pickup, setPickup] = useState<string>(""); // Pickup location
   const [destination, setDestination] = useState<string>(""); // Destination location
   const [panelOpen, setPanelOpen] = useState<boolean>(false); // Panel state
@@ -250,7 +250,7 @@ const UserHome = () => {
       {/* Driver Details panel */}
       <div
         ref={watingForDriverRef}
-        className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-fulll space-y-4"
+        className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
         <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
       </div>
