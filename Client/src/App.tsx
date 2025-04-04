@@ -12,8 +12,8 @@ import UserEmailVerification from "./pages/UserComponents/UserEmailVerification"
 import CaptainEmailVerification from "./pages/CaptainComponents/CaptainEmailVerification";
 import ProtectedUserComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedUserComponentWrapper";
 import ProtectedCaptainComponentWrapper from "./pages/ProtectedComponentsWrapper/ProtectedCaptainComponentWrapper";
-import Riding from "./pages/Riding";
 import CaptainRiding from "./pages/CaptainComponents/CaptainRiding";
+import UserRiding from "./pages/UserComponents/UserRiding";
 
 const App = () => {
   return (
@@ -51,7 +51,7 @@ const App = () => {
           {/* For the User logout page */}
           <Route path="logout" element={<UserLogout />} />
           {/* For the Riding page */}
-          <Route path="riding" element={<Riding />} />
+          <Route path="riding" element={<UserRiding />} />
         </Route>
         {/* Routes nested For the Captains page */}
         <Route

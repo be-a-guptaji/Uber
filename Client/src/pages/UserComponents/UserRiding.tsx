@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router";
 
 // Define the Riding component
-const Riding = () => {
+const UserRiding = () => {
   return (
     <>
       <div className="h-dvh">
@@ -82,4 +82,4 @@ const Riding = () => {
   );
 };
 
-export default Riding;
+export default UserRiding;
