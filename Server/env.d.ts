@@ -11,6 +11,7 @@ declare global {
       JWT_EXPIRY: string;
       EMAIL_ID: string;
       EMAIL_PASSWORD: string;
+      GOOGLE_MAPS_API_KEY: string;
     }
   }
 }

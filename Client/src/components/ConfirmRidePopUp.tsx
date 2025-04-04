@@ -24,6 +24,7 @@ const ConfirmRidePopUp = ({
   // Function to handle form submission
   const submitHandler = (e: React.FormEvent) => {
     e.preventDefault(); // Prevent default form submission
+    setError(false); // Reset error state
 
     // Reset OTP
     setOtp(""); // Clear OTP input
