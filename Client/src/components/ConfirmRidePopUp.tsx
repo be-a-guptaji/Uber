@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router";
 
 // Define the props type
@@ -9,6 +10,25 @@ type ConfirmRidePopUpProps = {
 const ConfirmRidePopUp = ({
   setConfirmRidePopupPanel,
 }: ConfirmRidePopUpProps) => {
+  // State Variables
+  const [otp, setOtp] = useState<string>(); // OTP state
+  const [error, setError] = useState<boolean>(false); // Error state
+
+  // Function to handle OTP input
+  const handleOTP = (value: string) => {
+    if (value.length <= 6) {
+      setOtp(value); // Set OTP value
+    }
+  };
+
+  // Function to handle form submission
+  const submitHandler = (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent default form submission
+
+    // Reset OTP
+    setOtp(""); // Clear OTP input
+  };
+
   return (
     <>
       <div className="h-dvh py-8">
@@ -75,25 +95,60 @@ const ConfirmRidePopUp = ({
             </div>
           </div>
 
-          {/* Confirm button */}
-          <Link to={"/captain/riding"}
-            className="w-full bg-green-600 text-white text-center font-semibold p-2 rounded-lg text-xl"
-            onClick={() => {
-              setConfirmRidePopupPanel(false);
-            }}
+          <form
+            className="flex flex-col gap-4 w-full mt-8"
+            onSubmit={(e) => submitHandler(e)}
           >
-            Confirm
-          </Link>
-
-          {/* Cancel button */}
-          <button
-            className="w-full bg-red-600 text-white font-semibold p-2 rounded-lg text-xl"
-            onClick={() => {
-              setConfirmRidePopupPanel(false);
-            }}
-          >
-            Cancel
-          </button>
+            {/* OTP Section */}
+            <label htmlFor="OTP">
+              <h3 className="text-xl mb-2 font-medium text-center">
+                Enter OTP
+              </h3>
+            </label>
+            <input
+              type="number"
+              id="OTP"
+              placeholder="Enter OTP"
+              autoComplete="off"
+              value={otp}
+              maxLength={6}
+              minLength={6}
+              onChange={(e) => {
+                handleOTP(e.target.value);
+              }}
+              className="bg-[#eeeeee] mb-8 rounded px-4 py-2 border w-full text-lg placeholder:text-base font-mono text-center tracking-widest"
+              required
+            />{" "}
+            {/* Error Message For Invalid OTP */}
+            {error && (
+              <p className="text-red-600 -mt-8 text-[12px] text-center mb-3.5">
+                OTP is Invalid
+              </p>
+            )}
+            {/* Confirm button */}
+            <Link
+              to={`${otp?.length === 6 && "/captain/riding"}`}
+              className={`w-full bg-green-600 text-white text-center font-semibold p-2 rounded-lg text-xl ${
+                error ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+              } ${otp?.length !== 6 && "opacity-50"}`}
+              onClick={() => {
+                if (otp?.length === 6) {
+                  setConfirmRidePopupPanel(false);
+                }
+              }}
+            >
+              Confirm
+            </Link>
+            {/* Cancel button */}
+            <button
+              className="w-full bg-red-600 text-white font-semibold p-2 rounded-lg text-xl"
+              onClick={() => {
+                setConfirmRidePopupPanel(false);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
         </div>
       </div>
     </>

@@ -16,7 +16,7 @@ const CaptainHome = () => {
   const [ridePopupPanel, setRidePopupPanel] = useState<boolean>(false);
   const [confirmRidePopupPanel, setConfirmRidePopupPanel] =
     useState<boolean>(false);
-  const [ride, setRide] = useState<null>(null);
+  // const [ride, setRide] = useState<null>(null);
 
   // Context Variables
   // const { socket } = useContext(SocketContext);

@@ -32,16 +32,15 @@ const FinishRide = ({ ride, setFinishRidePanel }: FinishRideType) => {
 
   return (
     <>
-      <h5
-        className="p-1 text-center w-[93%] absolute top-0"
-        onClick={() => {
-          setFinishRidePanel(false);
-        }}
-      >
-        <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i>
-      </h5>
-      <h3 className="text-2xl font-semibold mb-5">Finish this Ride</h3>
-      <div className="flex items-center justify-between p-4 border-2 border-yellow-400 rounded-lg mt-4">
+      {/* Heading */}
+      <div className="flex items-center justify-between">
+        <h3 className="text-3xl font-bold my-4">Finish this Ride</h3>
+        <button onClick={() => setFinishRidePanel(false)}>
+          <i className="ri-arrow-down-s-line text-3xl" />
+        </button>
+      </div>
+
+      <div className="flex items-center justify-between p-4 border-2 bg-yellow-400 rounded-lg mt-4">
         <div className="flex items-center gap-3 ">
           <img
             className="h-12 rounded-full object-cover w-12"
@@ -49,7 +48,8 @@ const FinishRide = ({ ride, setFinishRidePanel }: FinishRideType) => {
             alt=""
           />
           <h2 className="text-lg font-medium">
-            {ride?.user.fullname.firstname}
+            {/* {ride?.user.fullname.firstname} */}
+            Aryan Baadlas
           </h2>
         </div>
         <h5 className="text-lg font-semibold">2.2 KM</h5>
@@ -60,20 +60,28 @@ const FinishRide = ({ ride, setFinishRidePanel }: FinishRideType) => {
             <i className="ri-map-pin-user-fill"></i>
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-sm -mt-1 text-gray-600">{ride?.pickup}</p>
+              <p className="text-sm -mt-1 text-gray-600">
+                {/* {ride?.pickup} */}
+                fafe
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3 border-b-2">
             <i className="text-lg ri-map-pin-2-fill"></i>
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
-              <p className="text-sm -mt-1 text-gray-600">{ride?.destination}</p>
+              <p className="text-sm -mt-1 text-gray-600">
+                {/* {ride?.destination} */}ffawefwe
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <i className="ri-currency-line"></i>
             <div>
-              <h3 className="text-lg font-medium">₹{ride?.fare} </h3>
+              <h3 className="text-lg font-medium">
+                {/* ₹{ride?.fare} */}
+                234231
+              </h3>
               <p className="text-sm -mt-1 text-gray-600">Cash Cash</p>
             </div>
           </div>
