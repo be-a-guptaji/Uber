@@ -3,11 +3,11 @@ import { useNavigate } from "react-router";
 // Type for FinishRide
 type FinishRideType = {
   setFinishRidePanel: (value: boolean) => void;
-  ride: any;
+  ride: unknown;
 };
 
 // Component for FinishRide
-const FinishRide = ({ ride, setFinishRidePanel }: FinishRideType) => {
+const FinishRide = ({  setFinishRidePanel }: FinishRideType) => {
   // Navigation hook();
   const navigate = useNavigate();
 
