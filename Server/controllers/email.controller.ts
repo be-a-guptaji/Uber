@@ -11,7 +11,7 @@ import { generateSixDigitCode } from "../utils/functions/randomCodeGenerator";
 export const sendVerificationEmailToUser = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   // Check if the request body is valid
   const errors = validationResult(req);
 
@@ -136,7 +136,7 @@ export const sendVerificationEmailToUser = async (
 export const sendVerificationEmailToCaptain = async (
   req: Request,
   res: Response
-) => {
+): Promise<void> => {
   // Check if the request body is valid
   const errors = validationResult(req);
 

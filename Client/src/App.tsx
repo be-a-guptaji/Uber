@@ -57,9 +57,9 @@ const App = () => {
         <Route
           path="captain"
           element={
-            // <ProtectedCaptainComponentWrapper>
-            <Outlet />
-            // </ProtectedCaptainComponentWrapper>
+            <ProtectedCaptainComponentWrapper>
+              <Outlet />
+            </ProtectedCaptainComponentWrapper>
           }
         >
           {/* For the home page */}

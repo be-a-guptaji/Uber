@@ -265,7 +265,10 @@ export const loginCaptain = async (
 };
 
 // Get Captain profile through the cookies
-export const getCaptainProfile = async (req: Request, res: Response) => {
+export const getCaptainProfile = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   // Check if the Captain is authenticated
   if (!req.captain) {
     res.status(401).json(new ApiResponse(401, null, "Unauthorized."));
@@ -324,7 +327,10 @@ export const getCaptainProfile = async (req: Request, res: Response) => {
 };
 
 // Logout a Captain
-export const logoutCaptain = async (req: Request, res: Response) => {
+export const logoutCaptain = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
   try {
     // Retreiving the token from the request headers or cookies
     const token: string =

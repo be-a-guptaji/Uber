@@ -30,3 +30,6 @@ export type UserType = {
 export type CaptainType = {
   vehicle: VehicleType;
 } & UserType;
+
+// Define the type for the Coordinates
+export type CoordinatesType = { ltd: number; lng: number };

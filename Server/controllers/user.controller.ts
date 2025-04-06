@@ -253,7 +253,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
 };
 
 // Get User profile through the cookies
-export const getUserProfile = async (req: Request, res: Response) => {
+export const getUserProfile = async (req: Request, res: Response) : Promise<void> => {
   // Check if the User is authenticated
   if (!req.user) {
     res.status(401).json(new ApiResponse(401, null, "Unauthorized."));
@@ -316,7 +316,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
 };
 
 // Logout a User
-export const logoutUser = async (req: Request, res: Response) => {
+export const logoutUser = async (req: Request, res: Response): Promise<void> => {
   try {
     // Retreiving the token from the request headers or cookies
     const token: string =
