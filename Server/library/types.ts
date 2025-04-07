@@ -33,3 +33,16 @@ export type CaptainType = {
 
 // Define the type for the Coordinates
 export type CoordinatesType = { ltd: number; lng: number };
+
+// Define the type for the Distance and Time
+export type DistanceTimeType = {
+  distance: {
+    text: string;
+    value: number;
+  };
+  duration: {
+    text: string;
+    value: number;
+  };
+  status: string;
+};

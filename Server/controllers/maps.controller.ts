@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { validationResult } from "express-validator";
 import {
   getAddressCoordinates,
+  getAutoCompleteSuggestionsService,
   getDistanceTimeService,
 } from "../services/maps.service";
 import { ApiResponse } from "../utils/api/ApiResponse";
@@ -73,6 +74,37 @@ export const getDistanceTime = async (
           distanceTime,
           "Distance and time fetched successfully"
         )
+      );
+  } catch {
+    res.status(500).json(new ApiResponse(500, null, "Internal server error"));
+  }
+};
+
+// Get the autocomplete suggestions from the address
+export const getAutoCompleteSuggestions = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    // Validate the request
+    const errors = validationResult(req);
+    // Check for validation errors
+    if (!errors.isEmpty()) {
+      res
+        .status(400)
+        .json(new ApiResponse(400, errors.array(), "Invalid request body."));
+    }
+
+    const { input } = req.query;
+
+    const suggestions = await getAutoCompleteSuggestionsService(
+      input as string
+    );
+
+    res
+      .status(200)
+      .json(
+        new ApiResponse(200, suggestions, "Suggestions fetched successfully")
       );
   } catch {
     res.status(500).json(new ApiResponse(500, null, "Internal server error"));

@@ -1,7 +1,11 @@
 import express from "express";
 import { body } from "express-validator";
 import { authUser } from "../middlewares/authUser.middleware";
-import { getCoordinates, getDistanceTime } from "../controllers/maps.controller";
+import {
+  getAutoCompleteSuggestions,
+  getCoordinates,
+  getDistanceTime,
+} from "../controllers/maps.controller";
 import { query } from "express-validator";
 
 // Create a new router
@@ -22,6 +26,14 @@ router.get(
   query("destination").isString().isLength({ min: 2 }),
   authUser,
   getDistanceTime
+);
+
+// Route to get suggetions
+router.get(
+  "/get-suggestions",
+  query("input").isString().isLength({ min: 3 }),
+  authUser,
+  getAutoCompleteSuggestions
 );
 
 // Export the router

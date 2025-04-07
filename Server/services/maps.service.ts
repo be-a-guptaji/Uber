@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ApiError } from "../utils/api/ApiError";
-import { CoordinatesType } from "../library/types";
+import { CoordinatesType, DistanceTimeType } from "../library/types";
 
 // Get the map Coordinates from the address
 export const getAddressCoordinates = async (
@@ -32,7 +32,7 @@ export const getAddressCoordinates = async (
 export const getDistanceTimeService = async (
   origin: string,
   destination: string
-): Promise<unknown> => {
+): Promise<DistanceTimeType> => {
   if (!origin || !destination) {
     throw new ApiError(400, "Missing required fields.");
   }
@@ -53,5 +53,30 @@ export const getDistanceTimeService = async (
     }
   } catch {
     throw new ApiError(500, "Unable to fetch distance and time");
+  }
+};
+
+// Get the autocomplete suggestions from the address
+export const getAutoCompleteSuggestionsService = async (
+  input: string
+): Promise<any> => {
+  if (!input) {
+    throw new ApiError(400, "Missing required fields.");
+  }
+
+  const apiKey = process.env.GOOGLE_MAPS_API;
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url);
+    if (response.data.status === "OK") {
+      return response.data.predictions
+        .map((prediction: any) => prediction.description)
+        .filter((value: string) => value);
+    } else {
+      throw new ApiError(500, "Unable to fetch suggestions");
+    }
+  } catch {
+    throw new ApiError(500, "Unable to fetch suggestions");
   }
 };
