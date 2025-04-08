@@ -97,6 +97,7 @@ export const getAutoCompleteSuggestions = async (
 
     const { input } = req.query;
 
+    // Get the coordinates from the address using the service
     const suggestions = await getAutoCompleteSuggestionsService(
       input as string
     );
