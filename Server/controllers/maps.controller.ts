@@ -59,13 +59,16 @@ export const getDistanceTime = async (
         .json(new ApiResponse(400, errors.array(), "Invalid request body."));
     }
 
+    // Retrieve the origin and destination from the request query
     const { origin, destination } = req.query;
 
+    // Get the distance and time from the coordinates using the service
     const distanceTime = await getDistanceTimeService(
       origin as string,
       destination as string
     );
 
+    // Send the response with the distance and time
     res
       .status(200)
       .json(
@@ -76,6 +79,7 @@ export const getDistanceTime = async (
         )
       );
   } catch {
+    // Handle errors and send the response with the error message
     res.status(500).json(new ApiResponse(500, null, "Internal server error"));
   }
 };
@@ -102,12 +106,14 @@ export const getAutoCompleteSuggestions = async (
       input as string
     );
 
+    // Send the response with the coordinates
     res
       .status(200)
       .json(
         new ApiResponse(200, suggestions, "Suggestions fetched successfully")
       );
   } catch {
+    // Handle errors and send the response with the error message
     res.status(500).json(new ApiResponse(500, null, "Internal server error"));
   }
 };
