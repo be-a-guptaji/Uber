@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
+import { ApiResponse } from "../utils/api/ApiResponse";
 import {
   getAddressCoordinates,
   getAutoCompleteSuggestionsService,
   getDistanceTimeService,
 } from "../services/maps.service";
-import { ApiResponse } from "../utils/api/ApiResponse";
 
 // Get the map Coordinates from the address
 export const getCoordinates = async (
