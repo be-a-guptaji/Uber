@@ -59,6 +59,7 @@ app.use("/users", UserRoutes); // Prefix for User routes
 app.use("/captains", CaptainRoutes); // Prefix for Captain routes
 app.use("/emails", EMailRoutes); // Prefix for Captain routes
 app.use("/maps", MapsRoutes); // Prefix for Maps routes
+app.use("/rides", MapsRoutes); // Prefix for Maps routes
 
 // Connect to the database
 connectToDatabase();
