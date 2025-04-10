@@ -46,3 +46,11 @@ export type DistanceTimeType = {
   };
   status: string;
 };
+
+// Define the type for the Ride
+export type RideType = {
+  user: string;
+  pickup: string;
+  destination: string;
+  vehicleType: "car" | "auto" | "motorcycle";
+};

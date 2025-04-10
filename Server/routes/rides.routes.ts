@@ -1,15 +1,14 @@
 import express from "express";
 import { body } from "express-validator";
+import { createRide } from "../controllers/rides.controller";
+import { authUser } from "../middlewares/authUser.middleware";
 
 // Create a new router
 const router = express.Router();
 
 router.post(
   "/create",
-  body("userId")
-    .isString()
-    .isLength({ min: 24, max: 24 })
-    .withMessage("Invalid user ID"),
+  authUser,
   body("pickup")
     .isString()
     .isLength({ min: 2 })
@@ -17,7 +16,12 @@ router.post(
   body("destination")
     .isString()
     .isLength({ min: 2 })
-    .withMessage("Invalid destination location")
+    .withMessage("Invalid destination location"),
+  body("vehicleType")
+    .isString()
+    .isIn(["car", "auto", "motorcycle"])
+    .withMessage("Invalid vehicle type"),
+  createRide
 );
 
 // Export the router

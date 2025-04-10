@@ -7,7 +7,7 @@ type FinishRideType = {
 };
 
 // Component for FinishRide
-const FinishRide = ({  setFinishRidePanel }: FinishRideType) => {
+const FinishRide = ({ setFinishRidePanel }: FinishRideType) => {
   // Navigation hook();
   const navigate = useNavigate();
 

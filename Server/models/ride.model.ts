@@ -6,10 +6,11 @@ export interface RideSchemaType extends Document {
   captain?: Schema.Types.ObjectId; // Optional, correct type for ObjectId
   pickup: string;
   destination: string;
+  otp?: string; // Optional, as it may not be set initially
   fare: number;
   status: "pending" | "accepted" | "completed" | "cancelled" | "ongoing";
-  duration?: number;
-  distance?: number;
+  duration?: number; // In seconds
+  distance?: number; // In meters
   paymentID?: string;
   orderID?: string;
   signature?: string;
@@ -33,6 +34,11 @@ const rideSchema = new Schema<RideSchemaType>(
     },
     destination: {
       type: String,
+      required: true,
+    },
+    otp: {
+      type: String,
+      select: false, // Exclude from queries by default
       required: true,
     },
     fare: {

@@ -1,5 +1,6 @@
 import crypto from "crypto";
 
+// This function generates a random 6-digit code using Node.js's crypto module.
 export function generateSixDigitCode() {
   // Generate a random buffer with a length of 3 bytes (24 bits)
   const buffer = crypto.randomBytes(3);

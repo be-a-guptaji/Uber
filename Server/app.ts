@@ -8,7 +8,7 @@ import UserRoutes from "./routes/user.routes";
 import CaptainRoutes from "./routes/captain.routes";
 import EMailRoutes from "./routes/email.routes";
 import MapsRoutes from "./routes/maps.routes";
-
+import RidesRoutes from "./routes/rides.routes";
 // Load and configuring environment variables
 dotenv.config({
   // Specify the path to the .env file
@@ -59,7 +59,7 @@ app.use("/users", UserRoutes); // Prefix for User routes
 app.use("/captains", CaptainRoutes); // Prefix for Captain routes
 app.use("/emails", EMailRoutes); // Prefix for Captain routes
 app.use("/maps", MapsRoutes); // Prefix for Maps routes
-app.use("/rides", MapsRoutes); // Prefix for Maps routes
+app.use("/rides", RidesRoutes); // Prefix for Maps routes
 
 // Connect to the database
 connectToDatabase();
