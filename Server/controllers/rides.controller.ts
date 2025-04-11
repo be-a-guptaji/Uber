@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { ApiResponse } from "../utils/api/ApiResponse";
 import { validationResult } from "express-validator";
 import { createRideService } from "../services/rides.service";
-import { getAddressCoordinates } from "../services/maps.service";
 
 // Function to create a new ride
 export const createRide = async (
