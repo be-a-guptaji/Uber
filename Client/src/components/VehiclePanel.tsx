@@ -1,11 +1,13 @@
 // Types for the VehiclePanel component
 type VehiclePanelProps = {
+  fare: { [key: string]: number } | null;
   setVehiclePanelOpen: (open: boolean) => void;
   setConfirmedRidePanel: (open: boolean) => void;
 };
 
 // Vehicle panel component
 const VehiclePanel = ({
+  fare,
   setVehiclePanelOpen,
   setConfirmedRidePanel,
 }: VehiclePanelProps) => {
@@ -37,7 +39,7 @@ const VehiclePanel = ({
           <h5 className="text-gray-600 font-medium">2 mins away</h5>
           <p className="text-gray-600 text-xs">Affordable, city rides</p>
         </div>
-        <h2 className="font-bold text-xl">₹1234.45</h2>
+        <h2 className="font-bold text-xl">₹{fare?.car}</h2>
       </button>
       {/* Motercycle card */}
       <button
@@ -58,7 +60,7 @@ const VehiclePanel = ({
           <h5 className="text-gray-600 font-medium">1 mins away</h5>
           <p className="text-gray-600 text-xs">Affordable motercycle rides</p>
         </div>
-        <h2 className="font-bold text-xl">₹111.67</h2>
+        <h2 className="font-bold text-xl">₹{fare?.motorcycle}</h2>
       </button>
       {/* Auto card */}
       <button
@@ -79,7 +81,7 @@ const VehiclePanel = ({
           <h5 className="text-gray-600 font-medium">2 mins away</h5>
           <p className="text-gray-600 text-xs">Affordable, compact rides</p>
         </div>
-        <h2 className="font-bold text-xl">₹453.14</h2>
+        <h2 className="font-bold text-xl">₹{fare?.auto}</h2>
       </button>
     </>
   );

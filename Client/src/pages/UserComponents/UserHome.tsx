@@ -27,6 +27,9 @@ const UserHome = () => {
   const [confirmedRidePanel, setConfirmedRidePanel] = useState<boolean>(false); // Confirmed ride state
   const [vehicelFound, setVehicelFound] = useState<boolean>(false); // Vehicle found state
   const [waitingForDriver, setWaitingForDriver] = useState<boolean>(false); // Waiting for driver state
+  const [fare, setFare] = useState<{
+    [key: string]: number;
+  } | null>(null); // Fare amount
 
   // GSAP animation hook for location panel
   useGSAP(
@@ -210,6 +213,9 @@ const UserHome = () => {
           {/* Location search panel */}
           <div className="flex flex-col gap-4 overflow-y-scroll">
             <LocationSearchPanel
+              pickup={pickup}
+              destination={destination}
+              setFare={setFare}
               setPanelOpen={setPanelOpen}
               setVehiclePanelOpen={setVehiclePanelOpen}
             />
@@ -223,6 +229,7 @@ const UserHome = () => {
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
         <VehiclePanel
+          fare={fare}
           setVehiclePanelOpen={setVehiclePanelOpen}
           setConfirmedRidePanel={setConfirmedRidePanel}
         />

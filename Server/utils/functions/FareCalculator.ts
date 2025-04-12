@@ -2,7 +2,7 @@ import { getDistanceTimeService } from "../../services/maps.service";
 import { ApiError } from "../api/ApiError";
 
 // This function calculates the fare based on the distance
-export async function getFare(
+export async function getFareFunction(
   pickup: string,
   destination: string
 ): Promise<{ [key: string]: number }> {
@@ -27,23 +27,31 @@ export async function getFare(
   const perMinuteRate = { car: 3, auto: 2, motorcycle: 1.5 };
 
   // Calculate the fare based on the distance, time and vehicle type
-  const fare = {
-    auto: Math.round(
-      baseFare.auto +
+const fare = {
+  auto:
+    Math.round(
+      (baseFare.auto +
         (distance.value / 1000) * perKilometerRate.auto +
-        (duration.value / 60) * perMinuteRate.auto
-    ),
-    car: Math.round(
-      baseFare.car +
+        (duration.value / 60) * perMinuteRate.auto) *
+        100
+    ) / 100,
+
+  car:
+    Math.round(
+      (baseFare.car +
         (distance.value / 1000) * perKilometerRate.car +
-        (duration.value / 60) * perMinuteRate.car
-    ),
-    motorcycle: Math.round(
-      baseFare.motorcycle +
+        (duration.value / 60) * perMinuteRate.car) *
+        100
+    ) / 100,
+
+  motorcycle:
+    Math.round(
+      (baseFare.motorcycle +
         (distance.value / 1000) * perKilometerRate.motorcycle +
-        (duration.value / 60) * perMinuteRate.motorcycle
-    ),
-  };
+        (duration.value / 60) * perMinuteRate.motorcycle) *
+        100
+    ) / 100,
+};
 
   // Return the fare object
   return fare;

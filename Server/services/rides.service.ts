@@ -1,7 +1,7 @@
 import { RideType } from "../library/types";
 import Ride, { RideSchemaType } from "../models/ride.model";
 import { ApiError } from "../utils/api/ApiError";
-import { getFare } from "../utils/functions/FareCalculator";
+import { getFareFunction } from "../utils/functions/FareCalculator";
 import { generateSixDigitCode } from "../utils/functions/randomCodeGenerator";
 
 // Service to create a ride
@@ -16,7 +16,7 @@ export const createRideService = async ({
       throw new ApiError(400, "Invalid ride details");
     }
 
-    const fare = await getFare(pickup, destination);
+    const fare = await getFareFunction(pickup, destination);
 
     const ride = await Ride.create({
       user,
