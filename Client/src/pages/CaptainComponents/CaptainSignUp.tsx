@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { CaptainType } from "../../library/types";
-import { CaptainDataContext } from "../../contexts/CaptainContext";
 import { sendEmailVerificationCodeForCaptain } from "../../services/Post/EmailPostAPI";
+import { CaptainDataContext } from "../../contexts/CaptainDataContext";
 
 // Captain sign-up component
 const CaptainSignUp = () => {

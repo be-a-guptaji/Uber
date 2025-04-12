@@ -320,7 +320,7 @@ export const getCaptainProfile = async (
     }) // Set the token as a cookie
     .status(200)
     .json(
-      new ApiResponse(200, req.captain, "Captain profile successfully fetched.") // Return a data response
+      new ApiResponse(200, captainObj, "Captain profile successfully fetched.") // Return a data response
     );
 
   return;

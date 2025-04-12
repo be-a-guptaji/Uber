@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { LoginDataType } from "../../library/types";
-import { UserDataContext } from "../../contexts/UserContext";
+import { UserDataContext } from "../../contextsProviders/UserContext";
 import { loginUser } from "../../services/Post/UserPostAPI";
 
 // User login component

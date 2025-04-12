@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
-import { CaptainDataContext } from "../../contexts/CaptainContext";
 import { logoutCaptain } from "../../services/Get/CaptainGetAPI";
+import { CaptainDataContext } from "../../contexts/CaptainDataContext";
 
 // Cptain Logout component
 const CaptainLogout = () => {

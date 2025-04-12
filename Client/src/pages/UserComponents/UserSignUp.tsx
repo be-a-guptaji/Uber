@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { UserType } from "../../library/types";
-import { UserDataContext } from "../../contexts/UserContext";
+import { UserDataContext } from "../../contextsProviders/UserContext";
 import { sendEmailVerificationCodeForUser } from "../../services/Post/EmailPostAPI";
 
 // User sign up component

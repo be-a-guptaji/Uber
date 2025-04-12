@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { CaptainDataContext } from "../../contexts/CaptainContext";
 import { getCaptain } from "../../services/Get/CaptainGetAPI";
 import Loading from "../../components/Loading";
 import { CaptainApiSuccess } from "../../library/types";
+import { CaptainDataContext } from "../../contexts/CaptainDataContext";
 
 // Define the props for the component
 interface ProtectedCaptainComponentWrapperProps {
@@ -42,7 +42,7 @@ const ProtectedCaptainComponentWrapper = ({
         }
       } catch {
         // If Captain is not logged in, navigate to login page
-        if (!res.data) {
+        if (!captain) {
           navigate("/captain-login");
         }
       }

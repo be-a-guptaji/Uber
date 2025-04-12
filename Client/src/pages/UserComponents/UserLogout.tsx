@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router";
-import { UserDataContext } from "../../contexts/UserContext";
+import { UserDataContext } from "../../contextsProviders/UserContext";
 import { logoutUser } from "../../services/Get/UserGetAPI";
 
 // User Logout component
