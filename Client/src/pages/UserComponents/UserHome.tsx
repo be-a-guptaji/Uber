@@ -30,7 +30,9 @@ const UserHome = () => {
   const [fare, setFare] = useState<{
     [key: string]: number;
   } | null>(null); // Fare amount
-  const [vehicelType, setVehicelType] = useState<"car" | "auto" | "motorcycle">("car"); // Vehicle type
+  const [vehicelType, setVehicelType] = useState<"car" | "auto" | "motorcycle">(
+    "car"
+  ); // Vehicle type
 
   // GSAP animation hook for location panel
   useGSAP(
@@ -231,8 +233,6 @@ const UserHome = () => {
       >
         <VehiclePanel
           fare={fare}
-          pickup={pickup}
-          destination={destination}
           setVehicelType={setVehicelType}
           setVehiclePanelOpen={setVehiclePanelOpen}
           setConfirmedRidePanel={setConfirmedRidePanel}
@@ -245,7 +245,10 @@ const UserHome = () => {
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
         <ConfirmedRide
+          fare={fare}
           vehicelType={vehicelType}
+          pickup={pickup}
+          destination={destination}
           setConfirmedRidePanel={setConfirmedRidePanel}
           setVehicelFound={setVehicelFound}
         />
@@ -256,7 +259,13 @@ const UserHome = () => {
         ref={vehicelFoundRef}
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
-        <LookingForDriver setVehicelFound={setVehicelFound} />
+        <LookingForDriver
+          fare={fare}
+          vehicelType={vehicelType}
+          pickup={pickup}
+          destination={destination}
+          setVehicelFound={setVehicelFound}
+        />
       </div>
 
       {/* Driver Details panel */}
@@ -264,7 +273,13 @@ const UserHome = () => {
         ref={watingForDriverRef}
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
-        <WaitingForDriver setWaitingForDriver={setWaitingForDriver} />
+        <WaitingForDriver
+          fare={fare}
+          vehicelType={vehicelType}
+          pickup={pickup}
+          destination={destination}
+          setWaitingForDriver={setWaitingForDriver}
+        />
       </div>
 
       <Outlet />

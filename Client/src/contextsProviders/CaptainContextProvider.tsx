@@ -1,4 +1,3 @@
-
 import { CaptainDataContext } from "../contexts/CaptainDataContext";
 import { SchemaAdditions, CaptainType } from "../library/types";
 import { ReactNode, useState } from "react";

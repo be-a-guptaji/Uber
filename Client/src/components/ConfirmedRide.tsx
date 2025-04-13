@@ -1,13 +1,21 @@
+import { createRide } from "../services/Post/RidePostAPI";
+
 // Types for the ConfirmedRide component
 type ConfirmedRideProps = {
+  fare: { [key: string]: number } | null;
   vehicelType: "car" | "auto" | "motorcycle";
+  pickup: string;
+  destination: string;
   setConfirmedRidePanel: (open: boolean) => void;
   setVehicelFound: (open: boolean) => void;
 };
 
 // ConfirmedRide component
 const ConfirmedRide = ({
+  fare,
   vehicelType,
+  pickup,
+  destination,
   setConfirmedRidePanel,
   setVehicelFound,
 }: ConfirmedRideProps) => {
@@ -51,9 +59,7 @@ const ConfirmedRide = ({
             <i className="ri-map-pin-2-fill text-3xl bg-[#eee] p-3 rounded-full" />
             <div className="flex flex-col">
               <h3 className="font-bold text-xl">562/11-A</h3>
-              <p className="text-gray-500 font-medium text-sm">
-                Jamna Par, New Delhi
-              </p>
+              <p className="text-gray-500 font-medium text-sm">{pickup}</p>
             </div>
           </div>
 
@@ -62,7 +68,7 @@ const ConfirmedRide = ({
             <i className="ri-map-pin-user-fill text-3xl bg-[#eee] p-3 rounded-full" />
             <div className="flex flex-col">
               <h3 className="font-bold text-xl">Shubash Park</h3>
-              <p className="text-gray-500 font-medium text-sm">Mg Road, Agra</p>
+              <p className="text-gray-500 font-medium text-sm">{destination}</p>
             </div>
           </div>
 
@@ -70,7 +76,7 @@ const ConfirmedRide = ({
           <div className="flex items-center gap-8 justify-start w-full pb-4">
             <i className="ri-currency-line text-3xl bg-[#eee] p-3 rounded-full" />
             <div className="flex flex-col">
-              <h3 className="font-bold text-xl">₹1234.45</h3>
+              <h3 className="font-bold text-xl">₹{fare?.[vehicelType]}</h3>
               <p className="text-gray-500 font-medium text-sm">
                 Total Fair to pay
               </p>
@@ -81,9 +87,10 @@ const ConfirmedRide = ({
         {/* Confirm button */}
         <button
           className="w-full bg-green-600 text-white font-semibold p-2 rounded-lg text-xl"
-          onClick={() => {
+          onClick={async () => {
             setVehicelFound(true);
             setConfirmedRidePanel(false);
+            await createRide(pickup, destination, vehicelType);
           }}
         >
           Confirm

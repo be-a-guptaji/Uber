@@ -1,11 +1,9 @@
-import { createRide } from "../services/Post/RidePostAPI";
-
 // Types for the VehiclePanel component
 type VehiclePanelProps = {
   fare: { [key: string]: number } | null;
-  pickup: string;
-  destination: string;
-  setVehicelType: React.Dispatch<React.SetStateAction<"car" | "auto" | "motorcycle">>;
+  setVehicelType: React.Dispatch<
+    React.SetStateAction<"car" | "auto" | "motorcycle">
+  >;
   setVehiclePanelOpen: (open: boolean) => void;
   setConfirmedRidePanel: (open: boolean) => void;
 };
@@ -13,8 +11,6 @@ type VehiclePanelProps = {
 // Vehicle panel component
 const VehiclePanel = ({
   fare,
-  pickup,
-  destination,
   setVehicelType,
   setVehiclePanelOpen,
   setConfirmedRidePanel,
@@ -31,11 +27,10 @@ const VehiclePanel = ({
       {/* Car card */}
       <button
         className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border"
-        onClick={async () => {
+        onClick={() => {
           setVehiclePanelOpen(false);
           setConfirmedRidePanel(true);
           setVehicelType("car");
-          await createRide(pickup, destination, "car");
         }}
       >
         <img src="/UberCar.webp" alt="Car logo" className="w-20" />
@@ -54,11 +49,10 @@ const VehiclePanel = ({
       {/* Motercycle card */}
       <button
         className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border"
-        onClick={async () => {
+        onClick={() => {
           setVehiclePanelOpen(false);
           setConfirmedRidePanel(true);
           setVehicelType("motorcycle");
-          await createRide(pickup, destination, "motorcycle");
         }}
       >
         <img src="/UberBike.webp" alt="Moto logo" className="w-20" />
@@ -77,11 +71,10 @@ const VehiclePanel = ({
       {/* Auto card */}
       <button
         className="flex items-center justify-between bg-[#eee] active:border-2 rounded-xl p-4 w-full border-gray-400 active:border-black border"
-        onClick={async () => {
+        onClick={() => {
           setVehiclePanelOpen(false);
           setConfirmedRidePanel(true);
           setVehicelType("auto");
-          await createRide(pickup, destination, "auto");
         }}
       >
         <img src="/UberAuto.png" alt="Auto logo" className="w-20" />
