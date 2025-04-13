@@ -2,6 +2,7 @@
 type WaitingForDriverProps = {
   fare: { [key: string]: number } | null;
   vehicelType: "car" | "auto" | "motorcycle";
+  ride: any;
   pickup: string;
   destination: string;
   setWaitingForDriver: (value: boolean) => void;
@@ -11,6 +12,7 @@ type WaitingForDriverProps = {
 const WaitingForDriver = ({
   fare,
   vehicelType,
+  ride,
   pickup,
   destination,
   setWaitingForDriver,

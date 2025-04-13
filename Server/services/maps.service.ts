@@ -1,6 +1,7 @@
 import axios from "axios";
 import { ApiError } from "../utils/api/ApiError";
 import { CoordinatesType, DistanceTimeType } from "../library/types";
+import Captain, { CaptainSchemaType } from "../models/captain.model";
 
 // Get the map Coordinates from the address
 export const getAddressCoordinates = async (
@@ -79,4 +80,21 @@ export const getAutoCompleteSuggestionsService = async (
   } catch {
     throw new ApiError(500, "Unable to fetch suggestions");
   }
+};
+
+// Get the captains in the radius
+export const getCaptainsInTheRadius = async (
+  latitude: number,
+  longitude: number,
+  radius: number
+): Promise<CaptainSchemaType[]> => {
+  const captains = await Captain.find({
+    location: {
+      $geoWithin: {
+        $centerSphere: [[latitude, longitude], radius / 6371], // Earth radius in km
+      },
+    },
+  });
+
+  return captains;
 };

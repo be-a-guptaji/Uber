@@ -2,7 +2,7 @@ import React, { useEffect, ReactNode } from "react";
 import { io, Socket } from "socket.io-client";
 import { SocketContext } from "../contexts/SocketDataContext";
 
-const socket: Socket = io(import.meta.env.VITE_BASE_URL as string);
+const socket: Socket = io(import.meta.env.VITE_SERVER_BASE_URL as string);
 
 interface SocketProviderProps {
   children: ReactNode;

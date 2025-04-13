@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Outlet } from "react-router";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Outlet, useNavigate } from "react-router";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import "remixicon/fonts/remixicon.css";
@@ -8,9 +8,14 @@ import VehiclePanel from "../../components/VehiclePanel";
 import ConfirmedRide from "../../components/ConfirmedRide";
 import LookingForDriver from "../../components/LookingForDriver";
 import WaitingForDriver from "../../components/WaitingForDriver";
+import { SocketContext } from "../../contexts/SocketDataContext";
+import { UserDataContext } from "../../contexts/UserDataContext";
 
 // User Home Page
 const UserHome = () => {
+  // Hooks variables
+  const navigate = useNavigate();
+
   // Ref variables
   const panelRef = useRef<HTMLDivElement>(null);
   const vehiclePanelRef = useRef<HTMLDivElement>(null);
@@ -33,6 +38,28 @@ const UserHome = () => {
   const [vehicelType, setVehicelType] = useState<"car" | "auto" | "motorcycle">(
     "car"
   ); // Vehicle type
+  const [ride, setRide] = useState(null);
+
+  //Context variables
+  const { socket } = useContext(SocketContext)!;
+  const { user } = useContext(UserDataContext)!;
+
+  socket.on("ride-confirmed", (ride) => {
+    setVehicelFound(false);
+    setWaitingForDriver(true);
+    setRide(ride);
+  });
+
+  socket.on("ride-started", (ride) => {
+    console.log("ride");
+    setWaitingForDriver(false);
+    navigate("/riding", { state: { ride } }); // Updated navigate to include ride data
+  });
+
+  // Socket connection
+  useEffect(() => {
+    socket.emit("join", { userType: "user", userId: user?._id });
+  }, [socket, user]);
 
   // GSAP animation hook for location panel
   useGSAP(
@@ -275,6 +302,7 @@ const UserHome = () => {
       >
         <WaitingForDriver
           fare={fare}
+          ride={ride}
           vehicelType={vehicelType}
           pickup={pickup}
           destination={destination}
