@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router";
 import CaptianDetails from "../../components/CaptianDetails";
 import RidePopUp from "../../components/RidePopUp";
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import ConfirmRidePopUp from "../../components/ConfirmRidePopUp";

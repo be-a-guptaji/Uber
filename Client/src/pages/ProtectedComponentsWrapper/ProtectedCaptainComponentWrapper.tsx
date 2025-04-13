@@ -42,7 +42,7 @@ const ProtectedCaptainComponentWrapper = ({
         }
       } catch {
         // If Captain is not logged in, navigate to login page
-        if (!captain) {
+        if (!res.data) {
           navigate("/captain-login");
         }
       }

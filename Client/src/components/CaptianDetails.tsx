@@ -17,8 +17,8 @@ const CaptianDetails = () => {
                 alt="User Pfp"
                 className="size-14 rounded-full"
               />
-              <h4 className="text-xl font-medium">
-                {captain?.fullName.firstName + " " + captain?.fullName.lastName}
+              <h4 className="text-xl font-medium capitalize">
+                {captain?.fullName?.firstName + " " + captain?.fullName?.lastName}
               </h4>
             </div>
             <div className="text-right">
