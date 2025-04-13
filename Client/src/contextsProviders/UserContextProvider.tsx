@@ -8,7 +8,7 @@ type UserContextProps = {
   children: ReactNode;
 };
 
-const UserContext = ({ children }: UserContextProps) => {
+const UserContextProvider = ({ children }: UserContextProps) => {
   const [user, setUser] = useState<MongooseUserSchemaType | null | undefined>(
     null
   );
@@ -20,4 +20,4 @@ const UserContext = ({ children }: UserContextProps) => {
   );
 };
 
-export default UserContext;
+export default UserContextProvider;

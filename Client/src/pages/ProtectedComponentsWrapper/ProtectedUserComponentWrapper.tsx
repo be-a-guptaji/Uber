@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { UserDataContext } from "../../contextsProviders/UserContextProvider";
 import { useNavigate } from "react-router";
 import { getUser } from "../../services/Get/UserGetAPI";
 import Loading from "../../components/Loading";
 import { UserApiSuccess } from "../../library/types";
+import { UserDataContext } from "../../contexts/UserDataContext";
 
 // Define the props for the component
 interface ProtectedUserComponentWrapperProps {
