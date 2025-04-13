@@ -1,11 +1,13 @@
 // Types for the ConfirmedRide component
 type ConfirmedRideProps = {
+  vehicelType: "car" | "auto" | "motorcycle";
   setConfirmedRidePanel: (open: boolean) => void;
   setVehicelFound: (open: boolean) => void;
 };
 
 // ConfirmedRide component
 const ConfirmedRide = ({
+  vehicelType,
   setConfirmedRidePanel,
   setVehicelFound,
 }: ConfirmedRideProps) => {
@@ -21,7 +23,27 @@ const ConfirmedRide = ({
 
       {/* Details Section */}
       <div className="flex flex-col items-center justify-center w-full gap-4">
-        <img src="/UberCar.webp" alt="Uber Car" className="w-full" />
+        <img
+          src={
+            vehicelType === "car"
+              ? "/UberCar.webp"
+              : vehicelType === "auto"
+                ? "/UberAuto.png"
+                : vehicelType === "motorcycle"
+                  ? "/UberBike.webp"
+                  : ""
+          }
+          alt={
+            vehicelType === "car"
+              ? "Car logo"
+              : vehicelType === "auto"
+                ? "Auto logo"
+                : vehicelType === "motorcycle"
+                  ? "Motorcycle logo"
+                  : ""
+          }
+          className="w-full"
+        />
         {/* Pickup point , dropoff point and fair */}
         <div className="w-full divide-y flex flex-col gap-4">
           {/* Pickup point */}

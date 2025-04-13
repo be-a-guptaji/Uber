@@ -30,6 +30,7 @@ const UserHome = () => {
   const [fare, setFare] = useState<{
     [key: string]: number;
   } | null>(null); // Fare amount
+  const [vehicelType, setVehicelType] = useState<"car" | "auto" | "motorcycle">("car"); // Vehicle type
 
   // GSAP animation hook for location panel
   useGSAP(
@@ -230,6 +231,9 @@ const UserHome = () => {
       >
         <VehiclePanel
           fare={fare}
+          pickup={pickup}
+          destination={destination}
+          setVehicelType={setVehicelType}
           setVehiclePanelOpen={setVehiclePanelOpen}
           setConfirmedRidePanel={setConfirmedRidePanel}
         />
@@ -241,6 +245,7 @@ const UserHome = () => {
         className="fixed z-30 bottom-0 p-4 bg-white w-full translate-y-full space-y-4"
       >
         <ConfirmedRide
+          vehicelType={vehicelType}
           setConfirmedRidePanel={setConfirmedRidePanel}
           setVehicelFound={setVehicelFound}
         />

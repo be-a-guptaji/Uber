@@ -10,6 +10,7 @@ export const calculateFare = async (
   // Make a request to the server to calculate the fare
   const response = await Api.get(`/rides/get-fare`, {
     params: { pickup, destination },
+    withCredentials: true,
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
