@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router";
 import VerificationCode from "../../components/VerificationCode";
 import { useContext, useEffect, useState } from "react";
-import { UserDataContext } from "../../contextsProviders/UserContext";
 import Loading from "../../components/Loading";
 import { UserType } from "../../library/types";
 import { createUser } from "../../services/Post/UserPostAPI";
+import { UserDataContext } from "../../contexts/UserDataContext";
 
 // Types for the UserEmailVerification component
 type UserEmailVerificationProps = UserType & { verificationCode: string };

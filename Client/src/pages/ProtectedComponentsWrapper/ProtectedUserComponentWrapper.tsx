@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { UserDataContext } from "../../contextsProviders/UserContext";
+import { UserDataContext } from "../../contextsProviders/UserContextProvider";
 import { useNavigate } from "react-router";
 import { getUser } from "../../services/Get/UserGetAPI";
 import Loading from "../../components/Loading";

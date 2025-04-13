@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router";
 import App from "./App.tsx";
-import UserContext from "./contextsProviders/UserContext.tsx";
+import UserContext from "./contextsProviders/UserContextProvider.tsx";
 import CaptainContextProvider from "./contextsProviders/CaptainContextProvider.tsx";
 import "./index.css";
 
