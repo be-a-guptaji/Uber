@@ -7,6 +7,7 @@ import gsap from "gsap";
 import ConfirmRidePopUp from "../../components/ConfirmRidePopUp";
 import { SocketContext } from "../../contexts/SocketDataContext";
 import { CaptainDataContext } from "../../contexts/CaptainDataContext";
+import axios from "axios";
 
 // Captain home component
 const CaptainHome = () => {
@@ -18,41 +19,60 @@ const CaptainHome = () => {
   const [ridePopupPanel, setRidePopupPanel] = useState<boolean>(false);
   const [confirmRidePopupPanel, setConfirmRidePopupPanel] =
     useState<boolean>(false);
-  const [ride, setRide] = useState(null);
+  const [ride, setRide] = useState<any | null>(null);
 
   // Context Variables
   const { socket } = useContext(SocketContext)!;
   const { captain } = useContext(CaptainDataContext)!;
 
-    useEffect(() => {
-      socket.emit("join", {
-        userId: captain?._id,
-        userType: "captain",
-      });
-      const updateLocation = () => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition((position) => {
-            socket.emit("update-location-captain", {
-              userId: captain?._id,
-              location: {
-                ltd: position.coords.latitude,
-                lng: position.coords.longitude,
-              },
-            });
-          });
-        }
-      };
-
-      const locationInterval = setInterval(updateLocation, 10000);
-      updateLocation();
-
-      return () => clearInterval(locationInterval)
-    }, [captain?._id, socket]);
-
-    socket.on("new-ride", (data) => {
-      setRide(data);
-      setRidePopupPanel(true);
+  useEffect(() => {
+    socket.emit("join", {
+      userId: captain?._id,
+      userType: "captain",
     });
+    const updateLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          socket.emit("update-location-captain", {
+            userId: captain?._id,
+            location: {
+              ltd: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        });
+      }
+    };
+
+    const locationInterval = setInterval(updateLocation, 10000);
+    updateLocation();
+
+    return () => clearInterval(locationInterval);
+  }, [captain?._id, socket]);
+
+  socket.on("new-ride", (data) => {
+    setRide(data);
+    setRidePopupPanel(true);
+  });
+
+  // Function to confirm a ride
+  async function confirmRide() {
+    await axios.post(
+      `${import.meta.env.VITE_SERVER_BASE_URL}/rides/confirm`,
+      {
+        rideId: ride?._id,
+        captainId: captain?._id,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    setRidePopupPanel(false);
+    setConfirmRidePopupPanel(true);
+  }
 
   // GSAP animation hook for Ride panel
   useGSAP(() => {
@@ -115,6 +135,7 @@ const CaptainHome = () => {
           <RidePopUp
             setRidePopupPanel={setRidePopupPanel}
             setConfirmRidePopupPanel={setConfirmRidePopupPanel}
+            confirmRide={confirmRide}
           />
         </div>
 

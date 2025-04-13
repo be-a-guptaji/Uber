@@ -2,12 +2,14 @@
 type RidePopUpProps = {
   setRidePopupPanel: (open: boolean) => void;
   setConfirmRidePopupPanel: (open: boolean) => void;
+  confirmRide: () => void;
 };
 
 // Define the RidePopUp component
 const RidePopUp = ({
   setRidePopupPanel,
   setConfirmRidePopupPanel,
+  confirmRide,
 }: RidePopUpProps) => {
   return (
     <>
@@ -72,6 +74,7 @@ const RidePopUp = ({
           onClick={() => {
             setConfirmRidePopupPanel(true);
             setRidePopupPanel(false);
+            confirmRide();
           }}
         >
           Accept

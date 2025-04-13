@@ -9,33 +9,28 @@ import {
 } from "../services/rides.service";
 import { getFareFunction } from "../utils/functions/FareCalculator";
 import { sendMessageToSocketId } from "../Socket";
+import Ride from "../models/ride.model";
+import { CaptainSchemaType } from "../models/captain.model";
+import { getAddressCoordinates, getCaptainsInTheRadius } from "../services/maps.service";
 
 // Function to create a new ride
 export const createRide = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  // Check if the request body is valid
   const errors = validationResult(req);
-
-  // If the request body is invalid, return an error response
   if (!errors.isEmpty()) {
-    // Map errors to an array of error messages (strings)
-    const errorMessages: string[] = errors.array().map((error) => error.msg);
-
-    // Return an error response
+    const errorMessages = errors.array().map((error) => error.msg);
     res
       .status(400)
       .json(new ApiResponse(400, errorMessages, "Invalid request body."));
-
     return;
   }
 
   try {
-    // Destructure the request body
     const { pickup, destination, vehicleType } = req.body;
 
-    // Check if the userId is valid
+    // Create the ride
     const ride = await createRideService({
       user: req.user?._id as string,
       pickup,
@@ -43,21 +38,46 @@ export const createRide = async (
       vehicleType,
     });
 
-    // Get the coordinates of the pickup and destination addresses
+    // Respond to client immediately
     res.status(201).json(new ApiResponse(201, ride, "Ride created."));
-  } catch {
-    // If an error occurs, return an error response
+
+    // Get coordinates of the pickup address
+    const pickupCoordinates = await getAddressCoordinates(pickup);
+
+    // Find captains nearby (within 2km radius)
+    const captainsInRadius = await getCaptainsInTheRadius(
+      pickupCoordinates.ltd,
+      pickupCoordinates.lng,
+      2
+    );
+
+    // Ensure OTP is hidden (optional — based on your original logic)
+    ride.otp = "";
+
+    // Fetch ride again with populated user
+    const rideWithUser = await Ride.findById(ride._id).populate("user");
+
+    // Notify each nearby captain via socket
+    captainsInRadius.forEach((captain: CaptainSchemaType) => {
+      if (captain.socketId) {
+        sendMessageToSocketId({
+          socketId: captain.socketId,
+          event: "new-ride",
+          data: rideWithUser,
+        });
+      }
+    });
+  } catch (err: any) {
+    console.error(err);
     res
       .status(500)
       .json(
         new ApiResponse(
           500,
-          ["Something went wrong while creating your ride."],
+          [err.message || "Something went wrong while creating the ride."],
           "Internal server error."
         )
       );
-
-    return;
   }
 };
 
@@ -129,7 +149,7 @@ export const confirmRide = async (
 export const startRide = async (
   req: Request,
   res: Response
-): Promise<Response> => {
+): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res
@@ -152,9 +172,9 @@ export const startRide = async (
       data: ride,
     });
 
-    return res.status(200).json(new ApiResponse(200, ride, "Ride started."));
+    res.status(200).json(new ApiResponse(200, ride, "Ride started."));
   } catch (err: any) {
-    return res.status(500).json(new ApiResponse(500, [], err.message));
+    res.status(500).json(new ApiResponse(500, [], err.message));
   }
 };
 
@@ -162,10 +182,10 @@ export const startRide = async (
 export const endRide = async (
   req: Request,
   res: Response
-): Promise<Response> => {
+): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res
+    res
       .status(400)
       .json(new ApiResponse(400, errors.array(), "Invalid request."));
   }
@@ -181,8 +201,8 @@ export const endRide = async (
       data: ride,
     });
 
-    return res.status(200).json(new ApiResponse(200, ride, "Ride ended."));
+    res.status(200).json(new ApiResponse(200, ride, "Ride ended."));
   } catch (err: any) {
-    return res.status(500).json(new ApiResponse(500, [], err.message));
+    res.status(500).json(new ApiResponse(500, [], err.message));
   }
 };

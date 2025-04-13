@@ -61,6 +61,18 @@ const UserHome = () => {
     socket.emit("join", { userType: "user", userId: user?._id });
   }, [socket, user]);
 
+   socket.on("ride-confirmed", (ride) => {
+     setVehicelFound(false);
+     setWaitingForDriver(true);
+     setRide(ride);
+   });
+
+   socket.on("ride-started", (ride) => {
+     console.log("ride");
+     setWaitingForDriver(false);
+     navigate("/riding", { state: { ride } }); // Updated navigate to include ride data
+   });
+
   // GSAP animation hook for location panel
   useGSAP(
     function () {

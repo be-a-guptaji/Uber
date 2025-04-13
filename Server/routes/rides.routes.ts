@@ -1,7 +1,8 @@
 import express from "express";
 import { body, query } from "express-validator";
-import { createRide, getFare } from "../controllers/rides.controller";
+import { confirmRide, createRide, endRide, getFare, startRide } from "../controllers/rides.controller";
 import { authUser } from "../middlewares/authUser.middleware";
+import { authCaptain } from "../middlewares/authCaptain.middleware";
 
 // Create a new router
 const router = express.Router();
@@ -38,6 +39,34 @@ router.get(
     .isLength({ min: 3 })
     .withMessage("Invalid destination address"),
   getFare
+);
+
+// Define the routes for the confirm ride
+router.post(
+  "/confirm",
+  authCaptain,
+  body("rideId").isMongoId().withMessage("Invalid ride id"),
+  confirmRide
+);
+
+// Define the routes for the start ride
+router.get(
+  "/start-ride",
+  authCaptain,
+  query("rideId").isMongoId().withMessage("Invalid ride id"),
+  query("otp")
+    .isString()
+    .isLength({ min: 6, max: 6 })
+    .withMessage("Invalid OTP"),
+  startRide
+);
+
+// Define the routes for the end ride
+router.post(
+  "/end-ride",
+  authCaptain,
+  body("rideId").isMongoId().withMessage("Invalid ride id"),
+  endRide
 );
 
 // Export the router
