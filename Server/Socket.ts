@@ -52,7 +52,7 @@ function initializeSocket(server: HTTPServer): void {
 
     socket.on("update-location-captain", async (data: LocationData) => {
       const { userId, location } = data;
-      
+
       if (
         !location ||
         typeof location.ltd !== "number" ||

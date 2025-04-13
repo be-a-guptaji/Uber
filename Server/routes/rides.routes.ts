@@ -1,6 +1,12 @@
 import express from "express";
 import { body, query } from "express-validator";
-import { confirmRide, createRide, endRide, getFare, startRide } from "../controllers/rides.controller";
+import {
+  confirmRide,
+  createRide,
+  endRide,
+  getFare,
+  startRide,
+} from "../controllers/rides.controller";
 import { authUser } from "../middlewares/authUser.middleware";
 import { authCaptain } from "../middlewares/authCaptain.middleware";
 

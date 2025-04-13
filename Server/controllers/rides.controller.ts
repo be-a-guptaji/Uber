@@ -11,7 +11,10 @@ import { getFareFunction } from "../utils/functions/FareCalculator";
 import { sendMessageToSocketId } from "../Socket";
 import Ride from "../models/ride.model";
 import { CaptainSchemaType } from "../models/captain.model";
-import { getAddressCoordinates, getCaptainsInTheRadius } from "../services/maps.service";
+import {
+  getAddressCoordinates,
+  getCaptainsInTheRadius,
+} from "../services/maps.service";
 
 // Function to create a new ride
 export const createRide = async (
@@ -146,10 +149,7 @@ export const confirmRide = async (
 };
 
 // Start Ride
-export const startRide = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const startRide = async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res
@@ -179,10 +179,7 @@ export const startRide = async (
 };
 
 // End Ride
-export const endRide = async (
-  req: Request,
-  res: Response
-): Promise<void> => {
+export const endRide = async (req: Request, res: Response): Promise<void> => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     res

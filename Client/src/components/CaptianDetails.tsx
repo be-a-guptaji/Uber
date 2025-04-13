@@ -18,7 +18,9 @@ const CaptianDetails = () => {
                 className="size-14 rounded-full"
               />
               <h4 className="text-xl font-medium capitalize">
-                {captain?.fullName?.firstName + " " + captain?.fullName?.lastName}
+                {captain?.fullName?.firstName +
+                  " " +
+                  captain?.fullName?.lastName}
               </h4>
             </div>
             <div className="text-right">
